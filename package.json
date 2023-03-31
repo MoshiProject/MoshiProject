@@ -15,6 +15,8 @@
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.6",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
     "@mantine/carousel": "^6.0.5",
