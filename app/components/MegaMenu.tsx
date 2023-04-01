@@ -156,21 +156,21 @@ export default function MegaMenu({cart}: any) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-25 " />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-40 flex">
+          <div className="fixed inset-0 z-40 flex right-0 justify-end ">
             <Transition.Child
               as={Fragment}
               enter="transition ease-in-out duration-300 transform"
-              enterFrom="-translate-x-full"
+              enterFrom="translate-x-full"
               enterTo="translate-x-0"
               leave="transition ease-in-out duration-300 transform"
               leaveFrom="translate-x-0"
-              leaveTo="-translate-x-full"
+              leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-neutral-950 pb-12 shadow-xl">
-                <div className="flex px-4 pt-5 pb-2 justify-between">
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-neutral-950 pb-12 shadow-xl ">
+                <div className="flex px-6 pt-5 pb-2 justify-between">
                   <button
                     type="button"
                     className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-200"
@@ -196,7 +196,7 @@ export default function MegaMenu({cart}: any) {
 
                 {/* Links */}
                 <Tab.Group as="div" className="mt-2">
-                  <div className="border-b border-gray-200">
+                  <div className="">
                     <Tab.List className="-mb-px flex space-x-8 px-4">
                       {navigation.categories.map((category) => (
                         <Tab
@@ -327,7 +327,7 @@ export default function MegaMenu({cart}: any) {
           {/* Secondary navigation */}
           <div className=" bg-neutral-950">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="border-b border-gray-200">
+              <div className="">
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
                   <div className="hidden lg:flex lg:flex-1 lg:items-center">
@@ -438,31 +438,8 @@ export default function MegaMenu({cart}: any) {
                     </Popover.Group>
                   </div>
 
-                  {/* Mobile menu and search (lg-) */}
-                  <div className="flex flex-1 items-center lg:hidden">
-                    <button
-                      type="button"
-                      className="-ml-2 rounded-md bg-neutral-950 p-2 text-gray-200"
-                      onClick={() => setOpen(true)}
-                    >
-                      <span className="sr-only">Open menu</span>
-                      <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
-                    {/* Search */}
-                    <a
-                      href="/search"
-                      className="ml-2 p-2 text-gray-200 hover:text-gray-300"
-                    >
-                      <span className="sr-only">Search</span>
-                      <MagnifyingGlassIcon
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </div>
-
                   {/* Logo (lg-) */}
+
                   <a href="/" className="lg:hidden">
                     <span className="sr-only">MoshiProject</span>
                     <Image
@@ -483,17 +460,28 @@ export default function MegaMenu({cart}: any) {
                     </a>
 
                     <div className="flex items-center lg:ml-8">
-                      {/* Help */}
+                      {/* Search */}
                       <a
-                        href="/FAQ"
-                        className="p-2 text-gray-200 hover:text-gray-300 lg:hidden"
+                        href="/search"
+                        className="ml-2 p-2 text-gray-200 hover:text-gray-300"
                       >
-                        <span className="sr-only">Help</span>
-                        <QuestionMarkCircleIcon
+                        <span className="sr-only">Search</span>
+                        <MagnifyingGlassIcon
                           className="h-6 w-6"
                           aria-hidden="true"
                         />
                       </a>
+                      {/* Mobile menu and search (lg-) */}
+                      <div className="flex flex-1 items-center lg:hidden">
+                        <button
+                          type="button"
+                          className=" rounded-md bg-neutral-950 p-2 text-gray-200"
+                          onClick={() => setOpen(true)}
+                        >
+                          <span className="sr-only">Open menu</span>
+                          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                        </button>
+                      </div>
                       <a
                         href="/FAQ"
                         className="hidden text-sm font-medium text-gray-100 hover:text-gray-50 lg:block"
@@ -533,7 +521,7 @@ function CartButton(cart: any) {
   }, [addToCartFetchers]);
 
   return (
-    <div className="ml-4 flow-root lg:ml-8">
+    <div className=" flow-root lg:ml-8">
       <Suspense>
         <Await resolve={cart}>
           {(data) => (

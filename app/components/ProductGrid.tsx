@@ -1,6 +1,6 @@
 import {useFetcher} from '@remix-run/react';
 import {useEffect, useState} from 'react';
-import ProductCard from './ProductCard';
+import ProductCard from './products/ProductCard';
 
 export default function ProductGrid({collection, url}) {
   const [nextPage, setNextPage] = useState(

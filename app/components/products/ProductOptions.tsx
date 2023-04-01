@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   Link,
   useLocation,
@@ -9,6 +11,12 @@ const colorMap = {
   Navy: '#234569',
   White: '#FFFFFF',
   Black: '#080808',
+  LightBlue: '#9DBED7',
+  Maroon: '#4B1F22',
+  Red: '#CA1220',
+  IceGrey: '#C0BFB8',
+  Natural: '#D6D1AA',
+  HeatherNavy: '#2C3E4C',
 };
 export default function ProductOptions({options, selectedVariant}) {
   const {pathname, search} = useLocation();
@@ -96,7 +104,7 @@ export default function ProductOptions({options, selectedVariant}) {
                       to={`${pathname}?${linkParams.toString()}`}
                       preventScrollReset
                       replace
-                      className={`w-9 h-9 border cursor-pointer ${
+                      className={`w-9 h-9 border cursor-pointer rounded-sm ${
                         isSelected
                           ? 'border-2 p-1 bg-clip-content'
                           : 'border-neutral-50'
@@ -110,7 +118,7 @@ export default function ProductOptions({options, selectedVariant}) {
                     to={`${pathname}?${linkParams.toString()}`}
                     preventScrollReset
                     replace
-                    className={`w-9 h-9 flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer transition-all duration-200 ${
+                    className={`w-9 h-9 flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer transition-all duration-200 rounded-sm ${
                       isSelected
                         ? 'border-neutral-800 border-2 p-1 bg-clip-content font-semibold'
                         : 'border-neutral-300 font-normal '

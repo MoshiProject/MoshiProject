@@ -1,7 +1,7 @@
 import {useLoaderData, Link} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 import {type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
-import {Collection} from '~/components/products';
+import {Collection} from '~/components/products/products';
 
 export const meta: MetaFunction = () => {
   return {
