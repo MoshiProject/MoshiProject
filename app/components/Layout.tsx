@@ -1,4 +1,4 @@
-import MegaMenu from './MegaMenu';
+import HeaderMenu from './MegaMenu/HeaderMenu';
 
 type LayoutProps = {
   children: JSX.Element;
@@ -15,7 +15,7 @@ export function Layout({children, title}: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
       <header>
-        <MegaMenu cart={cart}></MegaMenu>
+        <HeaderMenu cart={cart}></HeaderMenu>
       </header>
 
       <main
