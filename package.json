@@ -17,11 +17,13 @@
   "dependencies": {
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
     "@mantine/carousel": "^6.0.5",
     "@mantine/core": "^6.0.5",
     "@mantine/hooks": "^6.0.5",
+    "@mantine/remix": "^6.0.5",
     "@remix-run/react": "1.14.0",
     "@shopify/cli": "3.29.0",
     "@shopify/cli-hydrogen": "^4.0.9",
@@ -33,7 +35,8 @@
     "graphql-tag": "^2.12.6",
     "isbot": "^3.6.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "buffer-polyfill": "npm:buffer@^6.0.3"
   },
   "devDependencies": {
     "@remix-run/dev": "1.14.0",

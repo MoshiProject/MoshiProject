@@ -44,38 +44,23 @@ export default function ProductOptions({options, selectedVariant}) {
           return;
         }
         const isColor = option.name.toLowerCase() === 'color';
+        console.log(isColor);
         // get the currently selected option value
         const currentOptionVal = searchParams.get(option.name);
-        option.values.sort((option1: string, option2: string) => {
-          const sizeOrder = {
-            S: 1,
-            M: 2,
-            L: 3,
-            XL: 4,
-            '2XL': 5,
-            '3XL': 6,
-            '4XL': 7,
-            '5XL': 8,
-          };
-          const option1Val = sizeOrder[option1];
-          const option2Val = sizeOrder[option2];
-          if (!option1Val && !option2Val) return 0;
-          return option1Val - option2Val;
-        });
         return (
           <div
             key={option.name}
-            className="flex flex-col justify-center items-center pb-4 last:mb-0 w-full pt-4 border-t border-neutral-200 gap-y-2"
+            className="flex pb-4 gap-y-1 last:mb-0 w-full pt-4 border-t border-neutral-200"
           >
-            <div className="flex flex-col ">
-              <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase  text-lead">
+            <div className="flex flex-col w-1/4">
+              <h3 className="whitespace-pre-wrap max-w-prose font-semibold text-lead min-w-[4rem]">
                 {option.name}
               </h3>
-              {/* <h3 className="whitespace-pre-wrap max-w-prose font-medium text-lead min-w-[4rem] text-sm text-red-600">
+              <h3 className="whitespace-pre-wrap max-w-prose font-medium text-lead min-w-[4rem] text-sm text-red-600">
                 {currentOptionVal}
-              </h3> */}
+              </h3>
             </div>
-            <div className="flex flex-wrap items-center gap-3 justify-center">
+            <div className="flex flex-wrap items-center gap-3 w-3/4">
               {option.values.map((value: string) => {
                 const linkParams = new URLSearchParams(searchParams);
                 const isSelected = currentOptionVal === value;
@@ -89,9 +74,9 @@ export default function ProductOptions({options, selectedVariant}) {
                         backgroundColor: color,
                         borderColor: isSelected
                           ? color === '#FFFFFF'
-                            ? '#c2c2c2'
+                            ? '#585858'
                             : color
-                          : '#c2c2c2',
+                          : '#585858',
                       }}
                       to={`${pathname}?${linkParams.toString()}`}
                       preventScrollReset
@@ -112,8 +97,8 @@ export default function ProductOptions({options, selectedVariant}) {
                     replace
                     className={`w-9 h-9 flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer transition-all duration-200 ${
                       isSelected
-                        ? 'border-neutral-800 border-2 p-1 bg-clip-content font-semibold'
-                        : 'border-neutral-300 font-normal '
+                        ? 'border-neutral-800 border-2 p-1 bg-clip-content font-bold'
+                        : 'border-neutral-400 font-normal '
                     }`}
                   >
                     {value}

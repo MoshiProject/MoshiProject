@@ -13,6 +13,8 @@ import {Layout} from './components/Layout';
 import {Seo} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {CART_QUERY} from '~/queries/cart';
+import styles from '~/styles/app.css';
+
 export const links = () => {
   return [
     {rel: 'stylesheet', href: tailwind},
@@ -20,6 +22,7 @@ export const links = () => {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
     },
+    {rel: 'stylesheet', href: styles},
     {
       rel: 'preconnect',
       href: 'https://shop.app',
