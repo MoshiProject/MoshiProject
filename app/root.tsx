@@ -14,8 +14,6 @@ import {Seo} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {CART_QUERY} from '~/queries/cart';
 import styles from '~/styles/app.css';
-import carouselStyles from 'slick-carousel/slick/slick-theme.css';
-import slickStyles from 'slick-carousel/slick/slick.css';
 import swiperBCSS from 'swiper/swiper-bundle.min.css';
 
 export const links = () => {
@@ -26,7 +24,6 @@ export const links = () => {
       href: 'https://cdn.shopify.com',
     },
     {rel: 'stylesheet', href: styles},
-    {rel: 'stylesheet', href: carouselStyles},
     {rel: 'stylesheet', href: swiperBCSS},
     {
       rel: 'preconnect',
