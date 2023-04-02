@@ -78,7 +78,7 @@ const COLLECTION_QUERY = `#graphql
       title
       description
       handle
-      products(first: 4, after: $cursor) {
+      products(first: 6, after: $cursor) {
         pageInfo {
           hasNextPage
           endCursor

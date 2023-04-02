@@ -23,6 +23,8 @@
     "@shopify/hydrogen": "^2023.1.6",
     "@shopify/remix-oxygen": "^1.0.4",
     "dotenv": "^16.0.3",
+    "flowbite": "^1.6.4",
+    "flowbite-react": "^0.4.2",
     "framer-motion": "^10.10.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
