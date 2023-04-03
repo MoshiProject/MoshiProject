@@ -58,7 +58,7 @@ export default function ProductHandle() {
     useLoaderData();
   const orderable = selectedVariant?.availableForSale || false;
   return (
-    <section className="w-full gap-2 md:gap-8 grid  md:px-8 lg:px-12">
+    <section className="w-full gap-2 px-5 md:gap-8 grid  md:px-8 lg:px-12">
       <div className="grid items-start gap-2 lg:gap-12 md:grid-cols-2 lg:grid-cols-5">
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-3 h-fit mt-4">
           <ProductGallery media={product.media.nodes} />

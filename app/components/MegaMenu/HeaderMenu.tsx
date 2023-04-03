@@ -21,6 +21,7 @@ import {
   useVelocity,
   wrap,
 } from 'framer-motion';
+import useScrollDirection from '~/functions/useScrollDirection';
 interface ParallaxProps {
   children: string;
   baseVelocity: number;
@@ -28,7 +29,9 @@ interface ParallaxProps {
 function ParallaxText({children, baseVelocity = 100}: ParallaxProps) {
   const baseX = useMotionValue(0);
   const {scrollY} = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
+  //const scrollVelocity = useVelocity(scrollY);
+  const scrollVelocity = useMotionValue(0);
+
   const smoothVelocity = useSpring(scrollVelocity, {
     damping: 50,
     stiffness: 400,
@@ -52,11 +55,6 @@ function ParallaxText({children, baseVelocity = 100}: ParallaxProps) {
      * This is what changes the direction of the scroll once we
      * switch scrolling directions.
      */
-    if (velocityFactor.get() < 0) {
-      directionFactor.current = -1;
-    } else if (velocityFactor.get() > 0) {
-      directionFactor.current = 1;
-    }
 
     moveBy += directionFactor.current * moveBy * velocityFactor.get();
 
@@ -84,18 +82,23 @@ function ParallaxText({children, baseVelocity = 100}: ParallaxProps) {
 
 export default function HeaderMenu({cart}: any) {
   const [open, setOpen] = useState(false);
+  const scrollDirection = useScrollDirection();
 
   return (
-    <div className="bg-neutral-950 text-neutral-50 ">
+    <div
+      className={`bg-neutral-950 text-neutral-50 fixed z-40 h-fit w-screen transition-all duration-500 ${
+        scrollDirection === 'down' ? '-top-24' : 'top-0'
+      }`}
+    >
       {/* Mobile menu */}
       {/* infinite looping free shipping bar */}
-      <div className="">
+      <div className="py-1">
         <ParallaxText baseVelocity={-5}>
           FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.
         </ParallaxText>
       </div>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
+        <Dialog as="div" className="relative z-40 lg:hidden " onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"

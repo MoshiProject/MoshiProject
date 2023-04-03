@@ -2,6 +2,8 @@ export type Product = {
   id: string;
   title: string;
   handle: string;
+  tags: string[];
+  filters: {anime: string; productType: string; character: string};
   variants: {
     nodes: {
       image: PartialObjectDeep<Image, {recurseIntoArrays: true}>;

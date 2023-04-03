@@ -1,8 +1,9 @@
 import {useFetcher} from '@remix-run/react';
 import {useEffect, useState} from 'react';
-import ProductCard from './products/ProductCard';
+import ProductCard from '../products/ProductCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {Spinner} from 'flowbite-react';
+import FilterSidebar from './FilterSidebar';
 
 export default function ProductGrid({collection, url}) {
   const [nextPage, setNextPage] = useState(
@@ -14,6 +15,10 @@ export default function ProductGrid({collection, url}) {
   );
 
   const [products, setProducts] = useState(collection.products.nodes || []);
+
+  const [filteredProducts, setFilteredProducts] = useState(
+    collection.products.nodes || [],
+  );
 
   // For making client-side requests
   // https://remix.run/docs/en/v1/hooks/use-fetcher
@@ -36,12 +41,13 @@ export default function ProductGrid({collection, url}) {
 
   return (
     <div>
+      <FilterSidebar products={products} setProducts={setFilteredProducts} />
       <InfiniteScroll
-        dataLength={products.length} //This is important field to render the next data
+        className="grid-flow-row grid gap-0 gap-y-6 md:gap-4 lg:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-4 py-4 h-fit"
+        dataLength={filteredProducts.length} //This is important field to render the next data
         next={fetchMoreProducts}
         hasMore={nextPage}
-        loader={'Loading...'}
-        endMessage={
+        loader={
           <p style={{textAlign: 'center'}}>
             <div role="status">
               <svg
@@ -64,13 +70,16 @@ export default function ProductGrid({collection, url}) {
             </div>
           </p>
         }
+        endMessage={
+          <div className="my-4flex justify-center items-center">
+            No more products
+          </div>
+        }
         // below props only if you need pull down functionality
       >
-        <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </InfiniteScroll>
     </div>
   );

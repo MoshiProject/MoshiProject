@@ -1,9 +1,11 @@
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
-import ProductGrid from '../../components/ProductGrid';
+import ProductGrid from '../../components/collections/ProductGrid';
 import {type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
 import {type SeoHandleFunction} from '@shopify/hydrogen';
-
+import {useState} from 'react';
+import {Product} from '~/components/products/products';
+import {animeNames, productTypes} from '~/functions/titleFilter';
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.collection?.title,
   description: data?.collection?.description,
@@ -24,6 +26,43 @@ export async function loader({params, context, request}: LoaderArgs) {
       cursor,
     },
   });
+  // //filtering tags setup
+  // collection.products.nodes = collection.products.nodes.map(
+  //   (product: Product) => {
+  //     //prep
+  //     product.filters = {anime: '', productType: '', character: ''};
+  //     let tempTitle = product.title
+  //       .replace('T-Shirt', 'Tee')
+  //       .replace('3d', '3D')
+  //       .replace('T-shirt', 'Tee')
+  //       .replace('Unisex Heavy Blend™ Crewneck ', '')
+  //       .replace('Heavy Blend™ Crewneck ', '')
+  //       .replace('Heavy Blend™', '')
+  //       .replace('Unisex Softstyle ', '')
+  //       .replace('Pullover ', '');
+  //     //extracting anime / show from title
+  //     const animeName = animeNames.filter((anime: string) => {
+  //       return tempTitle.includes(anime);
+  //     })[0];
+  //     if (animeName) {
+  //       product.filters.anime = animeName;
+  //       tempTitle = tempTitle.replace(animeName, '');
+  //     }
+
+  //     const productType = productTypes.filter((type: string) => {
+  //       return tempTitle.includes(type);
+  //     })[0];
+
+  //     if (productType) {
+  //       product.filters.productType = productType;
+  //       tempTitle = tempTitle.replace(productType, '');
+  //     }
+  //     if (tempTitle.trim() !== '') {
+  //       product.filters.character = tempTitle.trim();
+  //     }
+  //     return product;
+  //   },
+  // );
 
   // Handle 404s
   if (!collection) {
@@ -78,7 +117,7 @@ const COLLECTION_QUERY = `#graphql
       title
       description
       handle
-      products(first: 6, after: $cursor) {
+      products(first: 12, after: $cursor) {
         pageInfo {
           hasNextPage
           endCursor

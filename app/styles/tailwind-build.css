@@ -1196,6 +1196,9 @@ input:checked + .toggle-bg {
 .-top-1 {
   top: -0.25rem;
 }
+.-top-24 {
+  top: -6rem;
+}
 .bottom-0 {
   bottom: 0px;
 }
@@ -1339,6 +1342,12 @@ input:checked + .toggle-bg {
 .ml-\[-10\%\] {
   margin-left: -10%;
 }
+.ml-\[-15\%\] {
+  margin-left: -15%;
+}
+.ml-\[-7\.5\%\] {
+  margin-left: -7.5%;
+}
 .ml-auto {
   margin-left: auto;
 }
@@ -1359,6 +1368,9 @@ input:checked + .toggle-bg {
 }
 .mt-2 {
   margin-top: 0.5rem;
+}
+.mt-24 {
+  margin-top: 6rem;
 }
 .mt-3 {
   margin-top: 0.75rem;
@@ -1542,8 +1554,14 @@ input:checked + .toggle-bg {
 .w-9 {
   width: 2.25rem;
 }
+.w-\[115\%\] {
+  width: 115%;
+}
 .w-\[120\%\] {
   width: 120%;
+}
+.w-\[130\%\] {
+  width: 130%;
 }
 .w-auto {
   width: auto;
@@ -1554,6 +1572,9 @@ input:checked + .toggle-bg {
 }
 .w-full {
   width: 100%;
+}
+.w-screen {
+  width: 100vw;
 }
 .min-w-\[0\.75rem\] {
   min-width: 0.75rem;
@@ -1620,6 +1641,10 @@ input:checked + .toggle-bg {
 }
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.-translate-x-full {
+  --tw-translate-x: -100%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .-translate-y-1\/2 {
@@ -1725,6 +1750,9 @@ input:checked + .toggle-bg {
 }
 .justify-items-start {
   justify-items: start;
+}
+.gap-0 {
+  gap: 0px;
 }
 .gap-1 {
   gap: 0.25rem;
@@ -2974,6 +3002,10 @@ input:checked + .toggle-bg {
   --tw-text-opacity: 1;
   color: rgb(54 83 20 / var(--tw-text-opacity));
 }
+.text-neutral-100 {
+  --tw-text-opacity: 1;
+  color: rgb(245 245 245 / var(--tw-text-opacity));
+}
 .text-neutral-50 {
   --tw-text-opacity: 1;
   color: rgb(250 250 250 / var(--tw-text-opacity));
@@ -3200,6 +3232,9 @@ input:checked + .toggle-bg {
 .ring-yellow-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(250 202 21 / var(--tw-ring-opacity));
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
