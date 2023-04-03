@@ -26,43 +26,52 @@ export async function loader({params, context, request}: LoaderArgs) {
       cursor,
     },
   });
-  // //filtering tags setup
-  // collection.products.nodes = collection.products.nodes.map(
-  //   (product: Product) => {
-  //     //prep
-  //     product.filters = {anime: '', productType: '', character: ''};
-  //     let tempTitle = product.title
-  //       .replace('T-Shirt', 'Tee')
-  //       .replace('3d', '3D')
-  //       .replace('T-shirt', 'Tee')
-  //       .replace('Unisex Heavy Blend™ Crewneck ', '')
-  //       .replace('Heavy Blend™ Crewneck ', '')
-  //       .replace('Heavy Blend™', '')
-  //       .replace('Unisex Softstyle ', '')
-  //       .replace('Pullover ', '');
-  //     //extracting anime / show from title
-  //     const animeName = animeNames.filter((anime: string) => {
-  //       return tempTitle.includes(anime);
-  //     })[0];
-  //     if (animeName) {
-  //       product.filters.anime = animeName;
-  //       tempTitle = tempTitle.replace(animeName, '');
-  //     }
+  //filtering tags setup
+  collection.products.nodes = collection.products.nodes.map(
+    (product: Product) => {
+      //prep
+      product.filters = {anime: '', productType: '', character: ''};
+      let tempTitle = product.title
+        .replace('T-Shirt', 'Tee')
+        .replace('Shirt', 'Tee')
+        .replace('3d', '3D')
+        .replace('T-shirt', 'Tee')
+        .replace('Unisex Heavy Blend™ Crewneck ', '')
+        .replace('Heavy Blend™ Crewneck ', '')
+        .replace('Heavy Blend™', '')
+        .replace('Unisex Softstyle ', '')
+        .replace('Pullover ', '')
+        .replace('Crewneck ', '')
+        .replace('Zenitzu', 'Zenitsu')
+        .replace(' Phone Case', ' Phone Case')
+        .replace('  Case', ' Case')
+        .replace('Softstyle', ' ')
+        .replace('HUNTER x HUNTER', 'Hunter X Hunter')
+        .replace('Boku No Hero Acedemia', 'My Hero Academia')
+        .replace('Figurine', 'Figure');
+      //extracting anime / show from title
+      const animeName = animeNames.filter((anime: string) => {
+        return tempTitle.includes(anime);
+      })[0];
+      if (animeName) {
+        product.filters.anime = animeName;
+        tempTitle = tempTitle.replace(animeName, '');
+      }
 
-  //     const productType = productTypes.filter((type: string) => {
-  //       return tempTitle.includes(type);
-  //     })[0];
+      const productType = productTypes.filter((type: string) => {
+        return tempTitle.includes(type);
+      })[0];
 
-  //     if (productType) {
-  //       product.filters.productType = productType;
-  //       tempTitle = tempTitle.replace(productType, '');
-  //     }
-  //     if (tempTitle.trim() !== '') {
-  //       product.filters.character = tempTitle.trim();
-  //     }
-  //     return product;
-  //   },
-  // );
+      if (productType) {
+        product.filters.productType = productType;
+        tempTitle = tempTitle.replace(productType, '');
+      }
+      if (tempTitle.trim() !== '') {
+        product.filters.character = tempTitle.trim();
+      }
+      return product;
+    },
+  );
 
   // Handle 404s
   if (!collection) {
@@ -117,7 +126,7 @@ const COLLECTION_QUERY = `#graphql
       title
       description
       handle
-      products(first: 12, after: $cursor) {
+      products(first: 100, after: $cursor) {
         pageInfo {
           hasNextPage
           endCursor

@@ -2,58 +2,86 @@ import {motion, AnimatePresence} from 'framer-motion';
 import {Dialog, Disclosure, Transition} from '@headlessui/react';
 import {Image} from '@shopify/hydrogen';
 import {ChevronDownIcon, XMarkIcon} from '@heroicons/react/24/outline';
-import MegaMenuMobile from '../MegaMenu/MegaMenuMobile';
-import {currencies, logoURL} from '../MegaMenu/menuSettings';
-import {Fragment, useRef, useState} from 'react';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import {Button} from 'flowbite-react';
 import {Product} from '../products/products';
+import {RadioGroup} from '@headlessui/react';
+import CollectionFilter from './CollectionFilter';
+import {charactersMap} from '~/functions/titleFilter';
+export type FilterType = 'anime' | 'productType' | 'character';
 
 type FilterSidebarProps = {
   products: Product[];
   setProducts: (products: Product[]) => void;
+  filteredProducts: Product[];
 };
 
-function FilterSidebar({products, setProducts}: FilterSidebarProps) {
+function FilterSidebar({
+  products,
+  setProducts,
+  filteredProducts,
+}: FilterSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [tag, setTag] = useState('');
-  const handleTagChange = (event) => {
-    const newTag = event.target.value;
-    setTag(newTag);
-    filterProductsByTag(newTag);
-  };
-  //   //console.log(products);
-  //   const getAnimeFilters = () => {
-  //     const animeFilters = products
-  //       .map((product: Product) => {
-  //         return product.filters ? product.filters.anime : null;
-  //       })
-  //       .filter(onlyUnique);
-  //     return animeFilters;
-  //   };
+  const [filteredCharacters, setFilteredCharacters] = useState([]);
+  const [filteredAnime, setFilteredAnime] = useState([]);
+  const [filteredProductType, setFilteredProductType] = useState([]);
 
-  //   const getCharacterFilters = () => {
-  //     const animeFilters = products
-  //       .map((product: Product) => {
-  //         return product.filters ? product.filters.character : null;
-  //       })
-  //       .filter(onlyUnique);
-  //     return animeFilters;
-  //   };
-
-  //   console.log(getCharacterFilters());
-  const filterProductsByTag = (tag) => {
-    if (!tag) {
-      setProducts(products);
-    } else {
+  //   Handle Character Filtering
+  useEffect(() => {
+    if (filteredCharacters.length > 0) {
       const filtered = products.filter((product) => {
-        return (
-          product.tags.includes(tag) ||
-          product.title.toLowerCase().includes(tag)
-        );
+        if (!product.filters) return;
+        return Array.isArray(charactersMap[product.filters['character']])
+          ? charactersMap[product.filters['character']].some((r) =>
+              filteredCharacters.includes(r),
+            )
+          : filteredCharacters.includes(
+              charactersMap[product.filters['character']],
+            );
+      });
+
+      setProducts(filtered);
+    }
+  }, [filteredCharacters, products, setProducts]);
+
+  //   Handle Anime Filtering
+  useEffect(() => {
+    if (filteredAnime.length > 0) {
+      const filtered = products.filter((product) => {
+        if (!product.filters) return;
+        return filteredAnime.includes(product.filters['anime']);
+      });
+
+      setProducts(filtered);
+    }
+  }, [filteredAnime, products, setProducts]);
+
+  //   Handle Product Type Filtering
+  useEffect(() => {
+    if (filteredProductType.length > 0) {
+      const filtered = products.filter((product) => {
+        if (!product.filters) return;
+        return filteredProductType.includes(product.filters['productType']);
       });
       setProducts(filtered);
     }
-  };
+  }, [filteredProductType, products, setProducts]);
+
+  useEffect(() => {
+    if (
+      filteredCharacters.length === 0 &&
+      filteredAnime.length === 0 &&
+      filteredProductType.length === 0
+    ) {
+      setProducts(products);
+    }
+  }, [
+    filteredCharacters,
+    filteredAnime,
+    filteredProductType,
+    products,
+    setProducts,
+  ]);
   return (
     <>
       <Button onClick={() => setIsOpen(true)}></Button>
@@ -99,18 +127,37 @@ function FilterSidebar({products, setProducts}: FilterSidebarProps) {
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
-                <div>
-                  {' '}
-                  <form>
-                    <label>
-                      Filter by tag:
-                      <select value={tag} onChange={handleTagChange}>
-                        <option value="">All</option>
-                        <option value="itadori">Itadori</option>
-                        <option value="new">New Arrival</option>
-                      </select>
-                    </label>
-                  </form>
+                <div className="mx-6">
+                  <>
+                    <CollectionFilter
+                      products={filteredProducts}
+                      selected={filteredAnime}
+                      setSelected={setFilteredAnime}
+                      setProducts={setProducts}
+                      type={'anime'}
+                      title="Filter by Anime"
+                    />
+                  </>
+                  <>
+                    <CollectionFilter
+                      products={filteredProducts}
+                      selected={filteredCharacters}
+                      setSelected={setFilteredCharacters}
+                      setProducts={setProducts}
+                      type={'character'}
+                      title="Filter by Character"
+                    />
+                  </>
+                  <>
+                    <CollectionFilter
+                      products={filteredProducts}
+                      selected={filteredProductType}
+                      setSelected={setFilteredProductType}
+                      setProducts={setProducts}
+                      type={'productType'}
+                      title="Filter by Product Type"
+                    />
+                  </>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -121,13 +168,7 @@ function FilterSidebar({products, setProducts}: FilterSidebarProps) {
   );
 }
 
-function onlyUnique(value, index, array) {
+export default FilterSidebar;
+function onlyUnique(value: any, index: number, array: any[]) {
   return array.indexOf(value) === index;
 }
-function Counter(arr: []) {
-  const count = {};
-  arr.forEach((val) => (count[val] = (count[val] || 0) + 1));
-  return count;
-}
-
-export default FilterSidebar;
