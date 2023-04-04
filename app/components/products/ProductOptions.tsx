@@ -18,7 +18,13 @@ const colorMap = {
   Natural: '#D6D1AA',
   HeatherNavy: '#2C3E4C',
 };
-export default function ProductOptions({options, selectedVariant}) {
+import SizingChart from '~/components/products/SizingChart';
+
+export default function ProductOptions({
+  options,
+  selectedVariant,
+  productType,
+}) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
   const transition = useTransition();
@@ -52,6 +58,9 @@ export default function ProductOptions({options, selectedVariant}) {
           return;
         }
         const isColor = option.name.toLowerCase() === 'color';
+
+        const isSize = option.name.toLowerCase() === 'size';
+
         // get the currently selected option value
         const currentOptionVal = searchParams.get(option.name);
         option.values.sort((option1: string, option2: string) => {
@@ -73,12 +82,23 @@ export default function ProductOptions({options, selectedVariant}) {
         return (
           <div
             key={option.name}
-            className="flex flex-col justify-center items-center pb-4 last:mb-0 w-full pt-4 border-t border-neutral-200 gap-y-2"
+            className={`flex flex-col justify-center items-center pb-4 last:mb-0 w-full pt-4 border-t border-neutral-200 gap-y-2`}
           >
-            <div className="flex flex-col ">
-              <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase  text-lead">
+            <div
+              className={`flex ${
+                isSize ? 'justify-between' : 'justify-center'
+              } w-full`}
+            >
+              {isSize && <span className="w-1/3"></span>}
+              <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase  ">
                 {option.name}
               </h3>
+              {isSize && (
+                <span className="w-1/3 flex justify-end">
+                  <SizingChart productType={productType} />
+                </span>
+              )}
+
               {/* <h3 className="whitespace-pre-wrap max-w-prose font-medium text-lead min-w-[4rem] text-sm text-red-600">
                 {currentOptionVal}
               </h3> */}

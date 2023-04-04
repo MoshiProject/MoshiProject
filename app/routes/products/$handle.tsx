@@ -11,6 +11,7 @@ import ProductRecommendations from '~/components/products/ProductRecommendations
 import {PRODUCT_QUERY, RECOMMENDATIONS_QUERY} from '~/queries/product';
 import AddToCartForm from '~/components/products/AddToCartForm';
 import ProductGallery from '~/components/products/ProductGallery';
+import {getProductType} from '~/functions/titleFilter';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
   const storeDomain = context.storefront.getShopifyDomain();
@@ -56,6 +57,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 export default function ProductHandle() {
   const {product, selectedVariant, storeDomain, productRecommendations} =
     useLoaderData();
+
   const orderable = selectedVariant?.availableForSale || false;
   return (
     <section className="w-full gap-2 px-5 md:gap-8 grid  md:px-8 lg:px-12">
@@ -84,8 +86,8 @@ export default function ProductHandle() {
           <ProductOptions
             options={product.options}
             selectedVariant={selectedVariant}
+            productType={getProductType(product.title)}
           />
-
           {orderable && (
             <div className="space-y-2 w-full">
               <AddToCartForm variantId={selectedVariant?.id} />

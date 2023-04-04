@@ -32,8 +32,8 @@ export const productTypes = [
   'Phone Case',
 ];
 
-export default function titleFilter(title: string) {
-  title = title
+export const titleCleanup = (title: string) => {
+  return title
     .replace('T-Shirt', 'Tee')
     .replace('Shirt', 'Tee')
     .replace('3d', '3D')
@@ -53,6 +53,10 @@ export default function titleFilter(title: string) {
     .replace('Boku No Hero Academia', 'My Hero Academia')
     .replace('My Hero Acedemia', 'My Hero Academia')
     .replace('Figurine', 'Figure');
+};
+
+export default function titleFilter(title: string) {
+  title = titleCleanup(title);
 
   const removedAnime = replaceArray(title, animeNames, '');
   const filteredName = productTypes.includes(removedAnime.trim())
@@ -189,4 +193,12 @@ export const charactersMap = {
   Endeavor: 'Endeavor',
   Eri: 'Eri',
   'Giyuu Tomioka': 'Giyu Tomioka',
+};
+export const getProductType = (productTitle: string) => {
+  const cleanTitle = titleCleanup(productTitle);
+  for (const type of productTypes) {
+    if (cleanTitle.includes(type)) {
+      return type;
+    }
+  }
 };
