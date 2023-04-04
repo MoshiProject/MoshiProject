@@ -15,6 +15,7 @@ import {defer} from '@shopify/remix-oxygen';
 import {CART_QUERY} from '~/queries/cart';
 import styles from '~/styles/app.css';
 import swiperBCSS from 'swiper/swiper-bundle.min.css';
+import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
 
 export const links = () => {
   return [
@@ -23,6 +24,7 @@ export const links = () => {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
     },
+    {rel: 'stylesheet', href: ImageZoom},
     {rel: 'stylesheet', href: styles},
     {rel: 'stylesheet', href: swiperBCSS},
     {

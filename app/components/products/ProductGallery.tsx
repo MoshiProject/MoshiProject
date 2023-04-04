@@ -3,6 +3,8 @@ import {useState} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {ImageType} from '~/components/products/products';
 import {Controller} from 'swiper';
+import Zoom from 'react-medium-image-zoom';
+import ImageModal from './ImageModal';
 
 export default function ProductGallery({
   media,
@@ -74,12 +76,7 @@ export default function ProductGallery({
 
           return (
             <SwiperSlide key={data.id || data.image.id}>
-              <MediaFile
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
-                data={data}
-                {...extraProps}
-              />
+              <ImageModal data={data}></ImageModal>
             </SwiperSlide>
           );
         })}
