@@ -2,9 +2,14 @@ import {useFetcher} from '@remix-run/react';
 import {useEffect, useState} from 'react';
 import ProductCard from '../products/ProductCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {Spinner} from 'flowbite-react';
 import FilterSidebar from './FilterSidebar';
-
+import CollectionSort from './CollectionSort';
+import {
+  Bars3Icon,
+  Squares2X2Icon,
+  StopIcon,
+  ArrowsUpDownIcon,
+} from '@heroicons/react/24/outline';
 export default function ProductGrid({collection, url}) {
   const [nextPage, setNextPage] = useState(
     collection.products.pageInfo.hasNextPage,
@@ -13,7 +18,7 @@ export default function ProductGrid({collection, url}) {
   const [endCursor, setEndCursor] = useState(
     collection.products.pageInfo.endCursor,
   );
-
+  const [gridType, setGridType] = useState('normal');
   const [products, setProducts] = useState(collection.products.nodes || []);
 
   const [filteredProducts, setFilteredProducts] = useState(
@@ -27,7 +32,11 @@ export default function ProductGrid({collection, url}) {
   function fetchMoreProducts() {
     // ?index differentiates index routes from their parent layout routes
     // https://remix.run/docs/en/v1/guides/routing#what-is-the-index-query-param
-    fetcher.load(`${url}?index&cursor=${endCursor}`);
+    if (url.includes('?')) {
+      fetcher.load(`${url}&index&cursor=${endCursor}`);
+    } else {
+      fetcher.load(`${url}?index&cursor=${endCursor}`);
+    }
   }
   useEffect(() => {
     if (!fetcher.data) return;
@@ -37,23 +46,51 @@ export default function ProductGrid({collection, url}) {
     setNextPage(collection.products.pageInfo.hasNextPage);
     setEndCursor(collection.products.pageInfo.endCursor);
   }, [fetcher.data]);
-  useEffect(() => {
-    window.addEventListener('scroll', function () {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        console.log("you're at the bottom of the page");
-        // Show loading spinner and make fetch request to api
-      }
-    });
-  }, []);
+
   return (
-    <div>
-      <FilterSidebar
-        products={products}
-        setProducts={setFilteredProducts}
-        filteredProducts={filteredProducts}
-      />
+    <div className="mx-1">
+      <div className="flex h-10 mx-2 border-b border-neutral-200 items-center justify-between pb-2">
+        {' '}
+        <FilterSidebar
+          products={products}
+          setProducts={setFilteredProducts}
+          filteredProducts={filteredProducts}
+        />
+        <div className="flex">
+          <CollectionSort />
+          <div className="flex  h-fit">
+            <button
+              onClick={() => {
+                setGridType('single');
+              }}
+            >
+              <StopIcon className="text-black stroke-1 h-8 w-8" />
+            </button>
+            <button
+              onClick={() => {
+                setGridType('normal');
+              }}
+            >
+              <Squares2X2Icon className=" stroke-1 h-7 w-7" />
+            </button>
+            <button
+              onClick={() => {
+                setGridType('row');
+              }}
+            >
+              <Bars3Icon className="stroke-1 h-8 w-8" />
+            </button>
+          </div>
+        </div>
+      </div>
       <InfiniteScroll
-        className="grid-flow-row grid gap-0 gap-y-6 md:gap-4 lg:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-4 py-4 h-fit"
+        className={`grid-flow-row grid gap-0 gap-y-6 md:gap-4 lg:gap-6 ${
+          gridType === 'normal'
+            ? 'grid-cols-2'
+            : gridType === 'row'
+            ? ' mr-4 grid-cols-1'
+            : ' grid-cols-1'
+        } md:grid-cols-3 lg:grid-cols-4 my-4 py-4 h-fit`}
         dataLength={products.length} //This is important field to render the next data
         next={fetchMoreProducts}
         hasMore={nextPage}
@@ -79,14 +116,18 @@ export default function ProductGrid({collection, url}) {
           </div>
         }
         endMessage={
-          <div className="my-4flex justify-center items-center">
+          <div className="my-4 flex justify-center items-center">
             No more products
           </div>
         }
         // below props only if you need pull down functionality\
       >
         {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            row={gridType === 'row'}
+          />
         ))}
       </InfiniteScroll>
     </div>

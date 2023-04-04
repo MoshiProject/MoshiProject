@@ -156,8 +156,9 @@ export default function ProductHandle() {
 type AccordionProps = {
   title: string | JSX.Element;
   children: JSX.Element;
+  animations: boolean;
 };
-function Accordion({title, children}: AccordionProps) {
+export function Accordion({title, animations, children}: AccordionProps) {
   return (
     <div className="px-5 border-b border-neutral-200 w-full">
       <Disclosure>
@@ -174,20 +175,22 @@ function Accordion({title, children}: AccordionProps) {
               />
             </Disclosure.Button>
 
-            <AnimatePresence>
-              {open && (
-                <motion.div
-                  className="overflow-hidden"
-                  layout
-                  initial={{height: 0, opacity: 0}}
-                  animate={{height: 'fit-content', opacity: 1}}
-                  exit={{height: 0, opacity: 0}}
-                  transition={{duration: 0.4}}
-                >
-                  {children}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {open && animations && (
+              <motion.div
+                className="overflow-hidden"
+                layout
+                initial={{height: 0, opacity: 0}}
+                animate={{height: 'fit-content', opacity: 1}}
+                exit={{height: 0, opacity: 0}}
+                transition={{duration: 0.4}}
+              >
+                {children}
+              </motion.div>
+            )}
+
+            {open && !animations && (
+              <div className="overflow-hidden">{children}</div>
+            )}
           </>
         )}
       </Disclosure>

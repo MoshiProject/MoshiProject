@@ -3,6 +3,7 @@ import {Product} from '../products/products';
 import {useEffect} from 'react';
 import {charactersMap} from '~/functions/titleFilter';
 import {FilterType} from './FilterSidebar';
+import {Accordion} from '~/routes/products/$handle';
 
 function CollectionFilter({
   type,
@@ -77,31 +78,26 @@ function CollectionFilter({
     }
   }, [selected]);
   return (
-    <>
-      {(filters.length > 0 || selected.length > 0) && (
-        <div>
-          <h3 className=" text-xl my-2">{title}</h3>
-          <div className="space-y-2 flex flex-col">
+    <Accordion title={title} animations={false}>
+      <>
+        {(filters.length > 0 || selected.length > 0) && (
+          <div className="space-y-2 flex flex-col mb-4">
             {options.map((option) => (
               <div key={option.value} className="flex items-center">
                 <Switch
                   checked={selected.includes(option.value)}
                   onChange={() => handleSelection(option.value)}
                   className={`flex
-              relative items-center justify-center flex-shrink-0 h-4 w-4 mx-3 rounded-sm
-              border-neutral-400 border cursor-pointer transition-colors ease-in-out duration-200
-              
-              ${
-                selected.includes(option.value)
-                  ? 'bg-red-600'
-                  : 'bg-neutral-950'
-              }
-              ${
-                selected.includes(option.value)
-                  ? 'focus:outline-none focus:ring-2 focus:ring-red-600'
-                  : ''
-              }
-            `}
+            relative items-center justify-center flex-shrink-0 h-4 w-4 mx-3 rounded-sm
+            border-neutral-400 border cursor-pointer transition-colors ease-in-out duration-200
+            
+            ${selected.includes(option.value) ? 'bg-red-600' : 'bg-neutral-950'}
+            ${
+              selected.includes(option.value)
+                ? 'focus:outline-none focus:ring-2 focus:ring-red-600'
+                : ''
+            }
+          `}
                 >
                   {selected.includes(option.value) && <CheckBoxIcon />}
                 </Switch>
@@ -111,9 +107,9 @@ function CollectionFilter({
               </div>
             ))}
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </>
+    </Accordion>
   );
 }
 function onlyUnique(value: any, index: number, array: any[]) {

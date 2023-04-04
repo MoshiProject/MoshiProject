@@ -1,9 +1,11 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/naming-convention */
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
 import ProductGrid from '../../components/collections/ProductGrid';
 import {type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
 import {type SeoHandleFunction} from '@shopify/hydrogen';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Product} from '~/components/products/products';
 import {animeNames, productTypes} from '~/functions/titleFilter';
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
@@ -18,14 +20,36 @@ export const handle = {
 export async function loader({params, context, request}: LoaderArgs) {
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
+  const sortParam = searchParams.get('sort');
+  const sortDict = {
+    title_asc: {sort: 'TITLE', rev: true},
+    title_desc: {sort: 'TITLE', rev: false},
+    price_asc: {sort: 'PRICE', rev: false},
+    price_desc: {sort: 'PRICE', rev: true},
+    best: {sort: 'BEST_SELLING', rev: false},
+    newest: {sort: 'CREATED', rev: true},
+    oldest: {sort: 'CREATED', rev: false},
+    featured: {sort: null, rev: false},
+  };
+  const sort = sortDict[sortParam !== null ? sortParam : 'featured'].sort;
+
   const cursor = searchParams.get('cursor');
+  const rev =
+    sortDict[
+      searchParams.get('sort') !== null ? searchParams.get('sort') : 'featured'
+    ].rev;
+  console.log(sort);
+  console.log(rev);
 
   const {collection}: any = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
       handle,
       cursor,
+      rev,
+      sort,
     },
   });
+  // console.log(collection.products.nodes);
   //filtering tags setup
   collection.products.nodes = collection.products.nodes.map(
     (product: Product) => {
@@ -82,6 +106,8 @@ export async function loader({params, context, request}: LoaderArgs) {
   // https://remix.run/docs/en/v1/utils/json
   return json({
     collection,
+    sortParam,
+    sort,
   });
 }
 
@@ -93,11 +119,19 @@ export const meta: MetaFunction = ({data}) => {
 };
 
 export default function Collection() {
-  const {collection} = useLoaderData();
+  const {collection, sort, sortParam} = useLoaderData();
+  const [url, setURL] = useState(
+    `/collections/${collection.handle}?sort=${sort}`,
+  );
+  useEffect(() => {
+    console.log('aaaaa', sort);
+
+    setURL(`/collections/${collection.handle}?sort=${sort}`);
+  }, [collection, sort]);
   return (
-    <>
-      <header className="grid w-full gap-2 py-8 justify-items-start">
-        <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
+    <div key={sortParam}>
+      <header className="grid w-full gap-2 py-6 pl-2 justify-items-start">
+        <h1 className="text-2xl whitespace-pre-wrap font-semibold inline-block">
           {collection.title}
         </h1>
 
@@ -111,22 +145,19 @@ export default function Collection() {
           </div>
         )}
       </header>
-      <ProductGrid
-        collection={collection}
-        url={`/collections/${collection.handle}`}
-      />
-    </>
+      <ProductGrid collection={collection} url={url} />
+    </div>
   );
 }
 
 const COLLECTION_QUERY = `#graphql
-  query CollectionDetails($handle: String!, $cursor: String) {
+  query CollectionDetails($handle: String!, $cursor: String, $rev: Boolean, $sort: ProductCollectionSortKeys) {
     collection(handle: $handle) {
       id
       title
       description
       handle
-      products(first: 100, after: $cursor) {
+      products(first: 100, after: $cursor, reverse: $rev, sortKey: $sort) {
         pageInfo {
           hasNextPage
           endCursor
