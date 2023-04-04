@@ -11,19 +11,15 @@ import {
   ArrowsUpDownIcon,
 } from '@heroicons/react/24/outline';
 import {Product} from '../products/products';
-export default function ProductGrid({collection, url}) {
-  const [nextPage, setNextPage] = useState(
-    collection.products.pageInfo.hasNextPage,
-  );
+export default function ProductGrid({productsList, url}) {
+  const [nextPage, setNextPage] = useState(productsList.pageInfo.hasNextPage);
 
-  const [endCursor, setEndCursor] = useState(
-    collection.products.pageInfo.endCursor,
-  );
+  const [endCursor, setEndCursor] = useState(productsList.pageInfo.endCursor);
   const [gridType, setGridType] = useState('normal');
-  const [products, setProducts] = useState(collection.products.nodes || []);
+  const [products, setProducts] = useState(productsList.nodes || []);
 
   const [filteredProducts, setFilteredProducts] = useState(
-    collection.products.nodes || [],
+    products.nodes || [],
   );
 
   // For making client-side requests

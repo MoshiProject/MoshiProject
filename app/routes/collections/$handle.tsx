@@ -141,7 +141,7 @@ export default function Collection() {
           </div>
         )}
       </header>
-      <ProductGrid collection={collection} url={url} />
+      <ProductGrid productsList={collection.products} url={url} />
     </div>
   );
 }

@@ -22,6 +22,7 @@ import {
   wrap,
 } from 'framer-motion';
 import useScrollDirection from '~/functions/useScrollDirection';
+import SearchBar from './SearchBar';
 interface ParallaxProps {
   children: string;
   baseVelocity: number;
@@ -294,16 +295,9 @@ export default function HeaderMenu({cart}: any) {
 
                     <div className="flex items-center lg:ml-8">
                       {/* Search */}
-                      <a
-                        href="/search"
-                        className="ml-2 p-2 text-gray-200 hover:text-gray-300"
-                      >
-                        <span className="sr-only">Search</span>
-                        <MagnifyingGlassIcon
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      </a>
+
+                      <SearchBar />
+
                       {/* Mobile menu and search (lg-) */}
                       <div className="flex flex-1 items-center lg:hidden">
                         <button
