@@ -10,6 +10,7 @@ import {
   StopIcon,
   ArrowsUpDownIcon,
 } from '@heroicons/react/24/outline';
+import {Product} from '../products/products';
 export default function ProductGrid({collection, url}) {
   const [nextPage, setNextPage] = useState(
     collection.products.pageInfo.hasNextPage,
@@ -122,7 +123,7 @@ export default function ProductGrid({collection, url}) {
         }
         // below props only if you need pull down functionality\
       >
-        {filteredProducts.map((product) => (
+        {filteredProducts.map((product: Product) => (
           <ProductCard
             key={product.id}
             product={product}

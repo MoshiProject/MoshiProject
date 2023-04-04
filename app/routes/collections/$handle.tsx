@@ -38,8 +38,6 @@ export async function loader({params, context, request}: LoaderArgs) {
     sortDict[
       searchParams.get('sort') !== null ? searchParams.get('sort') : 'featured'
     ].rev;
-  console.log(sort);
-  console.log(rev);
 
   const {collection}: any = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
@@ -124,8 +122,6 @@ export default function Collection() {
     `/collections/${collection.handle}?sort=${sort}`,
   );
   useEffect(() => {
-    console.log('aaaaa', sort);
-
     setURL(`/collections/${collection.handle}?sort=${sort}`);
   }, [collection, sort]);
   return (

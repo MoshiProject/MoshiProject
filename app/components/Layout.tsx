@@ -1,4 +1,4 @@
-import HeaderMenu from './MegaMenu/HeaderMenu';
+import HeaderMenu from './HeaderMenu/HeaderMenu';
 
 type LayoutProps = {
   children: JSX.Element;
