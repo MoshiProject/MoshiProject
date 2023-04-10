@@ -5,6 +5,10 @@ import {ImageType} from '~/components/products/products';
 import {Controller} from 'swiper';
 import Zoom from 'react-medium-image-zoom';
 import ImageModal from './ImageModal';
+import {
+  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 
 export default function ProductGallery({
   media,
@@ -81,6 +85,15 @@ export default function ProductGallery({
           );
         })}
       </Swiper>
+      <button
+        type="button"
+        className="absolute top-24 right-0 m-4 text-gray-400 hover:text-gray-500"
+      >
+        <span className="sr-only">Close</span>
+        <div className=" bg-neutral-100 shadow-md rounded-full p-2 border-neutral-200 border">
+          <MagnifyingGlassIcon className="w-6 h-6 text-black" />
+        </div>
+      </button>
       <Swiper
         modules={[Controller]}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

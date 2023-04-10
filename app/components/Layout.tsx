@@ -6,6 +6,7 @@ type LayoutProps = {
 };
 import {useMatches} from '@remix-run/react';
 import {useDrawer} from './Drawer';
+import FooterMenu from './FooterMenu/FooterMenu';
 
 export function Layout({children, title}: LayoutProps) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
@@ -25,6 +26,9 @@ export function Layout({children, title}: LayoutProps) {
       >
         {children}
       </main>
+      <footer>
+        <FooterMenu />
+      </footer>
     </div>
   );
 }

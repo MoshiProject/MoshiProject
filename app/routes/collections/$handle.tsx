@@ -31,16 +31,24 @@ export async function loader({params, context, request}: LoaderArgs) {
     oldest: {sort: 'CREATED', rev: false},
     featured: {sort: null, rev: false},
   };
-  const sort =
-    sortDict[sortParam !== null && sortParam ? sortParam : 'featured'].sort;
+  const sort = sortDict[
+    sortParam !== null && sortParam ? sortParam : 'featured'
+  ]
+    ? sortDict[sortParam !== null && sortParam ? sortParam : 'featured'].sort
+    : null;
 
   const cursor = searchParams.get('cursor');
-  const rev =
-    sortDict[
-      searchParams.get('sort') !== null && searchParams.get('sort')
-        ? searchParams.get('sort')
-        : 'featured'
-    ].rev;
+  const rev = sortDict[
+    searchParams.get('sort') !== null && searchParams.get('sort')
+      ? searchParams.get('sort')
+      : 'featured'
+  ]
+    ? sortDict[
+        searchParams.get('sort') !== null && searchParams.get('sort')
+          ? searchParams.get('sort')
+          : 'featured'
+      ].rev
+    : null;
 
   const {collection}: any = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
