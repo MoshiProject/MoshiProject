@@ -29,7 +29,7 @@ export default function MegaMenuItem({
         {({open}) => (
           <>
             <Menu.Button
-              className={`flex justify-between items-center ${
+              className={`flex justify-between items-center tracking-widest	${
                 textDepth[depth]
               } ${textWeight[depth]} border-t border-neutral-900 w-full ${
                 'py-' + (4 - depth).toString()
@@ -42,7 +42,7 @@ export default function MegaMenuItem({
             </Menu.Button>
             <AnimatePresence>
               <motion.div
-                className="overflow-hidden"
+                className="overflow-hidden h-0"
                 layout
                 animate={{height: !open ? 0 : 'auto', opacity: 1}}
                 transition={{
@@ -51,7 +51,7 @@ export default function MegaMenuItem({
               >
                 <Menu.Items
                   static
-                  className={` flex flex-col mt-2 pl-4 border-l border-l-neutral-100 ${
+                  className={` flex tracking-widest flex-col mt-2 pl-4 border-l border-l-neutral-100 ${
                     textPadding[depth + 1]
                   }`}
                 >
@@ -76,9 +76,11 @@ export default function MegaMenuItem({
       <Menu.Item key={item.title + 'MenuItem'}>
         <motion.a
           layout
-          className={`py-2 h-fit ${'py-' + (4 - depth).toString()} ${
-            textWeight[depth]
-          } border-t border-t-neutral-900 ${textDepth[depth]}`}
+          className={`py-2 tracking-widest h-fit ${
+            'py-' + (4 - depth).toString()
+          } ${textWeight[depth]} border-t border-t-neutral-900 ${
+            textDepth[depth]
+          }`}
           href={item.url}
         >
           {item.title}

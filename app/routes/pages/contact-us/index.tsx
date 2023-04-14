@@ -1,13 +1,12 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/naming-convention */
-import {useLoaderData} from '@remix-run/react';
-import {json} from '@shopify/remix-oxygen';
-import ProductGrid from '~/components/collections/ProductGrid';
+import {ActionArgs, json} from '@shopify/remix-oxygen';
 import {type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
 import {type SeoHandleFunction} from '@shopify/hydrogen';
-import {useEffect, useState} from 'react';
-import {Product} from '~/components/products/products';
-import {animeNames, productTypes} from '~/functions/titleFilter';
+import sgMail from '@sendgrid/mail';
+import {Form, useActionData} from '@remix-run/react';
+import emailjs from '@emailjs/browser';
+import {useRef, useState} from 'react';
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: 'Contact Us',
   description: 'Contact Us',
@@ -18,19 +17,10 @@ export const handle = {
 };
 
 export async function loader({params, context, request}: LoaderArgs) {
-  const {handle} = params;
+  sgMail.setApiKey(context.env.SENDGRID_API_KEY);
+
   const searchParams = new URL(request.url).searchParams;
   const sortParam = searchParams.get('sort');
-  const sortDict = {
-    title_asc: {sort: 'TITLE', rev: true},
-    title_desc: {sort: 'TITLE', rev: false},
-    price_asc: {sort: 'PRICE', rev: false},
-    price_desc: {sort: 'PRICE', rev: true},
-    best: {sort: 'BEST_SELLING', rev: false},
-    newest: {sort: 'CREATED', rev: true},
-    oldest: {sort: 'CREATED', rev: false},
-    featured: {sort: null, rev: false},
-  };
 
   // json is a Remix utility for creating application/json responses
   // https://remix.run/docs/en/v1/utils/json
@@ -46,84 +36,182 @@ export const meta: MetaFunction = ({data}) => {
   };
 };
 
-export default function Collection() {
+export default function ContactUs() {
+  const form = useRef();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [orderNumber, setOrderNumber] = useState('');
+  const [message, setMessage] = useState('');
+  const [sent, setSent] = useState(false);
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        'service_izt8zxs',
+        'template_74zpflf',
+        form.current,
+        '5oISPXESxOT_0drDG',
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          setSent(true);
+        },
+        (error) => {
+          console.log(error.text);
+        },
+      );
+  };
+
   return (
-    <form method="post" action="contact" id="contact" className="contact-form">
-      <div className="first-name">
-        <label htmlFor="first-name">First name</label>
-        <input type="text" name="contact[first_name]" id="first-name" />
-      </div>
+    <>
+      {sent ? (
+        <div className="flex flex-col items-center justify-center ">
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center">
+            <h1 className="font-semibold text-4xl mb-2">Contact Us</h1>
+            <div className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-16 h-16 mb-4"
+                viewBox="0 0 64 64"
+                enableBackground="new 0 0 64 64"
+              >
+                <path
+                  d="M32,2C15.431,2,2,15.432,2,32c0,16.568,13.432,30,30,30c16.568,0,30-13.432,30-30C62,15.432,48.568,2,32,2z M25.025,50
+	l-0.02-0.02L24.988,50L11,35.6l7.029-7.164l6.977,7.184l21-21.619L53,21.199L25.025,50z"
+                  fill="#43a047"
+                />
+              </svg>
+              <h2 className="font-normal text-center">
+                Successfully Submitted! We'll get back to you as soon as
+                possible!
+              </h2>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center ">
+          <form
+            ref={form}
+            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center"
+            onSubmit={sendEmail}
+          >
+            <h1 className="font-semibold text-4xl mb-2">Contact Us</h1>
 
-      <div className="last-name">
-        <label htmlFor="last-name">Last name</label>
-        <input type="text" name="contact[last_name]" id="last-name" />
-      </div>
+            <div className="mb-4 flex flex-col items-center justify-center w-full md:w-3/4">
+              {' '}
+              <label
+                htmlFor="reason-for-contact"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Reason for Contact
+              </label>
+              <div className="mt-1 relative w-full">
+                <select
+                  id="reason-for-contact"
+                  name="reason_for_contact"
+                  className="block w-full py-2 pl-3 pr-10 text-basefocus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md"
+                >
+                  <option>Question about Products</option>
+                  <option>Report Shipping Issue</option>
+                  <option>Request Tracking Update</option>
+                  <option>Request Order Change / Cancellation</option>
+                  <option>Report Issue with Product Received</option>
+                  <option>Provide Feedback / Request Design</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                  <svg
+                    className="h-4 w-4 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M6.293 7.293a1 1 0 0 1 1.414 0L10 9.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4 flex flex-col items-center justify-center w-full md:w-3/4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="name"
+              >
+                Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 focus:ring-red-500 focus:border-red-500 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                type="text"
+                name="user_name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="mb-4 flex flex-col items-center justify-center w-full md:w-3/4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 focus:ring-red-500 focus:border-red-500 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="email"
+                name="user_email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="mb-4 flex flex-col items-center justify-center w-full md:w-3/4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="order-number"
+              >
+                Order number
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 focus:ring-red-500 focus:border-red-500 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="order-number"
+                type="text"
+                name="order_number"
+                value={orderNumber}
+                onChange={(e) => setOrderNumber(e.target.value)}
+              />
+            </div>
 
-      <div className="phone">
-        <label htmlFor="phone">Phone</label>
-        <input type="tel" name="contact[phone]" id="phone" />
-      </div>
-
-      <div className="email">
-        <label htmlFor="email">Email</label>
-        <input type="email" name="contact[email]" id="email" />
-      </div>
-
-      <div className="order-number">
-        <label htmlFor="order-number">Order number</label>
-        <input type="text" name="contact[order_number]" id="order-number" />
-      </div>
-
-      <div className="message">
-        <label htmlFor="message">Message</label>
-        <textarea name="contact[body]" id="message"></textarea>
-      </div>
-
-      <div className="submit">
-        <input type="submit" value="Create" />
-      </div>
-    </form>
+            <div className="mb-4 flex flex-col items-center justify-center w-full md:w-3/4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="message"
+              >
+                Message
+              </label>
+              <textarea
+                className="shadow appearance-none border rounded w-full h-64 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="message"
+                name="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="flex items-center justify-center">
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </>
   );
 }
-
-const COLLECTION_QUERY = `#graphql
-  query CollectionDetails($handle: String!, $cursor: String, $rev: Boolean, $sort: ProductCollectionSortKeys) {
-    collection(handle: $handle) {
-      id
-      title
-      description
-      handle
-      products(first: 100, after: $cursor, reverse: $rev, sortKey: $sort) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        nodes {
-          id
-          title
-          publishedAt
-          handle
-          variants(first: 1) {
-            nodes {
-              id
-              image {
-                url
-                altText
-                width
-                height
-              }
-              price {
-                amount
-                currencyCode
-              }
-              compareAtPrice {
-                amount
-                currencyCode
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;

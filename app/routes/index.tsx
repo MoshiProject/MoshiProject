@@ -1,8 +1,8 @@
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
-import {FeaturedCollections} from '~/components/FeaturedCollections';
-import {Hero} from '~/components/Hero';
+import {FeaturedCollections} from '~/components/HomePage/FeaturedCollections';
+import {Hero} from '~/components/HomePage/Hero';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getHeroPlaceholder} from '~/lib/placeholders';
 import type {

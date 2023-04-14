@@ -85,3 +85,7 @@ shop-pay-button {
   display: block;
   margin-right: 30px;
 }
+
+.klaviyo-form input {
+  border-bottom: 1px solid white !important;
+}

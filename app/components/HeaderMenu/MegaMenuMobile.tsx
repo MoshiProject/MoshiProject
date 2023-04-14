@@ -10,7 +10,7 @@ export default function MegaMenuMobile() {
           return (
             <a
               key={item.title}
-              className={`flex justify-between py-4 text-xl font-semibold border-t border-neutral-900`}
+              className={`flex justify-between tracking-widest py-4 text-xl font-semibold border-t border-neutral-900`}
               href={item.url}
             >
               {item.title}

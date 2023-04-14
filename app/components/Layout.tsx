@@ -22,7 +22,7 @@ export function Layout({children, title}: LayoutProps) {
       <main
         role="main"
         id="mainContent"
-        className="flex-grow mt-24 md:p-8 lg:p-12"
+        className="flex-grow mt-24 mb-4 md:p-8 lg:p-12"
       >
         {children}
       </main>

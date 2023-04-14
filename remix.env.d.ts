@@ -21,6 +21,10 @@ declare global {
     PUBLIC_STOREFRONT_API_VERSION: string;
     PUBLIC_STORE_DOMAIN: string;
     PUBLIC_STOREFRONT_ID: string;
+    APP_CLIENT_ID: string;
+    APP_CLIENT_SECRET: string;
+    ADMIN_API_ACCESS_TOKEN: string;
+    EASY_POST_API_KEY: string;
   }
 }
 

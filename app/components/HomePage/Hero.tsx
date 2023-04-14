@@ -6,8 +6,8 @@ import type {
   Media,
   Video as MediaVideo,
 } from '@shopify/hydrogen/storefront-api-types';
-import {Heading, Section, Text} from './Text';
-import {Link} from './Link';
+import {Heading, Section, Text} from '../Text';
+import {Link} from '../Link';
 import type {
   CollectionConnection,
   Metafield,
