@@ -65,8 +65,18 @@ export default function CartButton(cart: any) {
                         <CartLineItems linesObj={data.lines} />
                       </div>
                     </div>
-                    <div className="w-full md:px-12 px-4 py-6 space-y-6 border border-1 border-gray-00">
-                      <CartSummary cost={data.cost} />
+                    <div className="w-full md:px-12 px-4 py-6 space-y-6 border-t border-neutral-800">
+                      <CartSummary
+                        cost={data.cost}
+                        compareCost={data.lines.edges
+                          .map((line) => {
+                            return (
+                              line.node.cost.compareAtAmountPerQuantity.amount *
+                              line.node.quantity
+                            );
+                          })
+                          .reduce((partialSum, a) => partialSum + a, 0)}
+                      />
                       <CartActions checkoutUrl={data.checkoutUrl} />
                     </div>
                   </>

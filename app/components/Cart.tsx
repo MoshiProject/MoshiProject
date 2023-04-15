@@ -1,6 +1,7 @@
 import {Link, useFetcher} from '@remix-run/react';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen-react';
 import {LineItemType} from './products/products';
+import {reviews} from '~/data/reviews';
 
 export function CartLineItems({linesObj}: any) {
   const lines = flattenConnection(linesObj);
@@ -31,11 +32,19 @@ function LineItem({lineItem}: {lineItem: LineItemType}) {
         >
           {merchandise.product.title}
         </Link>
-        <div className="text-gray-800 text-sm">{merchandise.title}</div>
-        <div className="text-gray-800 text-sm">Qty: {quantity}</div>
+        <div className="text-neutral-200 text-sm">{merchandise.title}</div>
+        <div className="text-neutral-200 text-sm">Qty: {quantity}</div>
         <ItemRemoveButton lineIds={[lineItem.id]} />
       </div>
-      <Money data={lineItem.cost.totalAmount} />
+      <div className="flex flex-col items-end">
+        <span className="line-through	text-sm text-right w-full">
+          ${lineItem.cost.compareAtAmountPerQuantity.amount * lineItem.quantity}
+        </span>
+        <Money
+          className="text-red-600 font-medium"
+          data={lineItem.cost.totalAmount}
+        />
+      </div>
     </div>
   );
 }
@@ -48,7 +57,7 @@ function ItemRemoveButton({lineIds}: {lineIds: string[]}) {
       <input type="hidden" name="cartAction" value="REMOVE_FROM_CART" />
       <input type="hidden" name="linesIds" value={JSON.stringify(lineIds)} />
       <button
-        className="bg-white border-black text-black hover:text-white hover:bg-black rounded-md font-small text-center my-2 max-w-xl leading-none border w-10 h-10 flex items-center justify-center"
+        className="bg-neutral-950 border-white text-white hover:text-neutral-950 hover:bg-white rounded-md font-small text-center my-2 max-w-xl leading-none border w-10 h-10 flex items-center justify-center"
         type="submit"
       >
         <IconRemove />
@@ -89,28 +98,57 @@ function IconRemove() {
 }
 export function CartSummary({
   cost,
+  compareCost,
 }: {
   cost: {subtotalAmount: {amount: string}};
+  compareCost: number;
 }) {
   return (
     <>
       <dl className="space-y-2">
         <div className="flex items-center justify-between">
-          <dt>Subtotal</dt>
+          <dt>Original Price</dt>
           <dd>
-            {cost?.subtotalAmount?.amount ? (
-              <Money data={cost?.subtotalAmount} />
+            {compareCost ? (
+              <span className="line-through	text-sm text-right w-full">
+                ${compareCost}
+              </span>
             ) : (
               '-'
             )}
           </dd>
         </div>
         <div className="flex items-center justify-between">
+          <dt>Savings</dt>
+          <dd>
+            {compareCost ? (
+              <span className="text-sm text-right w-full">
+                ${(compareCost - cost?.subtotalAmount.amount).toFixed(2)}
+              </span>
+            ) : (
+              '-'
+            )}
+          </dd>
+        </div>
+        <div className="flex items-center justify-between">
+          <dt>Final Price</dt>
+          <dd>
+            {cost?.subtotalAmount?.amount ? (
+              <Money
+                className="text-red-600 font-medium text-lg"
+                data={cost?.subtotalAmount}
+              />
+            ) : (
+              '-'
+            )}
+          </dd>
+        </div>
+        {/* <div className="flex items-center justify-between">
           <dt className="flex items-center">
             <span>Shipping estimate</span>
           </dt>
-          <dd className="text-green-600">Free and carbon neutral</dd>
-        </div>
+          <dd className="text-green-400">Free and carbon neutral</dd>
+        </div> */}
       </dl>
     </>
   );
@@ -123,7 +161,7 @@ export function CartActions({checkoutUrl}: {checkoutUrl: string}) {
     <div className="flex flex-col mt-2">
       <a
         href={checkoutUrl}
-        className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium"
+        className="bg-white text-black px-6 py-3 w-full rounded-md text-center font-medium"
       >
         Continue to Checkout
       </a>

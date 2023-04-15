@@ -67,6 +67,37 @@ export const PRODUCT_QUERY = `#graphql
       title
       handle
       vendor
+      metafield(key: "reviews", namespace: "custom") {
+        namespace
+        key
+        value
+        references(first: 100){          
+            nodes {
+            ... on Metaobject{
+              handle
+              fields{
+                value
+                key
+                type
+                reference{
+                  ... on MediaImage {
+                    mediaContentType
+                    image {
+                      id
+                      url
+                      altText
+                      width
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }        
+        }
+        type
+     
+      }
       descriptionHtml
       media(first: 10) {
         nodes {
@@ -108,6 +139,7 @@ export const PRODUCT_QUERY = `#graphql
           width
           height
         }
+       
         price {
           amount
           currencyCode

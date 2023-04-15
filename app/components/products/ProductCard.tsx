@@ -5,7 +5,7 @@ import titleFilter from '~/functions/titleFilter';
 
 type PrdouctCardType = {
   product: Product;
-  row: boolean;
+  row?: boolean;
 };
 
 export default function ProductCard({product, row = false}: PrdouctCardType) {

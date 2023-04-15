@@ -25,6 +25,8 @@ declare global {
     APP_CLIENT_SECRET: string;
     ADMIN_API_ACCESS_TOKEN: string;
     EASY_POST_API_KEY: string;
+    JUDGE_ME_PUBLIC_TOKEN: string;
+    JUDGE_ME_PRIVATE_TOKEN: string;
   }
 }
 

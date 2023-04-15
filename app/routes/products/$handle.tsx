@@ -12,6 +12,7 @@ import {PRODUCT_QUERY, RECOMMENDATIONS_QUERY} from '~/queries/product';
 import AddToCartForm from '~/components/products/AddToCartForm';
 import ProductGallery from '~/components/products/ProductGallery';
 import {getProductType} from '~/functions/titleFilter';
+import ReviewsSection from '~/components/products/ReviewsSection';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
   const storeDomain = context.storefront.getShopifyDomain();
@@ -46,7 +47,45 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   // optionally set a default variant so you always have an "orderable" product selected
   const selectedVariant: Variant =
     product.selectedVariant ?? product?.variants?.nodes[0];
+  const id = product.id.substr(product.id.lastIndexOf('/') + 1);
+  //get Product ID
+  let judgeID: number;
+  try {
+    const response = await fetch(
+      `https://judge.me/api/v1/products/-1?api_token=${context.env.JUDGE_ME_PRIVATE_TOKEN}&shop_domain=${context.env.PUBLIC_STORE_DOMAIN}&external_id=${id}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    );
+    const data = await response.json();
+    judgeID = data.product.id;
+  } catch (error) {
+    console.error(error);
+  }
+
+  //get Product Reviews
+  let judgeReviews;
+  try {
+    const response = await fetch(
+      `https://judge.me/api/v1/reviews?api_token=${context.env.JUDGE_ME_PRIVATE_TOKEN}&shop_domain=${context.env.PUBLIC_STORE_DOMAIN}&product_id=${judgeID}&per_page=24`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    );
+    judgeReviews = await response.json();
+    judgeReviews = judgeReviews.reviews;
+    //console.log('data', judgeReviews);
+  } catch (error) {
+    console.error(error);
+  }
   return json({
+    judgeReviews,
     product,
     selectedVariant,
     storeDomain,
@@ -55,8 +94,13 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 };
 
 export default function ProductHandle() {
-  const {product, selectedVariant, storeDomain, productRecommendations} =
-    useLoaderData();
+  const {
+    judgeReviews,
+    product,
+    selectedVariant,
+    storeDomain,
+    productRecommendations,
+  } = useLoaderData();
 
   const orderable = selectedVariant?.availableForSale || false;
   return (
@@ -151,6 +195,10 @@ export default function ProductHandle() {
           </Accordion>
         </div>
       </div>
+      <ReviewsSection
+        product={product}
+        judgeReviews={judgeReviews}
+      ></ReviewsSection>
       <ProductRecommendations recommendations={productRecommendations} />
     </section>
   );

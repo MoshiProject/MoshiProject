@@ -3,6 +3,20 @@ export type Product = {
   title: string;
   handle: string;
   tags: string[];
+  metafield: {
+    namespace: string;
+    key: string;
+    value: string;
+    references: {
+      nodes: {
+        handle: string;
+        fields: {
+          value: string;
+        }[];
+      }[];
+    };
+    type: string;
+  };
   filters: {anime: string; productType: string; character: string};
   variants: {
     nodes: {

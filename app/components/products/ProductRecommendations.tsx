@@ -39,9 +39,7 @@ export default function ProductRecommendations({
       >
         {recommendations.map((product) => (
           <SwiperSlide key={product.id}>
-            <Link to={`/products/${product.handle}`}>
-              <ProductCard product={product} />
-            </Link>
+            <ProductCard product={product} />
           </SwiperSlide>
         ))}
       </Swiper>
