@@ -58,25 +58,27 @@ interface SocialMediaIconsProps {
 
 const SocialMediaIcons: React.FC<SocialMediaIconsProps> = ({className}) => {
   return (
-    <div className={`flex w-full justify-center items-center ${className}`}>
+    <div
+      className={`flex w-full justify-center items-center ${className} mb-4`}
+    >
       <InstagramIcon
-        width={22}
-        height={22}
+        width={18}
+        height={18}
         color="white"
-        className="w-8 h-8 mx-1 text-white"
+        className="w-6 h-6 mx-1 text-white"
       />
       <FacebookIcon
-        width={22}
-        height={22}
+        width={18}
+        height={18}
         color="white"
-        className="w-8 h-8 mx-1 text-white"
+        className="w-6 h-6 mx-1 text-white"
       />
 
       <PinterestIcon
-        width={22}
-        height={22}
+        width={18}
+        height={18}
         color="white"
-        className="w-8 h-8 mx-1 text-white"
+        className="w-6 h-6 mx-1 text-white"
       />
     </div>
   );

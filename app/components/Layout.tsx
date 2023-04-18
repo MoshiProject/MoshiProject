@@ -22,8 +22,9 @@ export function Layout({children, title}: LayoutProps) {
       <main
         role="main"
         id="mainContent"
-        className="flex-grow mt-24 mb-4 md:p-8 lg:p-12"
+        className="flex-grow mt-0 mb-4 md:p-8 lg:p-12"
       >
+        <div className="h-24 w-full bg-neutral-950"></div>
         {children}
       </main>
       <footer>

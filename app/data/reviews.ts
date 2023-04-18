@@ -842,3 +842,432 @@ export const reviews = [
     productType: 'sweatshirt',
   },
 ];
+
+export const shirtReviews = [
+  {
+    review:
+      "Honestly quite the shirt, I love it, it's so comfortable on the inside and looks amazing on the outside, I bought 3 from MoshiProject..",
+    stars: 5,
+  },
+  {
+    review: `Fast Shipping - Great Quality
+    I got this shirt from an Instagram ad and didn't expect much but I am blown away. Highly recommend this shirt and brand.`,
+    stars: 5,
+  },
+  {
+    review: '🔥',
+    stars: 5,
+  },
+  {
+    review:
+      'Bought it as a gift . He loved it ! I got him a medium size , The size is true to size US size . Highly recommend',
+    stars: 5,
+  },
+  {
+    review:
+      'This shirt is honestly pretty awesome dude. These guys at Moshi know what they’re doing. They have quality designs and materials, because it feels very good and looks great. Would recommend highly!',
+    stars: 5,
+  },
+  {
+    review: `The shirt is made of nice quality fabric and has a dope design with good print quality! I look forward to purchasing more from this artist and store, as I couldn't recommend them enough. One of my favourite pieces yet.`,
+    stars: 5,
+  },
+  {
+    review: `Like the clothing just all around good`,
+    stars: 5,
+  },
+  {
+    review: `By far the best looking shirt I can own in my collection! Can’t wait to order more things from your brand.`,
+    stars: 5,
+  },
+  {
+    review: `I love it, just get it trust me :D
+
+    `,
+    stars: 5,
+  },
+  {
+    review: `Love the shirt quality and design.`,
+    stars: 5,
+  },
+  {
+    review: `It fits me well and good quality!`,
+    stars: 5,
+  },
+  {
+    review: `The shirt is really soft to the touch and the art is amazing!`,
+    stars: 5,
+  },
+  {
+    review: `Really like the tshirt!`,
+    stars: 5,
+  },
+  {
+    review: `Insanely good quality tee, Moshi never misses.`,
+    stars: 5,
+  },
+  {
+    review: `Amazing quality & a great fit!!!`,
+    stars: 5,
+  },
+  {
+    review: `Good`,
+    stars: 4,
+  },
+  {
+    review: `t-shirt's the perfect size, comfy, and looks good`,
+    stars: 5,
+  },
+  {
+    review: `It’s good, good price and quality`,
+    stars: 4,
+  },
+  {
+    review: `This was probably the first design I saw when I found this shop and it’s an awesome design. Great quality like the other shirts I’ve bought.`,
+    stars: 5,
+  },
+  {
+    review: `Love it, fits great and love the prints`,
+    stars: 5,
+  },
+  {
+    review: `The fabric of this shirt feels a little more light than that of the other shirt I ordered but it feels super comfy.`,
+    stars: 4,
+  },
+  {
+    review: `The quality of the t-shirt is super soft! The image is perfect as well, I've very happy with my order.`,
+    stars: 5,
+  },
+  {
+    review: `Nice`,
+    stars: 5,
+  },
+  {
+    review: `Bought XXL as i love oversized. the shirt came in EXCELLENT CONDITION, the printing is not rly a print but stitched on which is so FREAKING GOOD ??? THE QUALITY IS SO NICE AND SO COMFY. i’m definitely buying again`,
+    stars: 5,
+  },
+  {
+    review: `Perfect.`,
+    stars: 5,
+  },
+  {
+    review: `The quality is good and the print is well done. thanks for quick delivery!`,
+    stars: 5,
+  },
+  {
+    review: `Exceptional shirt. Love the quality of iy and the design`,
+    stars: 5,
+  },
+  {
+    review: `A very comfortable shirt with gorgeous art. Very satisfied :)`,
+    stars: 5,
+  },
+  {
+    review: `professional prints. comfortable fits & fabric`,
+    stars: 5,
+  },
+  {
+    review: `Fits super well and the design is soooo lit. This makes me want to buy more from here.`,
+    stars: 5,
+  },
+  {
+    review: `good shirt. very nice 👍`,
+    stars: 5,
+  },
+  {
+    review: `loving it :) size medium fits me well (5’7 130lbs) and didn't shrunk after a wash`,
+    stars: 5,
+  },
+  {
+    review: `Quality is great and the art pieces are amazing. Love it!`,
+    stars: 5,
+  },
+  {
+    review: `It is super soft and comfortable. The design is awesome and I have already got a bunch of compliments.`,
+    stars: 5,
+  },
+  {
+    review: `Shirts looks amazing mate and they feel extra cozy which makes me feel some type of way.`,
+    stars: 5,
+  },
+  {
+    review: `really epic`,
+    stars: 5,
+  },
+  {
+    review: `High quality print and super soft material. Absolutely love it. I'll be buying from you again, that's for sure.`,
+    stars: 5,
+  },
+  {
+    review: `This is my 2nd favorite out of the 5 shirts I ordered. All were amazing.`,
+    stars: 5,
+  },
+  {
+    review: `Honestly fucking love it.`,
+    stars: 5,
+  },
+  {
+    review:
+      'I love the design of this shirt and the material is great, but it runs a little small for me. Would recommend ordering a size up.',
+    stars: 4,
+  },
+  {
+    review:
+      'The quality of the shirt is good, but I had some issues with the shipping. Thankfully customer service was extremely helpful.',
+    stars: 3,
+  },
+  {
+    review:
+      'The shirt is a bit shorter than I expected, but overall the fit is good and the design is cool.',
+    stars: 4,
+  },
+  {
+    review:
+      'I like the shirt, but the material is a little thinner than I was expecting. Still a good purchase though.',
+    stars: 4,
+  },
+  {
+    review:
+      'The shirt is a bit too baggy for my taste, but the material is good and the print is cool.',
+    stars: 3,
+  },
+  {
+    review:
+      'The shirt is good quality, but the sizing runs a bit large and the sleeves are a little too long for me.',
+    stars: 4,
+  },
+
+  {
+    review:
+      'The shirt fits great and the material is soft and comfortable. Love the design too!',
+    stars: 5,
+  },
+  {
+    review:
+      'I ordered this shirt in my usual size and it fits perfectly. The color is just as pictured and the quality is good.',
+    stars: 4,
+  },
+  {
+    review:
+      'The shirt is nice and lightweight, perfect for summer. The print is fun and the fit is good.',
+    stars: 4,
+  },
+
+  {
+    review:
+      'I love the vintage look of this shirt. The material is a bit thin, but overall good quality.',
+    stars: 4,
+  },
+  {
+    review:
+      'This shirt is very soft and comfortable, but I recommend sizing up.',
+    stars: 3,
+  },
+  {
+    review: `The shirt is a great fit and the material feels durable. The print is cool and I've gotten compliments on it.`,
+    stars: 5,
+  },
+  {
+    review:
+      'The shirt arrived quickly and fits well. The material is soft and the print is just as pictured.',
+    stars: 4,
+  },
+  {
+    review:
+      'The color of the shirt is even better than pictured. It fits well and the material is nice and lightweight.',
+    stars: 5,
+  },
+  {
+    review:
+      'The shirt is a bit too long for my taste, but the material is good quality and the print is fun.',
+    stars: 3,
+  },
+  {
+    review: `I was hesitant to order this shirt, but I'm glad I did. The fit is great and the material is soft and comfortable.`,
+    stars: 5,
+  },
+  {
+    review:
+      'The shirt is a bit too loose around the shoulders, but it looks good and the material is soft.',
+    stars: 3,
+  },
+
+  {
+    review:
+      'The shirt arrived quickly and fits well. The color is just as pictured and the material is soft and lightweight.',
+    stars: 5,
+  },
+  {
+    review:
+      'The shirt is a bit boxy, but the material is good quality and the print is fun.',
+    stars: 4,
+  },
+  {
+    review:
+      'I love the design of this shirt and the material is very soft. The fit is just a bit too loose for my preference.',
+    stars: 4,
+  },
+
+  {
+    review:
+      'The shirt is very comfortable and fits well. The material is soft and the color is just as pictured.',
+    stars: 5,
+  },
+];
+
+export const authors = [
+  'Juan Martinez',
+  'Amanda Lee',
+  'Carlos Rodriguez',
+  'Emily Chen',
+  'Miguel Sanchez',
+  'Grace Kim',
+  'Isabella Lopez',
+  'Michael Johnson',
+  'Maria Garcia',
+  'David Nguyen',
+  'Javier Hernandez',
+  'Lila Patel',
+  'Gustavo Gonzalez',
+  'Sophia Chen',
+  'Mateo Ramirez',
+  'Eva Perez',
+  'Daniel Kim',
+  'Sofia Alvarez',
+  'Matthew Davis',
+  'Olivia Smith',
+  'Diego Ortiz',
+  'Liam Brown',
+  'Gabriela Gomez',
+  'Emma Taylor',
+  'Ricardo Castro',
+  'Jasmine Singh',
+  'Julian Morales',
+  'Chloe Martinez',
+  'Jorge Flores',
+  'Avery Williams',
+  'Ximena Reyes',
+  'William Wilson',
+  'Camila Torres',
+  'Henry Lee',
+  'Leah Davis',
+  'Fernando Martinez',
+  'Madison Lee',
+  'Angelica Hernandez',
+  'Benjamin Lee',
+  'Alexa Rodriguez',
+  'Pedro Ramirez',
+  'Lily Chen',
+  'Antonio Garcia',
+  'Zoe Kim',
+  'Raquel Diaz',
+  'Mason Johnson',
+  'Mia Thompson',
+  'Eduardo Perez',
+  'Aaliyah Brown',
+  'Cristina Rodriguez',
+  'Nathan Kim',
+  'Nikita Patel',
+  'Amirah Gonzalez',
+  'Nadine Wang',
+  'Zainab Khan',
+  'Nia Lee',
+  'Ayaan Rahman',
+  'Carla Diaz',
+  'Cameron Sullivan',
+  'Avery Tran',
+  'Haley Garcia',
+  'Nina Park',
+  'Makayla Ortiz',
+  'Nolan Brown',
+  'Aarav Kumar',
+  'Tahlia Smith',
+  'Carmen Davis',
+  'Kenji Nakamura',
+  'Ashlee Nguyen',
+  'Isabella Chen',
+  'Maddox Johnson',
+  'Sanaa Ahmed',
+  'Eliana Santiago',
+  'Levi Rivera',
+  'Aria Singh',
+  'Cristina Fernandez',
+  'Aiden Kim',
+  'Juliette Torres',
+  'Maya Patel',
+  'Erik Anderson',
+  'Aria Green',
+  'Aryan Khatri',
+  'Lucia Reyes',
+  'Aidan Wilson',
+  'Cecilia Taylor',
+  'Emmett Adams',
+  'Giselle Hernandez',
+  'Sofia Gonzalez',
+  'Ronin Kim',
+  'Aaliyah Jackson',
+  'Angelina Nguyen',
+  'Juan Rodriguez',
+  'Camila Alvarez',
+  'Piper Brown',
+  'Lincoln Cooper',
+  'Sebastian Vasquez',
+  'Lena Martinez',
+  'Gustavo Chavez',
+  'Tatiana Johnson',
+  'Jocelyn Ramirez',
+  'Makenna Evans',
+  'Elena Perez',
+  'Elijah Wright',
+  'Samantha Taylor',
+  'Nadia Fernandez',
+  'Connor Thompson',
+  'Anthony Nguyen',
+  'Olivia Patel',
+  'Rafael Jimenez',
+  'Emily Chen',
+  'David Garcia',
+  'Sophia Martinez',
+  'Daniel Kim',
+  'Brianna Rodriguez',
+  'Isabella Lee',
+  'Gabriel Ramirez',
+  'Madison Wright',
+  'Ethan Phillips',
+  'Julia Hernandez',
+  'Aiden Jones',
+  'Avery Davis',
+  'Ava Mitchell',
+  'Liam Johnson',
+  'Leah Williams',
+  'Miguel Gonzalez',
+  'Maya Brown',
+  'Nathan Davis',
+  'Luna Rodriguez',
+  'Ryan Rivera',
+  'Ella Cooper',
+  'Joshua Wright',
+  'Evelyn Jackson',
+  'Matthew Carter',
+  'Victoria Flores',
+  'Andrew Kim',
+  'Maria Hernandez',
+  'Isaac Ramirez',
+  'Hailey Thomas',
+  'William Smith',
+  'Ariana Rodriguez',
+  'Christopher Wilson',
+  'Sofia Martin',
+  'Mason Taylor',
+  'Aaliyah Green',
+  'Jacob Lee',
+  'Kayla Scott',
+  'Christian Sanchez',
+  'Avery Mitchell',
+  'Michaela Thompson',
+  'Nicholas Mitchell',
+  'Arianna Martinez',
+  'Benjamin Davis',
+  'Genesis Gonzalez',
+  'Justin Perez',
+];

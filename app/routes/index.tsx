@@ -2,7 +2,7 @@ import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {FeaturedCollections} from '~/components/HomePage/FeaturedCollections';
-import {Hero} from '~/components/HomePage/Hero';
+import Hero from '~/components/HomePage/Hero';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getHeroPlaceholder} from '~/lib/placeholders';
 import type {
@@ -12,7 +12,12 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import {AnalyticsPageType} from '@shopify/hydrogen';
 import {FeaturedProductGrid} from '~/components/FeaturedProductGrid';
-
+import ParallaxText from '~/components/HeaderMenu/ParallaxText';
+import {motion} from 'framer-motion';
+import {COLLECTION_QUERY, SMALL_COLLECTION_QUERY} from './collections/$handle';
+import AnimeCarousel from '~/components/HomePage/AnimeCarousel';
+import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
+import ReviewsSection from '~/components/HomePage/ReviewSection';
 interface HomeSeoData {
   shop: {
     name: string;
@@ -32,7 +37,7 @@ export interface CollectionHero {
   top?: boolean;
 }
 
-export async function loader({params, context}: LoaderArgs) {
+export async function loader({params, context, request}: LoaderArgs) {
   const {language, country} = context.storefront.i18n;
 
   if (
@@ -50,25 +55,55 @@ export async function loader({params, context}: LoaderArgs) {
   }>(HOMEPAGE_SEO_QUERY, {
     variables: {handle: 'freestyle'},
   });
+  const handle = 'featured-products';
+  const searchParams = new URL(request.url).searchParams;
+  const sortParam = searchParams.get('sort');
+  const sortDict = {
+    title_asc: {sort: 'TITLE', rev: true},
+    title_desc: {sort: 'TITLE', rev: false},
+    price_asc: {sort: 'PRICE', rev: false},
+    price_desc: {sort: 'PRICE', rev: true},
+    best: {sort: 'BEST_SELLING', rev: false},
+    newest: {sort: 'CREATED', rev: true},
+    oldest: {sort: 'CREATED', rev: false},
+    featured: {sort: null, rev: false},
+  };
+  const sort = sortDict[
+    sortParam !== null && sortParam ? sortParam : 'featured'
+  ]
+    ? sortDict[sortParam !== null && sortParam ? sortParam : 'featured'].sort
+    : null;
 
+  const cursor = searchParams.get('cursor');
+  const rev = sortDict[
+    searchParams.get('sort') !== null && searchParams.get('sort')
+      ? searchParams.get('sort')
+      : 'featured'
+  ]
+    ? sortDict[
+        searchParams.get('sort') !== null && searchParams.get('sort')
+          ? searchParams.get('sort')
+          : 'featured'
+      ].rev
+    : null;
+
+  const {collection}: any = await context.storefront.query(
+    SMALL_COLLECTION_QUERY,
+    {
+      variables: {
+        handle,
+        cursor,
+        rev,
+        sort,
+      },
+    },
+  );
   return defer({
     shop,
     primaryHero: hero,
     // These different queries are separated to illustrate how 3rd party content
     // fetching can be optimized for both above and below the fold.
-    featuredProducts: context.storefront.query<{
-      products: ProductConnection;
-    }>(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {
-      variables: {
-        /**
-         * Country and language properties are automatically injected
-         * into all queries. Passing them is unnecessary unless you
-         * want to override them from the following default:
-         */
-        country,
-        language,
-      },
-    }),
+    featuredProducts: collection,
     secondaryHero: context.storefront.query<{hero: CollectionHero}>(
       COLLECTION_HERO_QUERY,
       {
@@ -121,13 +156,31 @@ export default function Homepage() {
   //     pageType: ShopifyAnalyticsConstants.pageType.home,
   //   },
   // });
-
+  const titleStyling =
+    'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-4';
   return (
     <>
-      {primaryHero && (
-        <Hero {...primaryHero} height="full" top loading="eager" />
-      )}
-
+      <Hero
+        title="SPRING 2023"
+        subtitle="ANIME MEETS STREETWEAR"
+        buttonText="Shop Now →"
+        imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/3.5sec.gif?v=1681722723"
+        isGif
+      />
+      <div className="h-12">
+        <motion.div
+          initial={{height: 0, opacity: 0}}
+          animate={{height: 48, opacity: 1}}
+          transition={{delay: 0.2, type: 'tween', duration: 0.5}}
+          className="relative h-12 w-full bg-white border-y border-neutral-200 text-neutral-950 flex justify-center items-center pb-3"
+        >
+          {' '}
+          <ParallaxText baseVelocity={5}>
+            SPRING SALE IS LIVE | ALL ITEMS 69% OFF
+          </ParallaxText>
+        </motion.div>
+      </div>
+      <AnimeCarousel titleStyling={titleStyling} />
       {featuredProducts && (
         <Suspense>
           <Await resolve={featuredProducts}>
@@ -135,6 +188,7 @@ export default function Homepage() {
               if (!products?.nodes) return <></>;
               return (
                 <FeaturedProductGrid
+                  titleStyling={titleStyling}
                   products={products.nodes}
                   title="Featured Products"
                   count={4}
@@ -144,44 +198,8 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-
-      {secondaryHero && (
-        <Suspense fallback={<Hero {...skeletons[1]} />}>
-          <Await resolve={secondaryHero}>
-            {({hero}) => {
-              if (!hero) return <></>;
-              return <Hero {...hero} />;
-            }}
-          </Await>
-        </Suspense>
-      )}
-
-      {featuredCollections && (
-        <Suspense>
-          <Await resolve={featuredCollections}>
-            {({collections}) => {
-              if (!collections?.nodes) return <></>;
-              return (
-                <FeaturedCollections
-                  collections={collections.nodes}
-                  title="Collections"
-                />
-              );
-            }}
-          </Await>
-        </Suspense>
-      )}
-
-      {tertiaryHero && (
-        <Suspense fallback={<Hero {...skeletons[2]} />}>
-          <Await resolve={tertiaryHero}>
-            {({hero}) => {
-              if (!hero) return <></>;
-              return <Hero {...hero} />;
-            }}
-          </Await>
-        </Suspense>
-      )}
+      <ItemTypeCollections />
+      <ReviewsSection reviews={[12, 24, 45, 169, 1124]} />
     </>
   );
 }
@@ -257,7 +275,7 @@ export const FEATURED_COLLECTIONS_QUERY = `#graphql
   query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
     collections(
-      first: 4,
+      first: 8,
       sortKey: UPDATED_AT
     ) {
       nodes {

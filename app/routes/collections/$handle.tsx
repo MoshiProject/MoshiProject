@@ -157,7 +157,7 @@ export default function Collection() {
   );
 }
 
-const COLLECTION_QUERY = `#graphql
+export const COLLECTION_QUERY = `#graphql
   query CollectionDetails($handle: String!, $cursor: String, $rev: Boolean, $sort: ProductCollectionSortKeys) {
     collection(handle: $handle) {
       id
@@ -165,6 +165,48 @@ const COLLECTION_QUERY = `#graphql
       description
       handle
       products(first: 100, after: $cursor, reverse: $rev, sortKey: $sort) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          id
+          title
+          publishedAt
+          handle
+          variants(first: 1) {
+            nodes {
+              id
+              image {
+                url
+                altText
+                width
+                height
+              }
+              price {
+                amount
+                currencyCode
+              }
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const SMALL_COLLECTION_QUERY = `#graphql
+  query CollectionDetails($handle: String!, $cursor: String, $rev: Boolean, $sort: ProductCollectionSortKeys) {
+    collection(handle: $handle) {
+      id
+      title
+      description
+      handle
+      products(first: 8, after: $cursor, reverse: $rev, sortKey: $sort) {
         pageInfo {
           hasNextPage
           endCursor

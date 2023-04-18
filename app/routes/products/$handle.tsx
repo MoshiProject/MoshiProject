@@ -13,7 +13,8 @@ import AddToCartForm from '~/components/products/AddToCartForm';
 import ProductGallery from '~/components/products/ProductGallery';
 import {getProductType} from '~/functions/titleFilter';
 import ReviewsSection from '~/components/products/ReviewsSection';
-
+import Rand, {PRNG} from 'rand-seed';
+import {authors, shirtReviews} from '~/data/reviews';
 export const loader = async ({params, context, request}: LoaderArgs) => {
   const storeDomain = context.storefront.getShopifyDomain();
   const {handle} = params;
@@ -84,6 +85,28 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   } catch (error) {
     console.error(error);
   }
+  let reviewCount: number;
+  if (product.metafields[0] !== null && product.metafields[1] !== null) {
+    reviewCount = product.metafields.find((metafield) => {
+      return metafield && metafield.key === 'reviewCount';
+    }).value;
+  } else {
+    reviewCount = 0;
+  }
+
+  const rand = new Rand(id);
+  console.log('next');
+  console.log('reviewCount', reviewCount);
+  let generatedReviews = [];
+  for (let i = 0; generatedReviews.length < reviewCount; i++) {
+    const randNum = Math.floor(rand.next() * shirtReviews.length);
+    let review = shirtReviews[randNum];
+    review.author = authors[randNum];
+    generatedReviews.push(review);
+    generatedReviews = [...new Set(generatedReviews)];
+  }
+  console.log('generatedReviews', generatedReviews.length);
+  console.log('generatedReviews', generatedReviews);
   return json({
     judgeReviews,
     product,

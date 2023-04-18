@@ -1,145 +1,117 @@
-import clsx from 'clsx';
-import type {SerializeFrom} from '@shopify/remix-oxygen';
-import {MediaFile} from '@shopify/hydrogen';
-import type {
-  MediaImage,
-  Media,
-  Video as MediaVideo,
-} from '@shopify/hydrogen/storefront-api-types';
-import {Heading, Section, Text} from '../Text';
+import React from 'react';
 import {Link} from '../Link';
-import type {
-  CollectionConnection,
-  Metafield,
-  ProductConnection,
-} from '@shopify/hydrogen/storefront-api-types';
-export interface CollectionHero {
-  byline: Metafield;
-  cta: Metafield;
-  handle: string;
-  heading: Metafield;
-  height?: 'full';
-  loading?: 'eager' | 'lazy';
-  spread: Metafield;
-  spreadSecondary: Metafield;
-  top?: boolean;
+import {motion} from 'framer-motion';
+import {Parallax} from 'swiper';
+import ParallaxText from '../HeaderMenu/ParallaxText';
+interface Props {
+  imageUrl: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  isGif?: boolean;
 }
 
-/**
- * Hero component that renders metafields attached to collection resources
- **/
-export function Hero({
-  byline,
-  cta,
-  handle,
-  heading,
-  height,
-  loading,
-  spread,
-  spreadSecondary,
-  top,
-}: SerializeFrom<CollectionHero>) {
+const stiffness = 50;
+const velocity = 100;
+const mass = 0.8;
+const imgVariants = {
+  open: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: 0.5,
+      delayChildren: 2,
+      stiffness,
+      mass,
+      velocity,
+      type: 'spring',
+    },
+  },
+  closed: {opacity: 0, x: '-50%'},
+};
+
+const textVariants = {
+  open: {
+    opacity: 1,
+    height: '100%',
+    y: 0,
+    transition: {stiffness, mass, velocity, type: 'spring'},
+  },
+  closed: {opacity: 0, y: '-80%', height: '0'},
+};
+const buttonVariants = {
+  open: {
+    opacity: 1,
+    height: '100%',
+    transition: {duration: 0.75, type: 'tween'},
+  },
+  closed: {opacity: 0, height: '0'},
+};
+const textContainerVariants = {
+  open: {
+    opacity: 1,
+    transition: {
+      delayChildren: 1.15,
+      staggerChildren: 0.85,
+      duration: 0.5,
+      type: 'tween',
+    },
+  },
+  closed: {opacity: 0},
+};
+
+const Hero: React.FC<Props> = ({
+  imageUrl,
+  title,
+  subtitle,
+  isGif,
+  buttonText,
+}) => {
   return (
-    <Link to={`/collections/${handle}`}>
-      <section
-        className={clsx(
-          'relative justify-end flex flex-col w-full',
-          top && '-mt-nav',
-          height === 'full'
-            ? 'h-screen'
-            : 'aspect-[4/5] sm:aspect-square md:aspect-[5/4] lg:aspect-[3/2] xl:aspect-[2/1]',
-        )}
+    <div className="relative w-full h-[60vh]">
+      <motion.div
+        className="absolute inset-0 bg-black"
+        initial={'closed'}
+        animate={'open'}
       >
-        <div className="absolute inset-0 grid flex-grow grid-flow-col pointer-events-none auto-cols-fr -z-10 content-stretch overflow-clip">
-          {spread?.reference && (
-            <div>
-              <SpreadMedia
-                scale={2}
-                sizes={
-                  spreadSecondary?.reference
-                    ? '(min-width: 80em) 700px, (min-width: 48em) 450px, 500px'
-                    : '(min-width: 80em) 1400px, (min-width: 48em) 900px, 500px'
-                }
-                widths={
-                  spreadSecondary?.reference
-                    ? [500, 450, 700]
-                    : [500, 900, 1400]
-                }
-                width={spreadSecondary?.reference ? 375 : 750}
-                data={spread.reference as Media}
-                loading={loading}
-              />
-            </div>
-          )}
-          {spreadSecondary?.reference && (
-            <div className="hidden md:block">
-              <SpreadMedia
-                sizes="(min-width: 80em) 700, (min-width: 48em) 450, 500"
-                widths={[450, 700]}
-                width={375}
-                data={spreadSecondary.reference as Media}
-              />
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col items-baseline justify-between gap-4 px-6 py-8 sm:px-8 md:px-12 bg-gradient-to-t dark:from-contrast/60 dark:text-primary from-primary/60 text-contrast">
-          {heading?.value && (
-            <Heading format as="h2" size="display" className="max-w-md">
-              {heading.value}
-            </Heading>
-          )}
-          {byline?.value && (
-            <Text format width="narrow" as="p" size="lead">
-              {byline.value}
-            </Text>
-          )}
-          {cta?.value && <Text size="lead">{cta.value}</Text>}
-        </div>
-      </section>
-    </Link>
+        <motion.img
+          src={imageUrl}
+          variants={imgVariants}
+          alt="Hero Image of Best Sellers"
+          className="w-full h-full object-cover object-center"
+          style={{filter: isGif ? 'none' : 'brightness(0.7)'}}
+        />
+        <motion.div className="absolute inset-0 flex items-center justify-center z-10">
+          <motion.ul
+            key="hero container"
+            variants={textContainerVariants}
+            className="flex flex-col justify-center items-center text-center text-white list-none p-0 m-0"
+          >
+            <motion.li className="h-fit overflow-hidden">
+              <motion.div
+                variants={textVariants}
+                className="text-5xl font-semibold"
+              >
+                {title}
+              </motion.div>
+            </motion.li>
+            <motion.li className="h-fit overflow-hidden">
+              <motion.div variants={textVariants} className="mt-2 text-xl">
+                {subtitle}
+              </motion.div>
+            </motion.li>
+            <motion.li variants={buttonVariants}>
+              <Link to="/collections/featured-products">
+                <div className="mt-3 w-full text-lg font-medium bg-red-700 px-6 py-2 rounded-sm">
+                  {buttonText}
+                </div>
+              </Link>
+            </motion.li>
+          </motion.ul>
+        </motion.div>
+      </motion.div>
+    </div>
   );
-}
+};
 
-interface SpreadMediaProps {
-  data: Media | MediaImage | MediaVideo;
-  loading?: HTMLImageElement['loading'];
-  scale?: 2 | 3;
-  sizes: string;
-  width: number;
-  widths: number[];
-}
-
-function SpreadMedia({
-  data,
-  loading,
-  scale,
-  sizes,
-  width,
-  widths,
-}: SpreadMediaProps) {
-  return (
-    <MediaFile
-      data={data}
-      className="block object-cover w-full h-full"
-      mediaOptions={{
-        video: {
-          controls: false,
-          muted: true,
-          loop: true,
-          playsInline: true,
-          autoPlay: true,
-          width: (scale ?? 1) * width,
-          previewImageOptions: {scale, src: data.previewImage?.url ?? ''},
-        },
-        image: {
-          loading,
-          loaderOptions: {scale, crop: 'center'},
-          widths,
-          sizes,
-          width,
-          alt: data.alt || '',
-        },
-      }}
-    />
-  );
-}
+export default Hero;

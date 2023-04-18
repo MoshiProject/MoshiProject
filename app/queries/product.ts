@@ -67,7 +67,7 @@ export const PRODUCT_QUERY = `#graphql
       title
       handle
       vendor
-      metafield(key: "reviews", namespace: "custom") {
+      metafields(identifiers:[{key: "reviews", namespace: "custom"},{key: "reviewCount", namespace: "custom"}]) {
         namespace
         key
         value
@@ -97,6 +97,11 @@ export const PRODUCT_QUERY = `#graphql
         }
         type
      
+      }
+      metafield(key: "reviewCount", namespace: "custom") {
+        namespace
+        key
+        value
       }
       descriptionHtml
       media(first: 10) {

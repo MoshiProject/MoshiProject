@@ -8,14 +8,18 @@ type Props = {
 
 const ReviewsSection: React.FC<Props> = ({product, judgeReviews}) => {
   const imageReviews = product.metafield
-    ? product.metafield.references.nodes.map((node) => ({
-        author: node.fields.find((field) => field.key === 'author').value,
-        body: node.fields.find((field) => field.key === 'body').value,
-        imageSrc: node.fields.find((field) => field.key === 'image').reference
-          .image.url,
-        starCount: node.fields.find((field) => field.key === 'star_count')
-          .value,
-      }))
+    ? product.metafields
+        .find((metafield) => {
+          return metafield.key === 'reviews';
+        })
+        .references.nodes.map((node) => ({
+          author: node.fields.find((field) => field.key === 'author').value,
+          body: node.fields.find((field) => field.key === 'body').value,
+          imageSrc: node.fields.find((field) => field.key === 'image').reference
+            .image.url,
+          starCount: node.fields.find((field) => field.key === 'star_count')
+            .value,
+        }))
     : [];
   //console.log(`Reviews`, product);
   // console.log(`Reviews`, judgeReviews);
@@ -29,24 +33,13 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews}) => {
         </div>
         <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-3">
           {imageReviews.map((review, index) => (
-            <div key={index} className="rounded-lg overflow-hidden shadow-lg">
-              {review.imageSrc && (
-                <div className="aspect-w-3 aspect-h-4">
-                  <img className="object-cover" src={review.imageSrc} alt="" />
-                </div>
-              )}
-              <div className="p-6">
-                <div className="flex items-baseline mb-4">
-                  <span className="inline-block bg-primary text-gray-600 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">
-                    {review.starCount} Stars
-                  </span>
-                  <div className="ml-2 text-gray-600 text-xs uppercase font-semibold tracking-wide">
-                    {review.author}
-                  </div>
-                </div>
-                <p className="text-gray-700 text-sm">{review.body}</p>
-              </div>
-            </div>
+            <ReviewCard
+              key={index}
+              imgSrc={review.imageSrc}
+              author={review.author}
+              stars={Number(review.starCount)}
+              body={review.body}
+            />
           ))}
           {/* Judge Reviews */}
           {judgeReviews.map((review, index) => (

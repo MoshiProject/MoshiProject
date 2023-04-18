@@ -6,6 +6,7 @@ import {ChevronDownIcon} from '@heroicons/react/24/outline';
 import {Image} from '@shopify/hydrogen';
 import {logoWhiteURL} from '~/components/HeaderMenu/menuSettings';
 import SocialMediaIcons from './SocialMediaIcons';
+import PaymentSection from './PaymentSection';
 
 const FooterAccordion: React.FC<{
   title: string;
@@ -16,11 +17,11 @@ const FooterAccordion: React.FC<{
   return (
     <>
       <button
-        className="flex justify-between border-b border-neutral-800 items-center w-full p-5 text-sm font-medium text-white bg-neutral-950 focus:outline-none hover:bg-neutral-950"
+        className="flex justify-between border-t border-neutral-800 uppercase tracking-[.2em] items-center w-full p-5  text-xs font-medium text-white bg-neutral-950 focus:outline-none hover:bg-neutral-950"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="w-1/3"></span>
-        <span className="w-1/3 text-md tracking-widest">{title}</span>
+        <span className="w-1/3 text-xs tracking-[.2em]">{title}</span>
         <div className="w-1/3 flex justify-end">
           <motion.span
             animate={{rotate: isOpen || isOpen ? 180 : 0}}
@@ -32,7 +33,7 @@ const FooterAccordion: React.FC<{
       </button>
       {isOpen && (
         <motion.div
-          className="px-4 pt-2 pb-4 text-sm text-white"
+          className=" pb-4 text-xs text-white tracking-[.15em]"
           initial={{height: 0}}
           animate={{height: isOpen ? 'auto' : 0}}
           transition={{duration: 0.2}}
@@ -137,6 +138,7 @@ const FooterMenu: React.FC = () => {
             </div>
           ))}
         </div>
+        <PaymentSection />
         <div className="flex justify-center items-center my-6 rounded-full w-full">
           <a href="/">
             <span className="sr-only">MoshiProject</span>
