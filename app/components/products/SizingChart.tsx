@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {Dialog, Transition, Switch} from '@headlessui/react';
+import useScrollDirection from '~/functions/useScrollDirection';
 
 const SizingChartModal: React.FC = ({productType}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [unit, setUnit] = useState('in');
-
+  const scrollDirection = useScrollDirection();
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
 
@@ -43,7 +44,11 @@ const SizingChartModal: React.FC = ({productType}) => {
               <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
               <div className="flex items-center justify-center min-h-screen ">
-                <div className="relative bg-white rounded-lg shadow-lg overflow-hidden z-[100000] m-4 h-fit w-fit pb-4">
+                <div
+                  className={`relative bg-white rounded-lg shadow-lg overflow-hidden z-[100000] m-4 h-fit w-fit pb-4 ${
+                    scrollDirection !== 'down' ? 'mt-28' : ''
+                  }`}
+                >
                   <div className="overflow-scroll">
                     <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
                       <div className="flex justify-between items-center">

@@ -206,7 +206,7 @@ export const SMALL_COLLECTION_QUERY = `#graphql
       title
       description
       handle
-      products(first: 8, after: $cursor, reverse: $rev, sortKey: $sort) {
+      products(first: 12, after: $cursor, reverse: $rev, sortKey: $sort) {
         pageInfo {
           hasNextPage
           endCursor

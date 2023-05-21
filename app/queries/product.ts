@@ -60,6 +60,72 @@ export const RECOMMENDATIONS_QUERY = `#graphql
     }
   }
 `;
+
+export const PRODUCTS_BY_ID_QUERY = `#graphql
+  query products($productIds: [ID!]!) {
+    nodes(ids: $productIds) {
+      ... on Product {
+        id
+      title
+      handle
+      media(first: 1) {
+        nodes {
+          ... on MediaImage {
+            image {
+              url
+            }
+          }
+        }
+      }
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+        maxVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      variants(first: 1) {
+        nodes {
+          id
+          availableForSale
+          selectedOptions {
+            name
+            value
+          }
+          image {
+            url
+            altText
+            width
+            height
+          }
+          price {
+            amount
+            currencyCode
+          }
+          compareAtPrice {
+            amount
+            currencyCode
+          }
+          sku
+          title
+          unitPrice {
+            amount
+            currencyCode
+          }
+          product {
+            title
+            handle
+          }
+        }
+      }
+      }
+    }
+  }
+`;
+
 export const PRODUCT_QUERY = `#graphql
   query product($handle: String!, $selectedOptions: [SelectedOptionInput!]!) {
     product(handle: $handle) {

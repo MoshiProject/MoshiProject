@@ -1,11 +1,11 @@
 import {StarIcon} from '@heroicons/react/24/solid';
 import {useState, useEffect} from 'react';
 
-interface ReviewsSectionProps {
+interface ReviewsCounterProps {
   reviews: number[];
 }
 
-export default function ReviewsSection({reviews}: ReviewsSectionProps) {
+export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
   const totalReviews = reviews.reduce((acc, cur) => acc + cur, 0);
   const totalStars = reviews.reduce(
     (acc, cur, idx) => acc + cur * (idx + 1),
@@ -26,7 +26,7 @@ export default function ReviewsSection({reviews}: ReviewsSectionProps) {
   }, [averageRating]);
   console.log('part', averageRating, partialStarWidth);
   return (
-    <div className="p-4">
+    <div className="p-4 w-full md:w-1/2 m-auto mt-4">
       <div className="flex justify-center mb-4">
         <h2 className="text-xl font-semibold ml-2">
           {averageRating.toFixed(1)}

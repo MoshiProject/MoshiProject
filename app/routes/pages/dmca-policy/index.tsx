@@ -2,9 +2,9 @@ import React from 'react';
 
 const DMCAPolicy = () => {
   return (
-    <div className="p-2 pl-3 text-sm">
+    <div className="p-4 pl-3 text-sm md:text-lg">
       <h1>DMCA Policy</h1>
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         When a person creates an original work that is fixed in a physical
         medium, that person automatically owns copyright to the work. Copyright
         ownership gives the owner the exclusive right to use the work in
@@ -14,7 +14,7 @@ const DMCAPolicy = () => {
         software, and dramatic works.
       </p>
       <br />
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         MoshiProject accepts unsolicited designs from independent artists who
         are informed and have agreed to MoshiProject’s policies concerning the
         intellectual property rights of others. All designs selected by
@@ -26,7 +26,7 @@ const DMCAPolicy = () => {
         copyrights to which the selected designs may refer.
       </p>
       <br />
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         It is MoshiProject policy to respond to notices of alleged infringement
         that comply with the Digital Millennium Copyright Act (DMCA), 17 U.S.C.
         § 512, and other applicable laws. MoshiProject’s response may include
@@ -38,14 +38,14 @@ const DMCAPolicy = () => {
         DMCA.
       </p>
       <br />
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         Please refer to the following detailed instructions which must be
         followed to protect your rights under the DMCA.
       </p>
       <br />
       <h2>Notice of Copyright or other Intellectual Property Infringement</h2>
       <br />
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         Please notify us if you believe any of your intellectual property rights
         have been infringed by us or any user of the Site. Pursuant to Section
         512 of the Copyright Revision Act, as enacted through the Digital
@@ -56,36 +56,36 @@ const DMCAPolicy = () => {
         effective the notification should include:
       </p>
       <br />
-      <ol>
-        <li>
+      <ol className="text-sm md:text-md md:pl-4">
+        <li className="text-sm md:text-md md:pl-4">
           1. A physical or electronic signature of the person authorized to act
           on behalf of the owner of the right being infringed;
         </li>
         <br />
-        <li>
+        <li className="text-sm md:text-md md:pl-4">
           2. Identification of the copyright work or other material claimed to
           have been infringed, or if multiple works are covered by a single
           notification, a representative list of such works;
         </li>
         <br />
-        <li>
+        <li className="text-sm md:text-md md:pl-4">
           3. identification of the material that is claimed to be infringing or
           to be the subject of infringing activity, and information sufficient
           to permit us to locate the material;
         </li>
         <br />
-        <li>
+        <li className="text-sm md:text-md md:pl-4">
           4. information sufficient to allow us to contact the complaining
           party;
         </li>
         <br />
-        <li>
+        <li className="text-sm md:text-md md:pl-4">
           5. a statement that the complaining party has a good faith belief that
           use of the material in the manner complained of is not authorized by
           the copyright or intellectual property owner, agent, or the law; and
         </li>
         <br />
-        <li>
+        <li className="text-sm md:text-md md:pl-4">
           6. a statement that the information in the notification is accurate
           and, under penalty of perjury, that the complaining party is
           authorized to act on behalf of the owner of the right being infringed.
@@ -94,19 +94,18 @@ const DMCAPolicy = () => {
       </ol>
       <h2>Statements</h2>
       <br />
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         When you send us DMCA report, we understand that you have read and
         accepted statements below:{' '}
       </p>{' '}
       <br />
-      <p className="text-sm">
+      <p className="text-sm md:text-md md:pl-4">
         *I have a good faith belief that content(s) in the campaign described
         above violate(s) my rights described above or those held by the rights
         owner, and that the use of such content(s) is contrary to law.{' '}
       </p>{' '}
       <br />
-      <p className="text-sm">
-        {' '}
+      <p className="text-sm md:text-md md:pl-4">
         *I declare, under penalty of perjury, that the information completed
         above is correct and accurate and that I am the owner or agent of the
         owner of the rights described above.
@@ -114,7 +113,9 @@ const DMCAPolicy = () => {
       <br />
       <h2>Contact Us</h2>
       <br />
-      contact@moshiproject.com
+      <span className="text-sm md:text-md md:pl-4">
+        contact@moshiproject.com
+      </span>
     </div>
   );
 };

@@ -40,16 +40,16 @@ const AnimeCarousel = ({
         breakpoints={{
           // Responsive breakpoints
           640: {
-            slidesPerView: 1,
+            slidesPerView: 5.5,
             spaceBetween: 0,
           },
           768: {
-            slidesPerView: 2,
+            slidesPerView: 8.5,
             spaceBetween: 20,
           },
           1024: {
-            slidesPerView: 3,
-            spaceBetween: 30,
+            slidesPerView: 14.5,
+            spaceBetween: 0,
           },
         }}
       >

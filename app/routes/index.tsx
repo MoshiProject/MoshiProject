@@ -17,7 +17,7 @@ import {motion} from 'framer-motion';
 import {COLLECTION_QUERY, SMALL_COLLECTION_QUERY} from './collections/$handle';
 import AnimeCarousel from '~/components/HomePage/AnimeCarousel';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
-import ReviewsSection from '~/components/HomePage/ReviewSection';
+import ReviewsCounter from '~/components/HomePage/ReviewsCounter';
 interface HomeSeoData {
   shop: {
     name: string;
@@ -157,17 +157,29 @@ export default function Homepage() {
   //   },
   // });
   const titleStyling =
-    'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-4';
+    'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-0 ';
   return (
     <>
-      <Hero
-        title="SPRING 2023"
-        subtitle="ANIME MEETS STREETWEAR"
-        buttonText="Shop Now →"
-        imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/3.5sec.gif?v=1681722723"
-        isGif
-      />
-      <div className="h-12">
+      <div className="block md:hidden ">
+        <Hero
+          title="SPRING 2023"
+          subtitle="ANIME MEETS STREETWEAR"
+          buttonText="Shop Now →"
+          imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/3.5sec.gif?v=1681722723"
+          isGif
+        />
+      </div>
+      <div className="hidden md:block md:mx-[-48px]">
+        <Hero
+          title="SPRING 2023"
+          subtitle="ANIME MEETS STREETWEAR"
+          buttonText="Shop Now →"
+          imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/t-shirt-mockup-of-a-cool-man-posing-in-a-dark-alley-2357-el1.png
+          "
+          isGif
+        />
+      </div>
+      <div className="h-12 block md:hidden">
         <motion.div
           initial={{height: 0, opacity: 0}}
           animate={{height: 48, opacity: 1}}
@@ -191,7 +203,7 @@ export default function Homepage() {
                   titleStyling={titleStyling}
                   products={products.nodes}
                   title="Featured Products"
-                  count={4}
+                  count={12}
                 />
               );
             }}
@@ -199,7 +211,9 @@ export default function Homepage() {
         </Suspense>
       )}
       <ItemTypeCollections />
-      <ReviewsSection reviews={[12, 24, 45, 169, 1124]} />
+      <div className="block md:hidden">
+        <ReviewsCounter reviews={[12, 24, 45, 169, 1124]} />
+      </div>
     </>
   );
 }

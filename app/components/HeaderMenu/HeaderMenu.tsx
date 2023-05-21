@@ -14,6 +14,7 @@ import CartButton from './CartButton';
 
 import useScrollDirection from '~/functions/useScrollDirection';
 import SearchBar from './SearchBar';
+import DesktopMegaMenu from './DesktopMegaMenu';
 
 export default function HeaderMenu({cart}: any) {
   const [open, setOpen] = useState(false);
@@ -27,10 +28,13 @@ export default function HeaderMenu({cart}: any) {
     >
       {/* Mobile menu */}
       {/* infinite looping free shipping bar */}
-      <div className="py-1">
+      <div className="py-1 md:hidden">
         <ParallaxText baseVelocity={-5}>
           FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.
         </ParallaxText>
+      </div>
+      <div className="py-1 hidden md:flex justify-center scroller tracking-wider font-medium">
+        <span>FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.</span>
       </div>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden " onClose={setOpen}>
@@ -218,14 +222,17 @@ export default function HeaderMenu({cart}: any) {
                       className="object-cover object-center h-10"
                     />
                   </a>
+                  <span className="hidden md:block">
+                    <DesktopMegaMenu />
+                  </span>
 
                   <div className="flex flex-1 items-center justify-end">
-                    <a
+                    {/* <a
                       href="/search"
                       className="hidden text-sm font-medium text-gray-100 hover:text-gray-50 lg:block"
                     >
                       Search
-                    </a>
+                    </a> */}
 
                     <div className="flex items-center lg:ml-8">
                       {/* Search */}
@@ -243,13 +250,10 @@ export default function HeaderMenu({cart}: any) {
                           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
-                      <a
+                      {/* <a
                         href="/FAQ"
                         className="hidden text-sm font-medium text-gray-100 hover:text-gray-50 lg:block"
-                      >
-                        Help
-                      </a>
-
+                      ></a> */}
                       {CartButton(cart)}
                     </div>
                   </div>

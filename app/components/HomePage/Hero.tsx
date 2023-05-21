@@ -68,7 +68,7 @@ const Hero: React.FC<Props> = ({
   buttonText,
 }) => {
   return (
-    <div className="relative w-full h-[60vh]">
+    <div className="relative w-full h-[60vh] md:h-[75vh]">
       <motion.div
         className="absolute inset-0 bg-black"
         initial={'closed'}

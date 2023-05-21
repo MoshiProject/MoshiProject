@@ -48,7 +48,7 @@ export async function loader({request, context, params}: LoaderArgs) {
   return defer({});
 }
 
-export async function action({request, context, params}: LoaderArgs) {
+export async function action({request, context, params}: ActionArgs) {
   const body = await request.formData();
   const userEmail = body.get('user_email');
   const orderNumber = body.get('order_number');

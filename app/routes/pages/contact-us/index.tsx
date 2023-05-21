@@ -68,7 +68,7 @@ export default function ContactUs() {
     <>
       {sent ? (
         <div className="flex flex-col items-center justify-center ">
-          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center">
+          <div className="rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center">
             <h1 className="font-semibold text-4xl mb-2">Contact Us</h1>
             <div className="flex items-center">
               <svg
@@ -94,7 +94,7 @@ export default function ContactUs() {
         <div className="flex flex-col items-center justify-center ">
           <form
             ref={form}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center"
+            className="rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center"
             onSubmit={sendEmail}
           >
             <h1 className="font-semibold text-4xl mb-2">Contact Us</h1>
@@ -194,7 +194,7 @@ export default function ContactUs() {
                 Message
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full h-64 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full h-64 py-2 px-3 focus:ring-red-500 focus:border-red-500 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="message"
                 name="message"
                 value={message}

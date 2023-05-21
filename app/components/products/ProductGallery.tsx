@@ -79,7 +79,7 @@ export default function ProductGallery({
       </Swiper>
       <button
         type="button"
-        className="absolute top-24 right-0 m-4 text-gray-400 hover:text-gray-500"
+        className="absolute top-24 right-0 m-4 text-gray-400 hover:text-gray-500 block md:hidden"
       >
         <span className="sr-only">Close</span>
         <div className=" bg-neutral-100 shadow-md rounded-full p-2 border-neutral-200 border">

@@ -4,17 +4,15 @@ import {Link} from '@remix-run/react';
 import {Product} from './products';
 import ProductCard from './ProductCard';
 
-type ProductRecommendationsProps = {
-  recommendations: Product[];
+type RecentlyViewedProps = {
+  recentlyViewed: Product[];
 };
 
-export default function ProductRecommendations({
-  recommendations,
-}: ProductRecommendationsProps) {
+export default function RecentlyViewed({recentlyViewed}: RecentlyViewedProps) {
   return (
     <div className="mt-12 swiper-container">
       <h2 className="text-lg font-medium text-gray-900 mb-4">
-        You may also like
+        Recently Viewed
       </h2>
       <Swiper
         slidesPerView={2}
@@ -22,22 +20,22 @@ export default function ProductRecommendations({
         breakpoints={{
           // eslint-disable-next-line @typescript-eslint/naming-convention
           640: {
-            slidesPerView: 2.3,
+            slidesPerView: 2,
             spaceBetween: 20,
           },
           // eslint-disable-next-line @typescript-eslint/naming-convention
           768: {
-            slidesPerView: 4.3,
+            slidesPerView: 3,
             spaceBetween: 30,
           },
           // eslint-disable-next-line @typescript-eslint/naming-convention
           1024: {
-            slidesPerView: 6.3,
+            slidesPerView: 4,
             spaceBetween: 40,
           },
         }}
       >
-        {recommendations.map((product) => (
+        {recentlyViewed.map((product) => (
           <SwiperSlide key={product.id}>
             <ProductCard product={product} />
           </SwiperSlide>

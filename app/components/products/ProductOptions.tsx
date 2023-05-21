@@ -82,7 +82,7 @@ export default function ProductOptions({
         return (
           <div
             key={option.name}
-            className={`flex flex-col justify-center items-center pb-4 last:mb-0 w-full pt-4 border-t border-neutral-200 gap-y-2`}
+            className={`flex flex-col justify-center items-center pb-4 last:mb-0 w-full pt-3 border-t border-neutral-200 gap-y-2`}
           >
             <div
               className={`flex ${
@@ -90,7 +90,7 @@ export default function ProductOptions({
               } w-full`}
             >
               {isSize && <span className="w-1/3"></span>}
-              <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase  ">
+              <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase pt-1 ">
                 {option.name}
               </h3>
               {isSize && (

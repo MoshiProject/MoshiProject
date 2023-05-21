@@ -2,15 +2,17 @@ import React from 'react';
 
 function CareInstructions() {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-3 text-center">
-        <h2 className="text-3xl font-bold mb-4">WASH & CARE INSTRUCTIONS</h2>
-        <p className="text-sm mb-4">
+    <div className="flex prose dark:prose-invert flex-col items-center justify-center">
+      <div className=" rounded-lg p-3 md:px-16 text-center text-sm md:text-lg md:text-left">
+        <h2 className="text-3xl font-bold mb-4 md:mb-12">
+          WASH & CARE INSTRUCTIONS
+        </h2>
+        <p className="text-sm md:text-lg mb-4 md:mb-12">
           To ensure that your DTG-printed garments remain in good condition for
           as long as possible, it's important to follow the care instructions
           carefully. The following steps are recommended:
         </p>
-        <ul className="list-disc ml-8 mb-4 text-sm">
+        <ul className="list-disc ml-8 mb-4 md:px-12 md:leading-10">
           <li>
             Machine-wash your DTG-printed garments cold and inside-out on a
             gentle cycle using a mild detergent and similar colors.
@@ -40,7 +42,7 @@ function CareInstructions() {
             the fibers of the garment and cause the print to fade or bleed.
           </li>
         </ul>
-        <p className="text-sm">
+        <p className="text-sm md:text-lg md:mb-12 md:mt-12">
           By following these instructions carefully, you can help ensure that
           your printed apparel remains in good condition for as long as
           possible. This will help you get the most out of your investment and

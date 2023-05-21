@@ -91,3 +91,6 @@ shop-pay-button {
 .icon--payment {
   margin: 4px 2px;
 }
+#size-guide {
+  display: none;
+}

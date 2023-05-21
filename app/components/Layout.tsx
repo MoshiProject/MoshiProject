@@ -3,18 +3,21 @@ import HeaderMenu from './HeaderMenu/HeaderMenu';
 type LayoutProps = {
   children: JSX.Element;
   title: JSX.Element;
+  recentlyViewed: any[];
 };
 import {useMatches} from '@remix-run/react';
 import {useDrawer} from './Drawer';
 import FooterMenu from './FooterMenu/FooterMenu';
+import RecentlyViewed from './products/RecentlyViewed';
 
-export function Layout({children, title}: LayoutProps) {
+export function Layout({children, title, recentlyViewed}: LayoutProps) {
+  console.log('Layout', recentlyViewed);
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const [root] = useMatches();
   // Test opening the drawer, delete this after verifying
   const cart = root.data?.cart;
   return (
-    <div className="flex flex-col min-h-screen antialiased bg-neutral-50 relative h-screen">
+    <div className=" flex flex-col min-h-screen antialiased bg-neutral-50 relative h-screen">
       <header>
         <HeaderMenu cart={cart}></HeaderMenu>
       </header>
@@ -24,8 +27,9 @@ export function Layout({children, title}: LayoutProps) {
         id="mainContent"
         className="flex-grow mt-0 mb-4 md:p-8 lg:p-12"
       >
-        <div className="h-24 w-full bg-neutral-950"></div>
+        <div className=" h-24 md:h-8 w-full bg-neutral-950 md:bg-white"></div>
         {children}
+        {/* <RecentlyViewed recentlyViewed={recentlyViewed} /> */}
       </main>
       <footer>
         <FooterMenu />

@@ -16,7 +16,10 @@ import {CART_QUERY} from '~/queries/cart';
 import styles from '~/styles/app.css';
 import swiperBCSS from 'swiper/swiper-bundle.min.css';
 import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
-
+import {Product} from './components/products/products';
+import {PRODUCTS_BY_ID_QUERY} from './queries/product';
+import {recentlyViewedCookie} from './cookie.server';
+import {json} from '@shopify/remix-oxygen';
 export const links = () => {
   return [
     {rel: 'stylesheet', href: tailwind},
@@ -42,18 +45,50 @@ export const meta = () => ({
 
 export async function loader({context, request}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
+  //get cookie data for recently Viewed
+  const cookieHeader = request.headers.get('Cookie');
+  const cookie = await recentlyViewedCookie.parse(cookieHeader);
+  console.log('cookie', cookie.recentlyViewed);
 
-  return defer({
-    cart: cartId ? getCart(context, cartId) : undefined,
-    layout: await context.storefront.query(LAYOUT_QUERY),
-  });
+  const {nodes}: {nodes: object[]} = await context.storefront.query(
+    PRODUCTS_BY_ID_QUERY,
+    {
+      variables: {
+        productIds: cookie.recentlyViewed,
+      },
+    },
+  );
+  const recentlyViewed = nodes;
+  if (cookie) {
+    return defer({
+      cart: cartId ? getCart(context, cartId) : undefined,
+      layout: await context.storefront.query(LAYOUT_QUERY),
+      recentlyViewed,
+    });
+  } else {
+    //sets cookie with header
+    return json(
+      {
+        cart: cartId ? getCart(context, cartId) : undefined,
+        layout: await context.storefront.query(LAYOUT_QUERY),
+        recentlyViewed,
+      },
+      {
+        headers: {
+          'Set-Cookie': await recentlyViewedCookie.serialize({
+            recentlyViewed: [],
+          }),
+        },
+      },
+    );
+  }
 }
 
 export default function App() {
   const data = useLoaderData();
 
   const {name} = data.layout.shop;
-
+  const recentlyViewed = data.recentlyViewed;
   return (
     <html lang="en">
       <head>
@@ -67,7 +102,7 @@ export default function App() {
           type="text/javascript"
           src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ViUH6b"
         ></script>
-        <Layout title={name}>
+        <Layout title={name} recentlyViewed={recentlyViewed}>
           <Outlet />
         </Layout>
         <ScrollRestoration />
