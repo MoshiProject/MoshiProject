@@ -46,27 +46,27 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 
   //handle recently viewed section
   //get cookie data for recently Viewed
-  const cookieHeader = request.headers.get('Cookie');
-  const cookie = await recentlyViewedCookie.parse(cookieHeader);
-  console.log('cookie', cookie.recentlyViewed);
-  console.log(product.id);
-  const recentlyViewed: any[] = cookie.recentlyViewed;
-  let recentlyChanged = false;
-  if (!recentlyViewed.includes(product.id)) {
-    recentlyChanged = true;
-    recentlyViewed.unshift(product.id);
-    if (recentlyViewed.length > 6) {
-      recentlyViewed.pop();
-    }
-  } else if (recentlyViewed[0] !== product.id) {
-    recentlyChanged = true;
-    const index = recentlyViewed.indexOf(product.id);
-    if (index > -1) {
-      // only splice array when item is found
-      recentlyViewed.splice(index, 1); // 2nd parameter means remove one item only
-    }
-    recentlyViewed.unshift(product.id);
-  }
+  // const cookieHeader = request.headers.get('Cookie');
+  // const cookie = await recentlyViewedCookie.parse(cookieHeader);
+  // console.log('cookie', cookie.recentlyViewed);
+  // console.log(product.id);
+  // const recentlyViewed: any[] = cookie.recentlyViewed;
+  // let recentlyChanged = false;
+  // if (!recentlyViewed.includes(product.id)) {
+  //   recentlyChanged = true;
+  //   recentlyViewed.unshift(product.id);
+  //   if (recentlyViewed.length > 6) {
+  //     recentlyViewed.pop();
+  //   }
+  // } else if (recentlyViewed[0] !== product.id) {
+  //   recentlyChanged = true;
+  //   const index = recentlyViewed.indexOf(product.id);
+  //   if (index > -1) {
+  //     // only splice array when item is found
+  //     recentlyViewed.splice(index, 1); // 2nd parameter means remove one item only
+  //   }
+  //   recentlyViewed.unshift(product.id);
+  // }
   //handle product recommendations
   const {productRecommendations}: {productRecommendations: Product[]} =
     await context.storefront.query(RECOMMENDATIONS_QUERY, {
@@ -135,34 +135,34 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   }
   // console.log('generatedReviews', generatedReviews.length);
   // console.log('generatedReviews', generatedReviews);
-  if (!recentlyChanged) {
-    return json({
+  // if (!recentlyChanged) {
+  //   return json({
+  //     judgeReviews,
+  //     product,
+  //     selectedVariant,
+  //     storeDomain,
+  //     productRecommendations,
+  //   });
+  // } else {
+  return json(
+    {
       judgeReviews,
       product,
       selectedVariant,
       storeDomain,
       productRecommendations,
-    });
-  } else {
-    return json(
-      {
-        judgeReviews,
-        product,
-        selectedVariant,
-        storeDomain,
-        productRecommendations,
-        isAdmin,
-      },
-      {
-        headers: {
-          'Set-Cookie': await recentlyViewedCookie.serialize({
-            recentlyViewed: recentlyViewed,
-          }),
-        },
-      },
-    );
-  }
+      isAdmin,
+    },
+    // {
+    //   headers: {
+    //     'Set-Cookie': await recentlyViewedCookie.serialize({
+    //       recentlyViewed: recentlyViewed,
+    //     }),
+    //   },
+    // },
+  );
 };
+// };
 
 export async function action({request, context, params}: ActionArgs) {
   const body = await request.formData();
