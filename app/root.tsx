@@ -18,7 +18,6 @@ import swiperBCSS from 'swiper/swiper-bundle.min.css';
 import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
 import {Product} from './components/products/products';
 import {PRODUCTS_BY_ID_QUERY} from './queries/product';
-import {recentlyViewedCookie} from './cookie.server';
 import {json} from '@shopify/remix-oxygen';
 export const links = () => {
   return [
@@ -47,40 +46,30 @@ export async function loader({context, request}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
   //get cookie data for recently Viewed
   const cookieHeader = request.headers.get('Cookie');
-  const cookie = await recentlyViewedCookie.parse(cookieHeader);
-  console.log('cookie', cookie.recentlyViewed);
+  // const cookie = await recentlyViewedCookie.parse(cookieHeader);
+  // console.log('cookie', cookie.recentlyViewed);
 
-  const {nodes}: {nodes: object[]} = await context.storefront.query(
-    PRODUCTS_BY_ID_QUERY,
-    {
-      variables: {
-        productIds: cookie.recentlyViewed,
-      },
-    },
-  );
-  const recentlyViewed = nodes;
-  if (cookie) {
-    return defer({
-      cart: cartId ? getCart(context, cartId) : undefined,
-      layout: await context.storefront.query(LAYOUT_QUERY),
-      recentlyViewed,
-    });
+  // const {nodes}: {nodes: object[]} = await context.storefront.query(
+  //   PRODUCTS_BY_ID_QUERY,
+  //   {
+  //     variables: {
+  //       productIds: cookie.recentlyViewed,
+  //     },
+  //   },
+  // );
+  // const recentlyViewed = nodes;
+  if (false) {
+    // return defer({
+    //   cart: cartId ? getCart(context, cartId) : undefined,
+    //   layout: await context.storefront.query(LAYOUT_QUERY),
+    //   recentlyViewed,
+    // });
   } else {
     //sets cookie with header
-    return json(
-      {
-        cart: cartId ? getCart(context, cartId) : undefined,
-        layout: await context.storefront.query(LAYOUT_QUERY),
-        recentlyViewed,
-      },
-      {
-        headers: {
-          'Set-Cookie': await recentlyViewedCookie.serialize({
-            recentlyViewed: [],
-          }),
-        },
-      },
-    );
+    return json({
+      cart: cartId ? getCart(context, cartId) : undefined,
+      layout: await context.storefront.query(LAYOUT_QUERY),
+    });
   }
 }
 

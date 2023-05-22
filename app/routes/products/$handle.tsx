@@ -16,7 +16,6 @@ import ReviewsSection from '~/components/products/ReviewsSection';
 import Rand, {PRNG} from 'rand-seed';
 import {authors, shirtReviews} from '~/data/reviews';
 import ShippingEstimation from '~/components/products/ShippingEstimation';
-import {recentlyViewedCookie} from '~/cookie.server';
 import Hero from '~/components/HomePage/Hero';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
