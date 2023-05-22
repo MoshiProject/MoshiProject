@@ -164,69 +164,6 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 };
 // };
 
-export async function action({request, context, params}: ActionArgs) {
-  const body = await request.formData();
-  const userEmail = body.get('user_email');
-  const name = body.get('name');
-  const rating = body.get('rating');
-  const reviewBody = body.get('review_body');
-  const reviewQuanity = body.get('review_quanity');
-  const searchParams = new URL(request.url).searchParams;
-  const selectedOptions: Option[] = [];
-  let isAdmin = false;
-  // set selected options from the query string
-  searchParams.forEach((value, name) => {
-    selectedOptions.push({name, value});
-    isAdmin = name === 'mode' && value === 'admin';
-  });
-
-  if (isAdmin) {
-    return 'admin';
-  }
-  console.log('body', userEmail, name, rating, reviewBody);
-  if (userEmail === '') {
-    return 'noEmail';
-  } else if (name === '') {
-    return 'noName';
-  }
-  const {handle} = params;
-
-  const {product}: {product: Product} = await context.storefront.query(
-    PRODUCT_QUERY,
-    {
-      variables: {
-        handle,
-        selectedOptions,
-      },
-    },
-  );
-  if (!product?.id) {
-    throw new Response(null, {status: 404});
-  }
-  const id = product.id.substr(product.id.lastIndexOf('/') + 1);
-
-  //write review
-  try {
-    const response = await fetch(
-      `https://judge.me/api/v1/reviews?api_token=${context.env.JUDGE_ME_PRIVATE_TOKEN}&shop_domain=${context.env.PUBLIC_STORE_DOMAIN}` +
-        `&id=${id}&platform=shopify&name=${name}&email=${userEmail}&rating=${rating}&body=${reviewBody
-          ?.toString()
-          .replace(' ', '%20')}`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    );
-    console.log('response', response);
-  } catch (error) {
-    console.error(error);
-  }
-
-  return '';
-}
-
 export default function ProductHandle() {
   const {
     judgeReviews,

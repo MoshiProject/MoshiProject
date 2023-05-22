@@ -8,7 +8,7 @@ import {useEffect} from 'react';
 export default function CartButton(cart: any) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
-
+  console.log('cart', cart);
   // Grab all the fetchers that are adding to cart
   const addToCartFetchers = [];
   for (const fetcher of fetchers) {
@@ -83,7 +83,7 @@ export default function CartButton(cart: any) {
                 ) : (
                   <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 h-screen">
                     <h2 className="whitespace-pre-wrap max-w-prose font-bold text-4xl">
-                      Your cart is empty
+                      Your cart is emptye
                     </h2>
                     <button
                       onClick={close}

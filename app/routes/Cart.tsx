@@ -26,7 +26,6 @@ export async function loader({context}: LoaderArgs) {
 export async function action({request, context}: ActionArgs) {
   const {session, storefront} = context;
   const headers = new Headers();
-
   const [formData, storedCartId, customerAccessToken] = await Promise.all([
     request.formData(),
     session.get('cartId'),
@@ -97,7 +96,7 @@ export async function action({request, context}: ActionArgs) {
 
 export default function Cart() {
   const {cart} = useLoaderData();
-
+  console.log('carta', cart);
   if (cart?.totalQuantity > 0)
     return (
       <div className="w-full max-w-6xl mx-auto pb-12 grid md:grid-cols-2 md:items-start gap-8 md:gap-8 lg:gap-12">
@@ -116,7 +115,7 @@ export default function Cart() {
   return (
     <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 h-screen">
       <h2 className="whitespace-pre-wrap max-w-prose font-bold text-4xl">
-        Your cart is empty
+        Your cart is emptya
       </h2>
       <Link
         to="/"
