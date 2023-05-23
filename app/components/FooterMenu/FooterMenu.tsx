@@ -126,24 +126,21 @@ const FooterMenu: React.FC = () => {
   return (
     <>
       <div className="flex flex-col flex-wrap justify-center items-center gap-2 bg-neutral-950">
-        <div className="flex flex-wrap justify-center items-center p-4 pt-0 bg-neutral-950">
+        <div className="flex flex-wrap justify-center  p-4 pt-0 bg-neutral-950">
           <FooterSubscribe />
           <SocialMediaIcons />
           {menuItems.map((item) => (
-            <div
-              key={item.title}
-              className="flex-grow-0 flex-shrink w-full md:w-1/3"
-            >
+            <div key={item.title} className=" w-full md:w-1/3">
               <div className="md:hidden">
                 <FooterAccordion title={item.title} links={item.links} />
               </div>
-              <div className="hidden md:block  ">
-                <div className="text-white text-2xl capitalize ">
-                  {item.title}
+              <div className="hidden md:block">
+                <div className="text-white capitalize px-6 text-center">
+                  <div className=" text-2xl ">{item.title}</div>
                   {item.links.map((link) => {
                     return (
                       <a
-                        className="text-lg block"
+                        className="text-md block"
                         key={link.label}
                         href={link.url}
                       >
