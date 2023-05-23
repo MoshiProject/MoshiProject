@@ -46,11 +46,11 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
             product.handle.toLowerCase().includes('hoodie')
               ? row
                 ? 'w-[40%] mb-2'
-                : 'w-[115%] ml-[-7.5%] mb-2'
+                : 'w-[120%] ml-[-10%] mb-2'
               : product.handle.toLowerCase().includes('sweatshirt')
               ? row
                 ? 'w-[40%] mb-2'
-                : 'w-[130%] ml-[-15%] mb-2'
+                : 'w-[120%] ml-[-10%] mb-2'
               : row
               ? 'w-[40%] mb-2'
               : 'w-[120%] ml-[-10%] mb-2'
@@ -59,7 +59,19 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
           <Image
             data={product.variants.nodes[0].image}
             alt={titleFilter(product.title)}
-            className="overflow-hidden"
+            className={`overflow-hidden ${
+              product.handle.toLowerCase().includes('hoodie')
+                ? row
+                  ? 'w-[40%] mb-2'
+                  : 'w-[115%]  mb-2'
+                : product.handle.toLowerCase().includes('sweatshirt')
+                ? row
+                  ? 'w-[40%] mb-2'
+                  : 'w-[135%] mb-2'
+                : row
+                ? 'w-[40%] mb-2'
+                : 'w-[120%] mb-2'
+            }`}
           />
         </div>
         <div

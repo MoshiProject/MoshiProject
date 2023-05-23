@@ -24,16 +24,32 @@ const animeCollections = [
     img: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/AoT.png',
     url: '/collections/attack-on-titan',
   },
+  {
+    img: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/DeathNote.png',
+    url: 'https://www.moshiproject.com/collections/death-note',
+  },
+  {
+    img: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/HunterXHunter.png',
+    url: 'https://www.moshiproject.com/collections/hunter-x-hunter',
+  },
+  {
+    img: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/My-Hero-Academia-Logo.png',
+    url: 'https://www.moshiproject.com/collections/my-hero-academia',
+  },
+  {
+    img: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Naruto.webp',
+    url: 'https://www.moshiproject.com/collections/naruto',
+  },
 ];
 
 const AnimeCarousel = ({
-  titleStyling = 'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-4',
+  titleStyling = 'text-2xl md:text-4xl mt-2 font-semibold  text-center px-0.5 lg:text-4xl lg:font-semibold lg:px-4',
 }) => {
   return (
-    <div className="px-2 py-3">
+    <div className="px-2 py-3 bg-white">
       <h2 className={titleStyling}>Shop By Anime</h2>
       <Swiper
-        className="mt-4 px-4"
+        className="mt-4 px-4 md:w-3/4"
         spaceBetween={16}
         slidesPerView={3.5}
         pagination={{clickable: true}}
@@ -44,11 +60,11 @@ const AnimeCarousel = ({
             spaceBetween: 0,
           },
           768: {
-            slidesPerView: 8.5,
+            slidesPerView: 6,
             spaceBetween: 20,
           },
           1024: {
-            slidesPerView: 14.5,
+            slidesPerView: 9,
             spaceBetween: 0,
           },
         }}

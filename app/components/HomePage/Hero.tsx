@@ -90,19 +90,22 @@ const Hero: React.FC<Props> = ({
             <motion.li className="h-fit overflow-hidden">
               <motion.div
                 variants={textVariants}
-                className="text-5xl font-semibold"
+                className="text-5xl font-semibold md:text-8xl"
               >
                 {title}
               </motion.div>
             </motion.li>
             <motion.li className="h-fit overflow-hidden">
-              <motion.div variants={textVariants} className="mt-2 text-xl">
+              <motion.div
+                variants={textVariants}
+                className="mt-2 text-xl md:text-3xl"
+              >
                 {subtitle}
               </motion.div>
             </motion.li>
             <motion.li variants={buttonVariants}>
               <Link to="/collections/featured-products">
-                <div className="mt-3 w-full text-lg font-medium bg-red-700 px-6 py-2 rounded-sm">
+                <div className="mt-3 w-full text-lg md:text-lg font-medium bg-red-700 px-6 md:px-8 py-2 md:py-3 rounded-sm">
                   {buttonText}
                 </div>
               </Link>

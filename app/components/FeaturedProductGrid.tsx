@@ -33,7 +33,7 @@ export function FeaturedProductGrid({
           Shop Best Sellers →
         </div>
       </Link>
-      <motion.div className="grid grid-cols-2 px-0.5 mt-2 md:grid-cols-4 lg:grid-cols-6 hiddenScroll md:pb-8 md:scroll-px-8 lg:scroll-px-4 md:px-8 lg:px-4 lg:mt-4">
+      <motion.div className="grid grid-cols-2 px-0.5 mt-2 md:grid-cols-4 lg:grid-cols-4 hiddenScroll md:pb-8 md:scroll-px-8 lg:scroll-px-4 md:px-8 lg:px-4 lg:mt-4">
         {products.map((product) => {
           return (
             <motion.div

@@ -134,7 +134,25 @@ const FooterMenu: React.FC = () => {
               key={item.title}
               className="flex-grow-0 flex-shrink w-full md:w-1/3"
             >
-              <FooterAccordion title={item.title} links={item.links} />
+              <div className="md:hidden">
+                <FooterAccordion title={item.title} links={item.links} />
+              </div>
+              <div className="hidden md:block  ">
+                <div className="text-white text-2xl capitalize ">
+                  {item.title}
+                  {item.links.map((link) => {
+                    return (
+                      <a
+                        className="text-lg block"
+                        key={link.label}
+                        href={link.url}
+                      >
+                        {link.label}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -162,7 +180,7 @@ const FooterMenu: React.FC = () => {
 export default FooterMenu;
 const menuItems = [
   {
-    title: 'SUPPORT',
+    title: 'Support',
     links: [
       {label: 'Contact Us', url: '/pages/contact-us'},
       {label: 'Wash & Care', url: '/pages/wash-care'},
@@ -175,14 +193,7 @@ const menuItems = [
       {label: 'Privacy Policy', url: '/policies/privacy-policy'},
       {label: 'Refund Policy', url: '/policies/refund-policy'},
       {label: 'Terms Of Service', url: '/policies/terms-of-service'},
-    ],
-  },
-  {
-    title: 'Menu 3',
-    links: [
       {label: 'DMCA Policy', url: '/pages/dmca-policy'},
-      {label: 'Link 8', url: '/link8'},
-      {label: 'Link 9', url: '/link9'},
     ],
   },
 ];
