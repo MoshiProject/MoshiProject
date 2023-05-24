@@ -17,6 +17,7 @@ import Rand, {PRNG} from 'rand-seed';
 import {authors, shirtReviews} from '~/data/reviews';
 import ShippingEstimation from '~/components/products/ShippingEstimation';
 import Hero from '~/components/HomePage/Hero';
+import SizingChart from '~/components/products/SizingChart';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
   const storeDomain = context.storefront.getShopifyDomain();
@@ -191,18 +192,18 @@ export default function ProductHandle() {
   //console.log(composition);
   const orderable = selectedVariant?.availableForSale || false;
   return (
-    <section className="w-full gap-2 px-5 md:gap-8 grid  md:px-8 lg:px-12">
-      <div className="grid items-start gap-2 lg:gap-12 md:grid-cols-2 lg:grid-cols-5">
-        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-3 h-fit mt-4">
+    <section className="w-full gap-2 px-5 md:pl-48 md:gap-8 grid  md:px-10 md:mt-16">
+      <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
+        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit mt-4">
           <ProductGallery media={product.media.nodes} />
         </div>
-        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[36rem] grid lg:gap-8 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-2">
+        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[36rem] grid lg:gap-6 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2 first:mt-4">
-            <h1 className="text-center text-2xl font-bold leading-8 whitespace-normal uppercase">
+            <h1 className="text-center md:text-start text-2xl font-bold leading-8 whitespace-normal uppercase">
               {product.title}
             </h1>
-            <div className="flex-col justify-center items-center">
-              <div className="flex justify-center">
+            <div className="flex-col justify-center items-center md:justify-start md:items-start">
+              <div className="flex justify-center md:justify-start md:items-start">
                 <Money
                   withoutTrailingZeros
                   data={selectedVariant.compareAtPrice}
@@ -214,7 +215,7 @@ export default function ProductHandle() {
                   className="text-lg font-semibold text-red-600 "
                 />
               </div>
-              <div className="flex justify-center mt-1">
+              <div className="flex justify-center mt-1 md:justify-start md:items-start">
                 <span className="text-xs text-neutral-500 uppercase">
                   {' '}
                   Free Shipping + Tax Included
@@ -229,6 +230,9 @@ export default function ProductHandle() {
           />
           {orderable && (
             <div className="space-y-2 w-full">
+              <span className="md:flex hidden">
+                <SizingChart productType={getProductType(product.title)} />
+              </span>
               <div>
                 <ShippingEstimation />
               </div>

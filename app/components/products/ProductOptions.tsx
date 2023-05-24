@@ -63,38 +63,40 @@ export default function ProductOptions({
 
         // get the currently selected option value
         const currentOptionVal = searchParams.get(option.name);
-        option.values.sort((option1: string, option2: string) => {
-          const sizeOrder = {
-            S: 1,
-            M: 2,
-            L: 3,
-            XL: 4,
-            '2XL': 5,
-            '3XL': 6,
-            '4XL': 7,
-            '5XL': 8,
-          };
-          const option1Val = sizeOrder[option1];
-          const option2Val = sizeOrder[option2];
-          if (!option1Val && !option2Val) return 0;
-          return option1Val - option2Val;
-        });
+        if (isSize) {
+          option.values.sort((option1: string, option2: string) => {
+            const sizeOrder = {
+              S: 1,
+              M: 2,
+              L: 3,
+              XL: 4,
+              '2XL': 5,
+              '3XL': 6,
+              '4XL': 7,
+              '5XL': 8,
+            };
+            const option1Val = sizeOrder[option1];
+            const option2Val = sizeOrder[option2];
+            if (!option1Val && !option2Val) return 0;
+            return option1Val - option2Val;
+          });
+        }
         return (
           <div
             key={option.name}
-            className={`flex flex-col justify-center items-center pb-4 last:mb-0 w-full pt-3 border-t border-neutral-200 gap-y-2`}
+            className={`flex flex-col justify-center items-center pb-4 md:items-start last:mb-0 w-full pt-3 border-t border-neutral-200 gap-y-2`}
           >
             <div
               className={`flex ${
-                isSize ? 'justify-between' : 'justify-center'
+                isSize ? 'justify-between' : 'justify-center md:justify-start'
               } w-full`}
             >
-              {isSize && <span className="w-1/3"></span>}
+              {isSize && <span className="w-1/3 md:hidden"></span>}
               <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase pt-1 ">
                 {option.name}
               </h3>
               {isSize && (
-                <span className="w-1/3 flex justify-end">
+                <span className="w-1/3 flex justify-end md:hidden">
                   <SizingChart productType={productType} />
                 </span>
               )}

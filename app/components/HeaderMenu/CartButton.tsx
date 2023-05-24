@@ -24,7 +24,7 @@ export default function CartButton(cart: any) {
   }, [addToCartFetchers]);
 
   return (
-    <div className=" flow-root lg:ml-8">
+    <div className=" flow-root lg:ml-2">
       <Suspense>
         <Await resolve={cart}>
           {(data) => (
@@ -36,7 +36,7 @@ export default function CartButton(cart: any) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="white"
-                className="w-6 h-6"
+                className="w-6 h-6 md:w-8 md:h-8"
               >
                 <title>Bag</title>
                 <path
@@ -83,7 +83,7 @@ export default function CartButton(cart: any) {
                 ) : (
                   <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 h-screen">
                     <h2 className="whitespace-pre-wrap max-w-prose font-bold text-4xl">
-                      Your cart is emptye
+                      Your cart is empty
                     </h2>
                     <button
                       onClick={close}

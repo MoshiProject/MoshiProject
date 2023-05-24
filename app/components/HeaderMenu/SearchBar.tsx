@@ -81,7 +81,10 @@ const SearchBar = () => {
                   className="text-black absolute top-0 right-0 px-3 py-2"
                 >
                   <span className="sr-only">Search</span>
-                  <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                  <MagnifyingGlassIcon
+                    className=" h-6 w-6 md:h-8 md:w-8"
+                    aria-hidden="true"
+                  />
                 </motion.button>
               )}
             </form>
@@ -92,7 +95,10 @@ const SearchBar = () => {
             className="flex items-center"
           >
             <span className="sr-only">Search</span>
-            <MagnifyingGlassIcon className=" h-6 w-6" aria-hidden="true" />
+            <MagnifyingGlassIcon
+              className=" h-6 w-6 md:h-8 md:w-8"
+              aria-hidden="true"
+            />
           </button>
         )}
       </AnimatePresence>

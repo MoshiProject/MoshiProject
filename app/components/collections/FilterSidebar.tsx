@@ -94,11 +94,7 @@ function FilterSidebar({
         <span className="ml-2 text-xs">Filter</span>
       </button>
       <Transition.Root show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-40 lg:hidden "
-          onClose={setIsOpen}
-        >
+        <Dialog as="div" className="relative z-40 " onClose={setIsOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"

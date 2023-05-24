@@ -124,7 +124,7 @@ export const navigation: MenuItem[] = [
     url: '/collections/best-selling-collection',
     children: [],
   },
-  {title: 'SIZING CHARTS', url: '', children: []},
-  {title: 'CONTACT US', url: '', children: []},
-  {title: 'REVIEWS', url: '', children: []},
+  // {title: 'SIZING CHARTS', url: '', children: []},
+  {title: 'CONTACT US', url: '/pages/contact-us', children: []},
+  // {title: 'REVIEWS', url: '', children: []},
 ];

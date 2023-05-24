@@ -136,7 +136,7 @@ export default function Collection() {
     setURL(`/collections/${collection.handle}?sort=${sort}`);
   }, [collection, sort]);
   return (
-    <div key={sortParam}>
+    <div key={sortParam} className="md:mx-[-48px]">
       <header className="grid w-full gap-2 py-6 pl-2 justify-items-start">
         <h1 className="text-2xl whitespace-pre-wrap font-semibold inline-block">
           {collection.title}

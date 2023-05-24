@@ -22,7 +22,7 @@ const DesktopMegaMenu: React.FC = () => {
         key={item.title}
         className={`${
           hasChildren ? 'group' : ''
-        } h-6 min-w-fit w-28 text-center capitalize text-sm hover:text-red-500 hover:border-b-2 hover:border-red-500`}
+        } h-6 min-w-fit w-28 text-center capitalize text-xl font-semibold hover:text-red-500 hover:border-b-2 hover:border-red-500`}
         onMouseEnter={() => handleMouseEnter(item.title)}
         onMouseLeave={handleMouseLeave}
       >
@@ -30,7 +30,7 @@ const DesktopMegaMenu: React.FC = () => {
           href={item.url}
           className={`${
             activeItem === item.title ? 'text-red-500' : 'text-white'
-          } w-screen px-2 bg-neutral-950 focus:outline-none`}
+          } w-screen px-4 py-1 bg-neutral-950 focus:outline-none`}
         >
           {item.title}
         </a>
@@ -38,9 +38,9 @@ const DesktopMegaMenu: React.FC = () => {
           <ul
             className={`${
               activeItem === item.title ? 'flex' : 'hidden'
-            } fixed top-19 flex justify-center p-4 left-0 bg-neutral-950 text-white w-screen`}
+            } fixed top-19 flex justify-center py-8 px-4 left-0 bg-neutral-950 text-white w-screen`}
           >
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 gap-x-24">
               {item.children.map((child) => (
                 <li key={child.title}>
                   <a
@@ -60,7 +60,7 @@ const DesktopMegaMenu: React.FC = () => {
 
   return (
     <div className="relative ">
-      <ul className=" flex bg-neutral-950 text-white">
+      <ul className=" flex bg-neutral-950 text-white w-fit justify-center">
         {navigation.map((item) => renderMenuItem(item))}
       </ul>
     </div>

@@ -46,11 +46,11 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
             product.handle.toLowerCase().includes('hoodie')
               ? row
                 ? 'w-[40%] mb-2'
-                : 'w-[120%] ml-[-10%] mb-2'
+                : 'w-[120%] ml-[-10%] md:mb-8 mb-4'
               : product.handle.toLowerCase().includes('sweatshirt')
               ? row
                 ? 'w-[40%] mb-2'
-                : 'w-[120%] ml-[-10%] mb-2'
+                : 'w-[130%] ml-[-15%] mb-2'
               : row
               ? 'w-[40%] mb-2'
               : 'w-[120%] ml-[-10%] mb-2'
