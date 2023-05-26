@@ -43,6 +43,26 @@ export const productTypeHandles = {
   Sweatshirt: 'sweatshirts',
 };
 
+export const productAnimeHandles = {
+  'Neon Genesis Evangelion': 'neon-genesis-evangelion',
+  'Jujutsu Kaisen': 'jujutsu-kaisen',
+  'Demon Slayer': 'kimetsu-no-yaiba',
+  'Attack On Titan': 'attack-on-titan',
+  'Attack on Titan': 'attack-on-titan',
+  'Naruto Shippuden': 'naruto',
+  'Hunter X Hunter': 'hunter-x-hunter',
+  'My Hero Academia': 'my-hero-academia',
+  'One Piece': '',
+  'Fullmetal Alchemist Brotherhood': '',
+  'Chainsaw Man': 'chainsaw-man',
+  Berserk: '',
+  'Mob Psycho': '',
+  'Violet Evergarden': '',
+  'Tokyo Ghoul': '',
+  'Cowboy Bebop': '',
+  'JoJo Bizarre Adventure': '',
+};
+
 export const collectionIdDict = {
   hoodie: 262228574413,
   sweatshirts: 262228410573,

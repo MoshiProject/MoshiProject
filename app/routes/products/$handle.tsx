@@ -11,7 +11,12 @@ import ProductRecommendations from '~/components/products/ProductRecommendations
 import {PRODUCT_QUERY, RECOMMENDATIONS_QUERY} from '~/queries/product';
 import AddToCartForm from '~/components/products/AddToCartForm';
 import ProductGallery from '~/components/products/ProductGallery';
-import {getProductType, productTypeHandles} from '~/functions/titleFilter';
+import {
+  getProductAnime,
+  getProductType,
+  productAnimeHandles,
+  productTypeHandles,
+} from '~/functions/titleFilter';
 import ReviewsSection from '~/components/products/ReviewsSection';
 import Rand, {PRNG} from 'rand-seed';
 import {authors, shirtReviews} from '~/data/reviews';
@@ -50,33 +55,17 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     throw new Response(null, {status: 404});
   }
 
-  //handle product recommendations
-  const {productRecommendations}: {productRecommendations: Product[]} =
-    await context.storefront.query(RECOMMENDATIONS_QUERY, {
-      variables: {
-        productId: product.id,
-      },
-    });
+  //###handle product recommendations
   const cursor = searchParams.get('cursor');
-  const productType = getProductType(product.title);
   const rev = false;
   const sort = null;
+
+  const productType = getProductType(product.title);
   const typeHandle = productTypeHandles[productType];
-  // const collectionId = collectionIdDict[typeHandle];
-  // const query = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-04/collections/${collectionId}/products.json`;
-  // console.log('query', query);
-  // Make a GET request to the Shopify Admin API to fetch a product
-  // const response = await fetch(query, {
-  //   headers: {
-  //     'X-Shopify-Access-Token': context.env.ADMIN_API_ACCESS_TOKEN,
-  //     'Content-Type': 'application/json',
-  //   },
-  // });
-  // console.log(
-  //   'context.env.ADMIN_API_ACCESS_TOKEN',
-  //   context.env.ADMIN_API_ACCESS_TOKEN,
-  // );
-  // const typeRecommendations = await response.json();
+
+  const productAnime = getProductAnime(product.title);
+  const animeHandle = productAnimeHandles[productAnime];
+  console.log('animeHandle', animeHandle);
 
   const {collection: productTypeRecommendations}: any =
     await context.storefront.query(SMALL_COLLECTION_QUERY, {
@@ -88,10 +77,17 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
       },
     });
 
-  console.log(
-    'productTypeRecommendations',
-    productTypeRecommendations.products.nodes,
-  );
+  const animeCollectionExists = animeHandle !== undefined;
+  const {collection: productAnimeRecommendations}: any =
+    await context.storefront.query(SMALL_COLLECTION_QUERY, {
+      variables: {
+        handle: animeCollectionExists ? animeHandle : 'featured-products',
+        cursor,
+        rev,
+        sort,
+      },
+    });
+
   // optionally set a default variant so you always have an "orderable" product selected
   const selectedVariant: Variant =
     product.selectedVariant ?? product?.variants?.nodes[0];
@@ -156,7 +152,8 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     product,
     selectedVariant,
     storeDomain,
-    productRecommendations,
+    productAnimeRecommendations: productAnimeRecommendations.products.nodes,
+
     productTypeRecommendations: productTypeRecommendations.products.nodes,
     isAdmin,
   });
@@ -171,6 +168,7 @@ export default function ProductHandle() {
     storeDomain,
     productRecommendations,
     productTypeRecommendations,
+    productAnimeRecommendations,
     isAdmin,
   } = useLoaderData();
   const desc = product.descriptionHtml;
@@ -367,8 +365,18 @@ export default function ProductHandle() {
           isAdmin
         ></ReviewsSection>
       </div>
-      <ProductRecommendations recommendations={productRecommendations} />
-      <ProductRecommendations recommendations={productTypeRecommendations} />
+      <ProductRecommendations
+        recommendations={productAnimeRecommendations}
+        title={
+          getProductAnime(product.title) === undefined
+            ? `You may also like`
+            : `Shop ${getProductAnime(product.title)}`
+        }
+      />
+      <ProductRecommendations
+        recommendations={productTypeRecommendations}
+        title={`Shop ${getProductType(product.title)}s`}
+      />
     </section>
   );
 }

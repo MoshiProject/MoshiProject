@@ -6,16 +6,16 @@ import ProductCard from './ProductCard';
 
 type ProductRecommendationsProps = {
   recommendations: Product[];
+  title: string;
 };
 
 export default function ProductRecommendations({
   recommendations,
+  title,
 }: ProductRecommendationsProps) {
   return (
-    <div className="mt-12 swiper-container">
-      <h2 className="text-lg font-medium text-gray-900 mb-4">
-        You may also like
-      </h2>
+    <div className="mt-6 swiper-container">
+      <h2 className="text-lg font-medium text-gray-900 mb-4">{title}</h2>
       <Swiper
         slidesPerView={2}
         spaceBetween={10}
