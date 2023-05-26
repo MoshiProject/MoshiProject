@@ -11,18 +11,22 @@ import ProductRecommendations from '~/components/products/ProductRecommendations
 import {PRODUCT_QUERY, RECOMMENDATIONS_QUERY} from '~/queries/product';
 import AddToCartForm from '~/components/products/AddToCartForm';
 import ProductGallery from '~/components/products/ProductGallery';
-import {getProductType} from '~/functions/titleFilter';
+import {getProductType, productTypeHandles} from '~/functions/titleFilter';
 import ReviewsSection from '~/components/products/ReviewsSection';
 import Rand, {PRNG} from 'rand-seed';
 import {authors, shirtReviews} from '~/data/reviews';
 import ShippingEstimation from '~/components/products/ShippingEstimation';
 import Hero from '~/components/HomePage/Hero';
 import SizingChart from '~/components/products/SizingChart';
+import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
+  //###load necessary parameters
   const storeDomain = context.storefront.getShopifyDomain();
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
+
+  //###load admin mode if required
   const selectedOptions: Option[] = [];
   let isAdmin = false;
   // set selected options from the query string
@@ -30,7 +34,9 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     selectedOptions.push({name, value});
     isAdmin = name === 'mode' && value === 'admin';
   });
-  console.log('selected', selectedOptions, 'isAdmin', isAdmin);
+  //console.log('selected', selectedOptions, 'isAdmin', isAdmin);
+
+  //###load product
   const {product}: {product: Product} = await context.storefront.query(
     PRODUCT_QUERY,
     {
@@ -40,34 +46,10 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
       },
     },
   );
-
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
 
-  //handle recently viewed section
-  //get cookie data for recently Viewed
-  // const cookieHeader = request.headers.get('Cookie');
-  // const cookie = await recentlyViewedCookie.parse(cookieHeader);
-  // console.log('cookie', cookie.recentlyViewed);
-  // console.log(product.id);
-  // const recentlyViewed: any[] = cookie.recentlyViewed;
-  // let recentlyChanged = false;
-  // if (!recentlyViewed.includes(product.id)) {
-  //   recentlyChanged = true;
-  //   recentlyViewed.unshift(product.id);
-  //   if (recentlyViewed.length > 6) {
-  //     recentlyViewed.pop();
-  //   }
-  // } else if (recentlyViewed[0] !== product.id) {
-  //   recentlyChanged = true;
-  //   const index = recentlyViewed.indexOf(product.id);
-  //   if (index > -1) {
-  //     // only splice array when item is found
-  //     recentlyViewed.splice(index, 1); // 2nd parameter means remove one item only
-  //   }
-  //   recentlyViewed.unshift(product.id);
-  // }
   //handle product recommendations
   const {productRecommendations}: {productRecommendations: Product[]} =
     await context.storefront.query(RECOMMENDATIONS_QUERY, {
@@ -75,6 +57,41 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
         productId: product.id,
       },
     });
+  const cursor = searchParams.get('cursor');
+  const productType = getProductType(product.title);
+  const rev = false;
+  const sort = null;
+  const typeHandle = productTypeHandles[productType];
+  // const collectionId = collectionIdDict[typeHandle];
+  // const query = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-04/collections/${collectionId}/products.json`;
+  // console.log('query', query);
+  // Make a GET request to the Shopify Admin API to fetch a product
+  // const response = await fetch(query, {
+  //   headers: {
+  //     'X-Shopify-Access-Token': context.env.ADMIN_API_ACCESS_TOKEN,
+  //     'Content-Type': 'application/json',
+  //   },
+  // });
+  // console.log(
+  //   'context.env.ADMIN_API_ACCESS_TOKEN',
+  //   context.env.ADMIN_API_ACCESS_TOKEN,
+  // );
+  // const typeRecommendations = await response.json();
+
+  const {collection: productTypeRecommendations}: any =
+    await context.storefront.query(SMALL_COLLECTION_QUERY, {
+      variables: {
+        handle: typeHandle,
+        cursor,
+        rev,
+        sort,
+      },
+    });
+
+  console.log(
+    'productTypeRecommendations',
+    productTypeRecommendations.products.nodes,
+  );
   // optionally set a default variant so you always have an "orderable" product selected
   const selectedVariant: Variant =
     product.selectedVariant ?? product?.variants?.nodes[0];
@@ -134,34 +151,15 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     generatedReviews.push(review);
     generatedReviews = [...new Set(generatedReviews)];
   }
-  // console.log('generatedReviews', generatedReviews.length);
-  // console.log('generatedReviews', generatedReviews);
-  // if (!recentlyChanged) {
-  //   return json({
-  //     judgeReviews,
-  //     product,
-  //     selectedVariant,
-  //     storeDomain,
-  //     productRecommendations,
-  //   });
-  // } else {
-  return json(
-    {
-      judgeReviews,
-      product,
-      selectedVariant,
-      storeDomain,
-      productRecommendations,
-      isAdmin,
-    },
-    // {
-    //   headers: {
-    //     'Set-Cookie': await recentlyViewedCookie.serialize({
-    //       recentlyViewed: recentlyViewed,
-    //     }),
-    //   },
-    // },
-  );
+  return json({
+    judgeReviews,
+    product,
+    selectedVariant,
+    storeDomain,
+    productRecommendations,
+    productTypeRecommendations: productTypeRecommendations.products.nodes,
+    isAdmin,
+  });
 };
 // };
 
@@ -172,13 +170,11 @@ export default function ProductHandle() {
     selectedVariant,
     storeDomain,
     productRecommendations,
+    productTypeRecommendations,
     isAdmin,
   } = useLoaderData();
-  //console.log('description', product.descriptionHtml);
   const desc = product.descriptionHtml;
-  //console.log('index', desc.indexOf('<ul>'));
   const data = useActionData();
-  console.log('actiondata', data);
   const composition =
     desc.indexOf('<ul>') !== -1
       ? desc.substring(desc.indexOf('<ul>'), desc.lastIndexOf('</ul>') + 5)
@@ -189,7 +185,6 @@ export default function ProductHandle() {
   if (composition.length > 0) {
     description = description.replace(composition, '');
   }
-  //console.log(composition);
   const orderable = selectedVariant?.availableForSale || false;
   return (
     <section className="w-full gap-2 px-5 md:pl-48 md:gap-8 grid  md:px-10 md:mt-16">
@@ -217,7 +212,6 @@ export default function ProductHandle() {
               </div>
               <div className="flex justify-center mt-1 md:justify-start md:items-start">
                 <span className="text-xs text-neutral-500 uppercase">
-                  {' '}
                   Free Shipping + Tax Included
                 </span>
               </div>
@@ -374,6 +368,7 @@ export default function ProductHandle() {
         ></ReviewsSection>
       </div>
       <ProductRecommendations recommendations={productRecommendations} />
+      <ProductRecommendations recommendations={productTypeRecommendations} />
     </section>
   );
 }

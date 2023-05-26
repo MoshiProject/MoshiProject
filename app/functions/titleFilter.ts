@@ -19,6 +19,35 @@ export const animeNames = [
   'Cowboy Bebop',
   'JoJo Bizarre Adventure',
 ];
+// export const animeHandles = { 'Neon Genesis Evangelion': "neon-genesis-evangelion",
+// 'Jujutsu Kaisen':"jujutsu-kaisen",
+// 'Demon Slayer': "kimetsu-no-yaiba",
+// 'Attack On Titan':"attack-on-titan",
+// 'Attack on Titan':"attack-on-titan",
+// 'Naruto Shippuden':"naruto",
+// 'Hunter X Hunter': "hunter-x-hunter",
+// 'My Hero Academia':"my-hero-academia",
+// 'One Piece',
+// 'Fullmetal Alchemist Brotherhood',
+// 'Chainsaw Man',
+// 'Berserk',
+// 'Mob Psycho',
+// 'Violet Evergarden',
+// 'Tokyo Ghoul',
+// 'Cowboy Bebop',
+// 'JoJo Bizarre Adventure',}
+
+export const productTypeHandles = {
+  Hoodie: 'hoodie',
+  Tee: 't-shirt',
+  Sweatshirt: 'sweatshirts',
+};
+
+export const collectionIdDict = {
+  hoodie: 262228574413,
+  sweatshirts: 262228410573,
+  't-shirt': 262228672717,
+};
 
 export const productTypes = [
   'Sweatshirt',
@@ -199,6 +228,14 @@ export const getProductType = (productTitle: string) => {
   for (const type of productTypes) {
     if (cleanTitle.includes(type)) {
       return type;
+    }
+  }
+};
+export const getProductAnime = (productTitle: string) => {
+  const cleanTitle = titleCleanup(productTitle);
+  for (const anime of animeNames) {
+    if (cleanTitle.includes(anime)) {
+      return anime;
     }
   }
 };

@@ -23,7 +23,7 @@ export function FeaturedProductGrid({
 
   const isInView = useInView(ref);
   return (
-    <div className="flex  flex-col mt-2 lg:mt-4">
+    <div className="flex  flex-col mt-2 lg:mt-4 md:mx-[-48px]">
       <h3 className={titleStyling}>BEST SELLERS</h3>
       <Link
         to="/collections/featured-products"
