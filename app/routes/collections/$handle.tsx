@@ -50,7 +50,6 @@ export async function loader({params, context, request}: LoaderArgs) {
       ].rev
     : null;
 
-  console.log(handle, cursor, rev, sort, 'woooo ');
   const {collection}: any = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
       handle,
@@ -59,8 +58,6 @@ export async function loader({params, context, request}: LoaderArgs) {
       sort,
     },
   });
-  console.log(collection);
-  // console.log(collection.products.nodes);
   //filtering tags setup
   collection.products.nodes = collection.products.nodes.map(
     (product: Product) => {

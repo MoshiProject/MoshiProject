@@ -24,7 +24,6 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
       Math.floor((averageRating - Math.floor(averageRating)) * 100),
     );
   }, [averageRating]);
-  console.log('part', averageRating, partialStarWidth);
   return (
     <div className="p-4 w-full md:w-1/2 m-auto mt-4">
       <div className="flex justify-center mb-4">
@@ -34,7 +33,6 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
         <div className="flex items-center justify-center ml-1 mr-4">
           {[0, 1, 2, 3, 4].map((star) => {
             if (!(averageRating - star < 1 && averageRating - star > 0)) {
-              console.log(star);
               return (
                 <StarIcon
                   key={star}
@@ -44,7 +42,6 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
                 />
               );
             } else {
-              console.log(star);
               return (
                 <div
                   key={star}

@@ -37,6 +37,8 @@ const AboutUs = () => {
           <a href="/">
             <span className="sr-only">MoshiProject</span>
             <Image
+              width={'full'}
+              height={'full'}
               data={{
                 url: logoURL,
                 altText: 'item.imageAlt',

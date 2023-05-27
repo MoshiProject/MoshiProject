@@ -96,7 +96,6 @@ export async function action({request, context}: ActionArgs) {
 
 export default function Cart() {
   const {cart} = useLoaderData();
-  console.log('carta', cart);
   if (cart?.totalQuantity > 0)
     return (
       <div className="w-full max-w-6xl mx-auto pb-12 grid md:grid-cols-2 md:items-start gap-8 md:gap-8 lg:gap-12">

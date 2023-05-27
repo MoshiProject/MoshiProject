@@ -140,7 +140,7 @@ export default function ProductOptions({
                     to={`${pathname}?${linkParams.toString()}`}
                     preventScrollReset
                     replace
-                    className={`w-9 h-9 flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer transition-all duration-200 rounded-sm ${
+                    className={`w-fit md:px-1 h-9 min-w-[36px] flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer transition-all duration-200 rounded-sm ${
                       isSelected
                         ? 'border-neutral-800 border-2 p-1 bg-clip-content font-semibold'
                         : 'border-neutral-300 font-normal '

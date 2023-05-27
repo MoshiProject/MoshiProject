@@ -5,7 +5,6 @@ export default function MegaMenuMobile() {
   return (
     <div className={'text-white mt-6 mb-3 mx-4'}>
       {navigation.map((item) => {
-        console.log('item', item);
         if (item.children && item.children.length === 0) {
           return (
             <a

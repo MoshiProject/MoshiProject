@@ -8,10 +8,8 @@ type LayoutProps = {
 import {useMatches} from '@remix-run/react';
 import {useDrawer} from './Drawer';
 import FooterMenu from './FooterMenu/FooterMenu';
-import RecentlyViewed from './products/RecentlyViewed';
 
-export function Layout({children, title, recentlyViewed}: LayoutProps) {
-  console.log('Layout', recentlyViewed);
+export function Layout({children, title}: LayoutProps) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const [root] = useMatches();
   // Test opening the drawer, delete this after verifying

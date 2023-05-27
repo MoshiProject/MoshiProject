@@ -10,8 +10,8 @@ const ShippingEstimation: React.FC<ShippingEstimationProps> = () => {
   const estimatedHighDeliveryDate = new Date(currentDate);
   estimatedHighDeliveryDate.setDate(currentDate.getDate() + 8); // Add 5-8 days to current date
   return (
-    <div className="">
-      <span className="text-xs font-medium text-neutral-600">
+    <div className="flex justify-center">
+      <span className="text-xs text-center font-medium text-neutral-600">
         Estimated Delivery between{' '}
         <span className=" font-bold text-black">
           {estimatedLowDeliveryDate

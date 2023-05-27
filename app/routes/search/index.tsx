@@ -25,7 +25,6 @@ export async function loader({params, context, request}: LoaderArgs) {
   const searchParams = new URL(request.url).searchParams;
   const sortParam = searchParams.get('sort');
   const query = `title:${searchParams.get('query')}`;
-  console.log(query);
   const sortDict = {
     title_asc: {sort: 'TITLE', rev: true},
     title_desc: {sort: 'TITLE', rev: false},
@@ -55,7 +54,6 @@ export async function loader({params, context, request}: LoaderArgs) {
       sort,
     },
   });
-  console.log(products);
   // console.log(collection.products.nodes);
   //filtering tags setup
   products.nodes = products.nodes.map((product: Product) => {

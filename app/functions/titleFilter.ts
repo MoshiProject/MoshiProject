@@ -39,8 +39,15 @@ export const animeNames = [
 
 export const productTypeHandles = {
   Hoodie: 'hoodie',
-  Tee: 't-shirt',
+  Shirt: 't-shirt',
   Sweatshirt: 'sweatshirts',
+  Figure: 'figurines',
+  Stickers: 'stickers',
+  Mug: 'mugs',
+  'Mouse Pad': 'mouse-pads',
+  '3D Lamp': '3d-lamp',
+  'Phone Case': 'phone-cases',
+  Case: 'phone-cases',
 };
 
 export const productAnimeHandles = {
@@ -72,21 +79,22 @@ export const collectionIdDict = {
 export const productTypes = [
   'Sweatshirt',
   'Hoodie',
-  'Tee',
+  'Shirt',
   'Figure',
   'Stickers',
   'Mug',
   'Mouse Pad',
   '3D Lamp',
   'Phone Case',
+  'Case',
 ];
 
 export const titleCleanup = (title: string) => {
   return title
-    .replace('T-Shirt', 'Tee')
-    .replace('Shirt', 'Tee')
+    .replace('T-Shirt', 'Shirt')
+    .replace('Shirt', 'Shirt')
     .replace('3d', '3D')
-    .replace('T-shirt', 'Tee')
+    .replace('T-shirt', 'Shirt')
     .replace('Unisex Heavy Blend™ Crewneck ', '')
     .replace('Heavy Blend™ Crewneck ', '')
     .replace('Heavy Blend™', '')

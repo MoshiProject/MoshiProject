@@ -52,7 +52,6 @@ export async function action({request, context, params}: ActionArgs) {
   const body = await request.formData();
   const userEmail = body.get('user_email');
   const orderNumber = body.get('order_number');
-  console.log(userEmail, orderNumber);
 
   const query = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/${LATEST_API_VERSION}/orders.json?fields=created_at,id,shipping_lines,order_number,fulfillments,customer,shipping_address,line_items,fulfillment_status,name,total-price,email&status=any&email=${userEmail}`;
   // Make a GET request to the Shopify Admin API to fetch a product
@@ -67,7 +66,6 @@ export async function action({request, context, params}: ActionArgs) {
   const order = user.orders.filter((ord) => {
     return ord.order_number === Number(orderNumber);
   })[0];
-  console.log(order);
 
   return order;
 }
@@ -78,7 +76,6 @@ function OrderDetails() {
   const [orderNumber, setOrderNumber] = useState(1);
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
-  console.log('data', order);
 
   return (
     <>

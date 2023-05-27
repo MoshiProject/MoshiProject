@@ -48,7 +48,6 @@ function CollectionFilter({
   });
   options = options
     .filter((filter) => {
-      console.log(filter.value);
       return filter.value != undefined && filter.value != '' && filter.value;
     })
     .filter(

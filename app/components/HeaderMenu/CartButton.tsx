@@ -8,7 +8,6 @@ import {useEffect} from 'react';
 export default function CartButton(cart: any) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
-  console.log('cart', cart);
   // Grab all the fetchers that are adding to cart
   const addToCartFetchers = [];
   for (const fetcher of fetchers) {

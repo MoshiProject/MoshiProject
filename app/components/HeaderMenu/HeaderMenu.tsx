@@ -68,10 +68,13 @@ export default function HeaderMenu({cart}: any) {
                     <a href="/">
                       <span className="sr-only">MoshiProject</span>
                       <Image
+                        sizes="h-10 md:h-14"
                         data={{
                           url: logoURL,
                           altText: 'logo',
                         }}
+                        width={'full'}
+                        height={'full'}
                         className="object-cover object-center h-10 md:h-14"
                       />
                     </a>
@@ -171,6 +174,8 @@ export default function HeaderMenu({cart}: any) {
                           url: logoURL,
                           altText: 'item.imageAlt',
                         }}
+                        width={'full'}
+                        height={'full'}
                         className="object-cover object-center h-10 md:h-16"
                       />
                     </a>
@@ -192,6 +197,8 @@ export default function HeaderMenu({cart}: any) {
                         url: logoURL,
                         altText: 'item.imageAlt',
                       }}
+                      width={'full'}
+                      height={'full'}
                       className="object-cover object-center h-10"
                     />
                   </a>

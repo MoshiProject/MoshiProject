@@ -163,6 +163,8 @@ const FooterMenu: React.FC = () => {
                 altText: 'item.imageAlt',
               }}
               className="object-cover object-center h-12 rounded-lg"
+              width={'full'}
+              height={'full'}
             />
           </a>
         </div>

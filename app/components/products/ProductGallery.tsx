@@ -8,7 +8,7 @@ import {
   MagnifyingGlassCircleIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
-
+import {Image} from '@shopify/hydrogen';
 export default function ProductGallery({
   media,
 }: {
@@ -21,13 +21,51 @@ export default function ProductGallery({
 }) {
   const [firstSwiper, setFirstSwiper] = useState(null);
   const [secondSwiper, setSecondSwiper] = useState(null);
-  console.log('first', firstSwiper);
   const typeNameMap = {
     MODEL_3D: 'Model3d',
     VIDEO: 'Video',
     IMAGE: 'MediaImage',
     EXTERNAL_VIDEO: 'ExternalVideo',
   };
+  const swiperSlides = media.map((med, i) => {
+    let extraProps = {};
+
+    if (med.mediaContentType === 'MODEL_3D') {
+      extraProps = {
+        interactionPromptThreshold: '0',
+        ar: true,
+        loading: 'eager',
+        disableZoom: true,
+        style: {height: '100%', margin: '0 auto'},
+      };
+    }
+
+    const data = {
+      ...med,
+      __typename: typeNameMap[med.mediaContentType] || typeNameMap['IMAGE'],
+      image: {
+        ...med.image,
+        altText: med.alt || 'Product image',
+      },
+    };
+
+    return (
+      <SwiperSlide
+        key={data.id || data.image.id}
+        onClick={() => {
+          if (firstSwiper !== null) firstSwiper.slideTo(i, 300, false);
+          if (secondSwiper !== null) secondSwiper.slideTo(i, 300, false);
+        }}
+      >
+        <Image
+          data={data.image}
+          loading="eager"
+          sizes="20vw"
+          alt={data.image.altText}
+        ></Image>
+      </SwiperSlide>
+    );
+  });
   return (
     <div className="swiper-container w-full max-w-full max-h-full h-fit flex-col md:flex md:flex-row">
       <div className="hidden md:block w-fit">
@@ -50,51 +88,10 @@ export default function ProductGallery({
           }}
           className="w-fit max-w-fit"
         >
-          {media.map((med, i) => {
-            let extraProps = {};
-
-            if (med.mediaContentType === 'MODEL_3D') {
-              extraProps = {
-                interactionPromptThreshold: '0',
-                ar: true,
-                loading: 'eager',
-                disableZoom: true,
-                style: {height: '100%', margin: '0 auto'},
-              };
-            }
-
-            const data = {
-              ...med,
-              __typename:
-                typeNameMap[med.mediaContentType] || typeNameMap['IMAGE'],
-              image: {
-                ...med.image,
-                altText: med.alt || 'Product image',
-              },
-            };
-
-            return (
-              <SwiperSlide
-                key={data.id || data.image.id}
-                onClick={() => {
-                  if (firstSwiper !== null) firstSwiper.slideTo(i, 300, false);
-                  if (secondSwiper !== null)
-                    secondSwiper.slideTo(i, 300, false);
-                }}
-              >
-                <MediaFile
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  //@ts-ignore
-                  data={data}
-                  {...extraProps}
-                  className="md:h-24"
-                />
-              </SwiperSlide>
-            );
-          })}
+          {swiperSlides}
         </Swiper>
       </div>
-      <div className="w-11/12">
+      <div className="md:w-11/12">
         {' '}
         <Swiper
           modules={[Controller]}
@@ -115,7 +112,6 @@ export default function ProductGallery({
           className="mySwiper w-[120%]  max-w-[120%] ml-[-10%] mb-4 md:w-full md:w-max-full "
         >
           {media.map((med, i) => {
-            console.log('med', med);
             let extraProps = {};
 
             if (med.mediaContentType === 'MODEL_3D') {
@@ -137,10 +133,15 @@ export default function ProductGallery({
                 altText: med.alt || 'Product image',
               },
             };
-
+            console.log(data);
             return (
               <SwiperSlide key={data.id || data.image.id}>
-                <ImageModal data={data}></ImageModal>
+                <Image
+                  data={data.image}
+                  loading="eager"
+                  sizes="100vw"
+                  alt={data.image.altText}
+                ></Image>
               </SwiperSlide>
             );
           })}
@@ -174,47 +175,7 @@ export default function ProductGallery({
           }}
           className="w-full max-w-full"
         >
-          {media.map((med, i) => {
-            let extraProps = {};
-
-            if (med.mediaContentType === 'MODEL_3D') {
-              extraProps = {
-                interactionPromptThreshold: '0',
-                ar: true,
-                loading: 'eager',
-                disableZoom: true,
-                style: {height: '100%', margin: '0 auto'},
-              };
-            }
-
-            const data = {
-              ...med,
-              __typename:
-                typeNameMap[med.mediaContentType] || typeNameMap['IMAGE'],
-              image: {
-                ...med.image,
-                altText: med.alt || 'Product image',
-              },
-            };
-
-            return (
-              <SwiperSlide
-                key={data.id || data.image.id}
-                onClick={() => {
-                  if (firstSwiper !== null) firstSwiper.slideTo(i, 300, false);
-                  if (secondSwiper !== null)
-                    secondSwiper.slideTo(i, 300, false);
-                }}
-              >
-                <MediaFile
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  //@ts-ignore
-                  data={data}
-                  {...extraProps}
-                />
-              </SwiperSlide>
-            );
-          })}
+          {swiperSlides}
         </Swiper>
       </div>
     </div>

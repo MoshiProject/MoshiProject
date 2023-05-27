@@ -11,7 +11,7 @@ import ProductRecommendations from '~/components/products/ProductRecommendations
 import {PRODUCT_QUERY, RECOMMENDATIONS_QUERY} from '~/queries/product';
 import AddToCartForm from '~/components/products/AddToCartForm';
 import ProductGallery from '~/components/products/ProductGallery';
-import {
+import titleFilter, {
   getProductAnime,
   getProductType,
   productAnimeHandles,
@@ -39,7 +39,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     selectedOptions.push({name, value});
     isAdmin = name === 'mode' && value === 'admin';
   });
-  //console.log('selected', selectedOptions, 'isAdmin', isAdmin);
+  console.log('selected', selectedOptions, 'isAdmin', isAdmin);
 
   //###load product
   const {product}: {product: Product} = await context.storefront.query(
@@ -65,7 +65,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 
   const productAnime = getProductAnime(product.title);
   const animeHandle = productAnimeHandles[productAnime];
-  console.log('animeHandle', animeHandle);
+  console.log(product.title);
 
   const {collection: productTypeRecommendations}: any =
     await context.storefront.query(SMALL_COLLECTION_QUERY, {
@@ -76,7 +76,6 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
         sort,
       },
     });
-
   const animeCollectionExists = animeHandle !== undefined;
   const {collection: productAnimeRecommendations}: any =
     await context.storefront.query(SMALL_COLLECTION_QUERY, {
@@ -152,9 +151,9 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     product,
     selectedVariant,
     storeDomain,
-    productAnimeRecommendations: productAnimeRecommendations.products.nodes,
+    productAnimeRecommendations: productAnimeRecommendations?.products?.nodes,
 
-    productTypeRecommendations: productTypeRecommendations.products.nodes,
+    productTypeRecommendations: productTypeRecommendations?.products?.nodes,
     isAdmin,
   });
 };
@@ -185,17 +184,17 @@ export default function ProductHandle() {
   }
   const orderable = selectedVariant?.availableForSale || false;
   return (
-    <section className="w-full gap-2 px-5 md:pl-48 md:gap-8 grid  md:px-10 md:mt-16">
+    <section className="w-full gap-2 px-5  md:gap-8 grid  md:px-24 md:mt-16">
       <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit mt-4">
           <ProductGallery media={product.media.nodes} />
         </div>
-        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[36rem] grid lg:gap-6 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
+        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[48rem] grid lg:gap-6 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2 first:mt-4">
-            <h1 className="text-center md:text-start text-2xl font-bold leading-8 whitespace-normal uppercase">
-              {product.title}
+            <h1 className="text-center tracking-widest md:text-start text-2xl md:text-3xl md:font-semibold font-bold leading-8 whitespace-normal uppercase">
+              {titleFilter(product.title)}
             </h1>
-            <div className="flex-col justify-center items-center md:justify-start md:items-start">
+            <div className="grid gap-2 justify-center items-center md:justify-start md:items-start">
               <div className="flex justify-center md:justify-start md:items-start">
                 <Money
                   withoutTrailingZeros
@@ -222,7 +221,7 @@ export default function ProductHandle() {
           />
           {orderable && (
             <div className="space-y-2 w-full">
-              <span className="md:flex hidden">
+              <span className="md:block hidden ">
                 <SizingChart productType={getProductType(product.title)} />
               </span>
               <div>
@@ -349,16 +348,8 @@ export default function ProductHandle() {
           </Accordion>
         </div>
       </div>
-      <div className="hidden">
-        <Hero
-          // title="SPRING 2023"
-          subtitle="PLACEHOLDER IMAGE TO MAKE THE WEBSITE FEEL MORE ALIVE"
-          buttonText="Shop Now →"
-          imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/3.5sec.gif?v=1681722723"
-          isGif
-        />
-      </div>
-      <div className="hidden">
+      <div className="hidden"></div>
+      <div className="">
         <ReviewsSection
           product={product}
           judgeReviews={judgeReviews}

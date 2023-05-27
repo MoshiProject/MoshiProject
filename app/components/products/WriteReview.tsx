@@ -15,7 +15,6 @@ function WriteReview({isAdmin}: {isAdmin: boolean}) {
   const [sent, setSent] = useState(false);
   const [rating, setRating] = useState(5);
   const [hover, setHover] = useState(5);
-  console.log('data', order);
   return (
     <>
       {open ? (

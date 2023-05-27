@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Dialog, Transition, Switch} from '@headlessui/react';
 import useScrollDirection from '~/functions/useScrollDirection';
 
-const SizingChartModal: React.FC = ({productType}) => {
+const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [unit, setUnit] = useState('in');
   const scrollDirection = useScrollDirection();
@@ -22,7 +22,6 @@ const SizingChartModal: React.FC = ({productType}) => {
     Hoodie: hoodieChart,
   };
   const data = productTypeMap[productType];
-  console.log(data);
   return (
     <>
       {data && (

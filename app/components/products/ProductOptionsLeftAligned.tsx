@@ -44,7 +44,6 @@ export default function ProductOptions({options, selectedVariant}) {
           return;
         }
         const isColor = option.name.toLowerCase() === 'color';
-        console.log(isColor);
         // get the currently selected option value
         const currentOptionVal = searchParams.get(option.name);
         return (
