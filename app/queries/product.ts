@@ -234,6 +234,11 @@ export const PRODUCT_QUERY = `#graphql
         nodes {
           id
           title
+          image {
+            id
+            url
+            
+          }
           availableForSale
           price {
             currencyCode

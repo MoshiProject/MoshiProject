@@ -24,6 +24,7 @@ import ShippingEstimation from '~/components/products/ShippingEstimation';
 import Hero from '~/components/HomePage/Hero';
 import SizingChart from '~/components/products/SizingChart';
 import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
+import {useEffect, useState} from 'react';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
   //###load necessary parameters
@@ -65,7 +66,6 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 
   const productAnime = getProductAnime(product.title);
   const animeHandle = productAnimeHandles[productAnime];
-  console.log(product.title);
 
   const {collection: productTypeRecommendations}: any =
     await context.storefront.query(SMALL_COLLECTION_QUERY, {
@@ -171,6 +171,7 @@ export default function ProductHandle() {
     isAdmin,
   } = useLoaderData();
   const desc = product.descriptionHtml;
+  const [selectedImage, setSelectedImage] = useState(selectedVariant.image.url);
   const data = useActionData();
   const composition =
     desc.indexOf('<ul>') !== -1
@@ -182,12 +183,22 @@ export default function ProductHandle() {
   if (composition.length > 0) {
     description = description.replace(composition, '');
   }
+  // console.log('media', product.media.nodes);
+  // console.log('product image', product.selectedVariant.image.url);
+  // console.log('selectedVariant ', selectedVariant);
+  // console.log('options ', product.options);
+  useEffect(() => {
+    setSelectedImage(selectedVariant.image.url);
+  }, [selectedVariant]);
   const orderable = selectedVariant?.availableForSale || false;
   return (
     <section className="w-full gap-2 px-5  md:gap-8 grid  md:px-24 md:mt-16">
       <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit mt-4">
-          <ProductGallery media={product.media.nodes} />
+          <ProductGallery
+            media={product.media.nodes}
+            selectedImage={selectedImage}
+          />
         </div>
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[48rem] grid lg:gap-6 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2 first:mt-4">
@@ -196,11 +207,13 @@ export default function ProductHandle() {
             </h1>
             <div className="grid gap-2 justify-center items-center md:justify-start md:items-start">
               <div className="flex justify-center md:justify-start md:items-start">
-                <Money
-                  withoutTrailingZeros
-                  data={selectedVariant.compareAtPrice}
-                  className="text-lg font-semibold text-neutral-800 line-through	mr-3"
-                />
+                {selectedVariant.compareAtPrice && (
+                  <Money
+                    withoutTrailingZeros
+                    data={selectedVariant.compareAtPrice}
+                    className="text-lg font-semibold text-neutral-800 line-through	mr-3"
+                  />
+                )}
                 <Money
                   withoutTrailingZeros
                   data={selectedVariant.price}

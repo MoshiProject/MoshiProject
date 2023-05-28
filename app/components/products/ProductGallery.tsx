@@ -9,8 +9,11 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 import {Image} from '@shopify/hydrogen';
+import {useEffect} from 'react';
+
 export default function ProductGallery({
   media,
+  selectedImage,
 }: {
   media: {
     mediaContentType: 'MODEL_3D' | 'VIDEO' | 'IMAGE' | 'EXTERNAL_VIDEO';
@@ -18,9 +21,26 @@ export default function ProductGallery({
     alt: string;
     id: string;
   }[];
+  selectedImage: string;
 }) {
+  const getSelectedImageIndex = () => {
+    for (let i = 0; i < media.length; i++) {
+      if (media[i].image.url === selectedImage) {
+        return i;
+      }
+    }
+    return 0;
+  };
+
   const [firstSwiper, setFirstSwiper] = useState(null);
   const [secondSwiper, setSecondSwiper] = useState(null);
+
+  useEffect(() => {
+    const ind = getSelectedImageIndex();
+    if (firstSwiper !== null) firstSwiper.slideTo(ind, 300, false);
+    if (secondSwiper !== null) secondSwiper.slideTo(ind, 300, false);
+  }, [selectedImage]);
+
   const typeNameMap = {
     MODEL_3D: 'Model3d',
     VIDEO: 'Video',
@@ -133,7 +153,6 @@ export default function ProductGallery({
                 altText: med.alt || 'Product image',
               },
             };
-            console.log(data);
             return (
               <SwiperSlide key={data.id || data.image.id}>
                 <Image
