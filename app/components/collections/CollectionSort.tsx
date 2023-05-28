@@ -35,7 +35,7 @@ export default function CollectionSort() {
         <>
           <div className="relative">
             <Listbox.Button
-              className={`w-48 h-full pl-1 pr-1 text-xs font-medium border-gray-300 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md`}
+              className={`w-48 h-full pl-1 pr-1 text-xs tracking-widest font-medium border-gray-300 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md`}
             >
               {/* <span className={`block truncate`}>
                 Sort:{' '}
@@ -48,7 +48,7 @@ export default function CollectionSort() {
                 />
               </span> */}
               <div className="flex h-full justify-end items-center border-r border-neutral-400 pr-2">
-                <span className=" text-center">
+                <span className=" text-center tracking-widest">
                   {
                     sortOptions.find((o) => o.value === selectedSortOption)
                       .label
@@ -58,7 +58,7 @@ export default function CollectionSort() {
               </div>
             </Listbox.Button>
             <Listbox.Options
-              className={`absolute z-10 w-full py-1 mt-1 overflow-auto text-sm bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}
+              className={`absolute z-10 w-full py-1 mt-1 overflow-auto text-sm tracking-widest  bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}
             >
               {sortOptions.map((option) => (
                 <Listbox.Option
@@ -66,7 +66,7 @@ export default function CollectionSort() {
                   value={option.value}
                   className={`cursor-default select-none relative py-2 pl-2 pr-4 ${
                     selectedSortOption === option.value
-                      ? 'font-semibold bg-red-600 text-white'
+                      ? 'font-semibold bg-red-600 text-white tracking-widest'
                       : ''
                   } ${
                     open && selectedSortOption === option.value
@@ -85,7 +85,7 @@ export default function CollectionSort() {
                       </span>
                       {selected ? (
                         <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                          className={`absolute inset-y-0 left-0 tracking-widest flex items-center pl-3 ${
                             open ? 'text-white' : 'text-red-600'
                           }`}
                         >

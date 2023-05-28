@@ -100,7 +100,7 @@ function CollectionFilter({
                 >
                   {selected.includes(option.value) && <CheckBoxIcon />}
                 </Switch>
-                <span className="text-white text-sm font-light">
+                <span className="text-white tracking-widest text-sm font-light">
                   {option.label}
                 </span>
               </div>

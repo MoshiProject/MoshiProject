@@ -37,7 +37,7 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
       >
         {isDiscounted && (
           // eslint-disable-next-line jsx-a11y/label-has-associated-control
-          <label className="subpixel-antialiased absolute top-0 right-0 text-right text-notice text-white bg-neutral-900 p-1 font-semibold text-[10px]">
+          <label className="subpixel-antialiased absolute top-0 right-0 text-right tracking-widest text-notice text-white bg-neutral-900 p-1 font-semibold text-[10px]">
             Sale
           </label>
         )}
@@ -45,15 +45,15 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
           className={`rounded relative ${
             product.handle.toLowerCase().includes('hoodie')
               ? row
-                ? 'w-[40%] mb-2'
+                ? 'w-[40%] mb-0'
                 : 'w-[120%] ml-[-10%] md:mb-8 mb-4'
               : product.handle.toLowerCase().includes('sweatshirt')
               ? row
-                ? 'w-[40%] mb-2'
-                : 'w-[130%] ml-[-15%] mb-2'
+                ? 'w-[40%] mb-0'
+                : 'w-[130%] ml-[-15%] mb-0'
               : row
-              ? 'w-[40%] mb-2'
-              : 'w-[120%] ml-[-10%] mb-2'
+              ? 'w-[40%] mb-0'
+              : 'w-[120%] ml-[-10%] mb-0'
           } overflow-hidden`}
         >
           <Image
@@ -65,15 +65,15 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
             className={`overflow-hidden ${
               product.handle.toLowerCase().includes('hoodie')
                 ? row
-                  ? 'w-[40%] mb-2'
-                  : 'w-[115%]  mb-2'
+                  ? 'w-[40%] mb-0'
+                  : 'w-[115%]  mb-0'
                 : product.handle.toLowerCase().includes('sweatshirt')
                 ? row
-                  ? 'w-[40%] mb-2'
-                  : 'w-[135%] mb-2'
+                  ? 'w-[40%] mb-0'
+                  : 'w-[135%] mb-0'
                 : row
-                ? 'w-[40%] mb-2'
-                : 'w-[120%] mb-2'
+                ? 'w-[40%] mb-0'
+                : 'w-[120%] mb-0'
             }`}
           />
         </div>
@@ -85,14 +85,16 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
           }`}
         >
           <h3
-            className={`max-w-prose text-copy w-full overflow-hidden whitespace-wrap text-center text-ellipsis ${
-              row ? 'text-lg font-semibold' : 'text-sm font-semibold '
+            className={`max-w-prose text-copy w-full overflow-hidden whitespace-wrap tracking-widest text-center text-ellipsis ${
+              row
+                ? 'text-lg font-semibold'
+                : 'text-sm md:text-base font-semibold '
             }`}
           >
             {titleFilter(product.title)}
           </h3>
           <div className="flex gap-2 justify-center mb-3">
-            <span className="max-w-prose whitespace-pre-wrap inherit text-copy flex gap-1 text-center font-semibold text-xs">
+            <span className="max-w-prose whitespace-pre-wrap inherit text-copy tracking-widest flex gap-1 text-center font-semibold text-xs md:text-base">
               <Money withoutTrailingZeros data={price} />
               {isDiscounted && (
                 <Money

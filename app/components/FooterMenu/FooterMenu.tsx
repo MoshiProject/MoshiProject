@@ -17,7 +17,7 @@ const FooterAccordion: React.FC<{
   return (
     <>
       <button
-        className="flex justify-between border-t border-neutral-800 uppercase tracking-[.2em] items-center w-full p-5  text-xs font-medium text-white bg-neutral-950 focus:outline-none hover:bg-neutral-950"
+        className="flex justify-between border-t border-neutral-800 uppercase tracking-[.2em] items-center w-full p-5  text-xs tracking-widest font-medium text-white bg-neutral-950 focus:outline-none hover:bg-neutral-950"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="w-1/3"></span>
@@ -33,7 +33,7 @@ const FooterAccordion: React.FC<{
       </button>
       {isOpen && (
         <motion.div
-          className=" pb-4 text-xs text-white tracking-[.15em]"
+          className=" pb-4 text-xs tracking-widest text-white tracking-[.15em]"
           initial={{height: 0}}
           animate={{height: isOpen ? 'auto' : 0}}
           transition={{duration: 0.2}}
@@ -135,12 +135,12 @@ const FooterMenu: React.FC = () => {
                 <FooterAccordion title={item.title} links={item.links} />
               </div>
               <div className="hidden md:block">
-                <div className="text-white capitalize px-6 text-center">
-                  <div className=" text-2xl ">{item.title}</div>
+                <div className="text-white tracking-widest capitalize px-6 text-center">
+                  <div className=" text-2xl tracking-widest">{item.title}</div>
                   {item.links.map((link) => {
                     return (
                       <a
-                        className="text-md block"
+                        className="text-md block tracking-widest"
                         key={link.label}
                         href={link.url}
                       >
@@ -168,7 +168,7 @@ const FooterMenu: React.FC = () => {
             />
           </a>
         </div>
-        <div className="text-xs text-white mb-4 text-center w-full ">
+        <div className="text-xs text-white mb-4 text-center w-full tracking-widest">
           © 2023 MoshiProject. All Rights Reserved.
         </div>
       </div>

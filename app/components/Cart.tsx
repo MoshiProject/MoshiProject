@@ -32,8 +32,12 @@ function LineItem({lineItem}: {lineItem: LineItemType}) {
         >
           {merchandise.product.title}
         </Link>
-        <div className="text-neutral-200 text-sm">{merchandise.title}</div>
-        <div className="text-neutral-200 text-sm">Qty: {quantity}</div>
+        <div className="text-neutral-200 text-sm tracking-widest">
+          {merchandise.title}
+        </div>
+        <div className="text-neutral-200 text-sm tracking-widest">
+          Qty: {quantity}
+        </div>
         <ItemRemoveButton lineIds={[lineItem.id]} />
       </div>
       <div className="flex flex-col items-end">

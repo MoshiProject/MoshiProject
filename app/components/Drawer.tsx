@@ -35,17 +35,17 @@ function Drawer({open, onClose, children}: any) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="max-w-lg bg-neutral-950 text-white transform text-left align-middle shadow-xl transition-all antialiased flex flex-col">
+                <Dialog.Panel className="max-w-lg bg-neutral-950 text-white tracking-widest transform text-left align-middle shadow-xl transition-all antialiased flex flex-col">
                   <header className="sticky top-0 flex items-center justify-between px-4 h-24 sm:px-8 md:px-12 flex-0">
                     <h2
                       id="cart-contents"
-                      className="whitespace-pre-wrap max-w-prose font-bold text-lg"
+                      className="whitespace-pre-wrap max-w-prose font-bold text-lg tracking-widest"
                     >
                       Cart
                     </h2>
                     <button
                       type="button"
-                      className="p-4 my-4 transition text-primary hover:text-primary/50"
+                      className="p-4 my-4 transition text-primary  tracking-widest hover:text-primary/50"
                       onClick={onClose}
                     >
                       <IconClose aria-label="Close panel" />

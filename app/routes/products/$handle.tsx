@@ -221,7 +221,7 @@ export default function ProductHandle() {
                 />
               </div>
               <div className="flex justify-center mt-1 md:justify-start md:items-start">
-                <span className="text-xs text-neutral-500 uppercase">
+                <span className="text-xs text-neutral-500 uppercase tracking-widest">
                   Free Shipping + Tax Included
                 </span>
               </div>

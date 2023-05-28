@@ -20,7 +20,7 @@ export default function AddToCartForm({variantId}: AddToCartFormProps) {
         value={selectedLocale?.country ?? 'US'}
       />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button className="bg-black text-white px-6 py-3 w-full text-center font-semibold text-base max-w-[400px] md:max-w-none uppercase">
+      <button className="bg-black text-white px-6 py-3 w-full text-center tracking-widest font-semibold text-base max-w-[400px] md:max-w-none uppercase">
         Add to Cart
       </button>
     </fetcher.Form>

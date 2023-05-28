@@ -1473,6 +1473,9 @@ input:checked + .toggle-bg {
 .mt-8 {
   margin-top: 2rem;
 }
+.mb-0 {
+  margin-bottom: 0px;
+}
 .block {
   display: block;
 }
@@ -6083,6 +6086,11 @@ input:checked + .toggle-bg {
   .md\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .md\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .md\:font-medium {
