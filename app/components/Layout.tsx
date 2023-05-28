@@ -15,7 +15,7 @@ export function Layout({children, title}: LayoutProps) {
   // Test opening the drawer, delete this after verifying
   const cart = root.data?.cart;
   return (
-    <div className=" flex flex-col min-h-screen antialiased bg-neutral-50 relative h-screen">
+    <div className=" flex flex-col min-h-screen antialiased bg-white relative h-screen">
       <header>
         <HeaderMenu cart={cart}></HeaderMenu>
       </header>

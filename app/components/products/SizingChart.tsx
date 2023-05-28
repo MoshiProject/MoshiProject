@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Dialog, Transition, Switch} from '@headlessui/react';
 import useScrollDirection from '~/functions/useScrollDirection';
+import {Image} from '@shopify/hydrogen';
 
 const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
   };
   const productTypeMap = {
     Sweatshirt: SweatshirtChart,
-    Tee: shirtChart,
+    Shirt: shirtChart,
     Hoodie: hoodieChart,
   };
   const data = productTypeMap[productType];
@@ -44,7 +45,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
 
               <div className="flex items-center justify-center min-h-screen ">
                 <div
-                  className={`relative bg-white rounded-lg shadow-lg overflow-hidden z-[100000] m-4 h-fit w-fit pb-4 ${
+                  className={`relative bg-white rounded-lg shadow-lg overflow-hidden z-[100000] m-4 h-fit w-fit pb-4 md:w-1/2 ${
                     scrollDirection !== 'down' ? 'mt-28' : ''
                   }`}
                 >
@@ -84,8 +85,8 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
 
                     <div className="px-4 py-3 ">
                       <div className="flex flex-col mb-4">
-                        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div className="-my-2 overflow-x-auto md:overflow-x-hidden sm:-mx-6 lg:mx-0">
+                          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-0">
                             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                               <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
@@ -134,10 +135,15 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
                         </div>
                       </div>
                     </div>
-                    <img
-                      alt="shirtSizing"
-                      src="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/ShirtSizing.png?v=1680595932"
-                    />
+                    <div className="flex justify-center">
+                      <span className="md:w-1/2">
+                        <Image
+                          alt="shirtSizing"
+                          src="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/ShirtSizing.png?v=1680595932"
+                          width={'100%'}
+                        />
+                      </span>
+                    </div>
                     <div className="text-sm px-6">
                       <h3 className=" text-lg font-semibold ">
                         Measuring Guide

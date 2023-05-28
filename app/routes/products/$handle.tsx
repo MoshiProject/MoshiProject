@@ -200,7 +200,7 @@ export default function ProductHandle() {
             selectedImage={selectedImage}
           />
         </div>
-        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[48rem] grid lg:gap-6 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
+        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2 first:mt-4">
             <h1 className="text-center tracking-widest md:text-start text-2xl md:text-3xl md:font-semibold font-bold leading-8 whitespace-normal uppercase">
               {titleFilter(product.title)}
@@ -260,105 +260,134 @@ export default function ProductHandle() {
               </div>
             </div>
           )}
-          <Accordion title={'Description'}>
-            <div
-              className="prose border-t border-gray-200 pt-6 text-black text-md"
-              dangerouslySetInnerHTML={{
-                __html: description,
-              }}
-            />
-          </Accordion>
-          <Accordion title={'Care Instructions'}>
-            <div className="bg-white rounded-lg shadow-lg">
-              <p className="text-sm mb-4">
-                To ensure that your DTG-printed garments remain in good
-                condition for as long as possible, it's important to follow the
-                care instructions carefully. The following steps are
-                recommended:
-              </p>
-              <ul className="list-disc mb-4 text-sm">
-                <li>
-                  Machine-wash your DTG-printed garments cold and inside-out on
-                  a gentle cycle using a mild detergent and similar colors.
-                </li>
-                <li>
-                  Use non-chlorine bleach only when necessary. Bleach can damage
-                  the fibers of the garment and cause the print to deteriorate
-                  faster.
-                </li>
-                <li>
-                  Avoid using fabric softeners or dry cleaning the items. Fabric
-                  softeners can cause the print to crack, and dry cleaning can
-                  cause the colors to fade or bleed.
-                </li>
-                <li>
-                  While DTG-printed apparel can be tumble-dried on a low cycle,
-                  it's recommended to hang-dry them instead. This helps prevent
-                  the garment from shrinking or losing its shape, and it also
-                  helps the print to last longer.
-                </li>
-                <li>
-                  If you need to iron your apparel, make sure to use a cool iron
-                  inside-out and avoid ironing the print directly. Ironing the
-                  print can cause it to melt or stick to the iron, ruining the
-                  design.
-                </li>
-                <li>
-                  Do not dry clean your DTG-printed garments. Dry cleaning can
-                  damage the fibers of the garment and cause the print to fade
-                  or bleed.
-                </li>
-              </ul>
-              <p className="text-sm">
-                By following these instructions carefully, you can help ensure
-                that your printed apparel remains in good condition for as long
-                as possible. This will help you get the most out of your
-                investment and enjoy your favorite designs for years to come.
-              </p>
-            </div>
-          </Accordion>
-
-          {composition && (
-            <Accordion title={'Composition'}>
+          <div className="md:max-w-[502px] border-t  text-sm md:mt-0 mt-8">
+            <Accordion title={'Description'} animations>
               <div
-                className="prose border-t border-gray-200 pt-6 text-black text-md list-disc	"
+                className="prose border-t border-gray-200 pt-6 text-black text-sm mb-4"
                 dangerouslySetInnerHTML={{
-                  __html: composition.replaceAll('.:', '•'),
+                  __html: description,
                 }}
               />
             </Accordion>
-          )}
-          <Accordion title="Shipping">
-            <div className="">
-              <p>
-                <strong>SHIPPING TIMES</strong>&nbsp;
-              </p>
-              <p>
-                Orders take 1 - 4 days to be processed. Delivery typically take
-                5-8 business days but can take 2 -&nbsp;4 weeks. Tracking
-                numbers are always provided. We are not responsible for delays
-                caused by individual carriers, but we will always do everything
-                we can to make sure you receive your order as fast as
-                possible.&nbsp;
-              </p>
-              <p>
-                <strong>TRACKING NUMBERS</strong>
-              </p>
-              <p>
-                Tracking numbers are always provided for every order. If your
-                order is shipped in&nbsp;multiple packages, you will get a
-                tracking number for each
-              </p>
-              <p>
-                <strong>CANCELLATIONS</strong>
-              </p>
-              <p>
-                Orders cannot be cancelled after being placed.&nbsp; If you wish
-                to cancel your order, you will need to wait for your product to
-                arrive so you can process a return.
-              </p>
-            </div>
-          </Accordion>
+            {['sweatshirt', 'shirt', 'hoodie'].includes(
+              getProductType(product.title)?.toLowerCase(),
+            ) && (
+              <Accordion title={'Care Instructions'} animations>
+                <div className="bg-white rounded-lg shadow-lg">
+                  <p className="text-sm mb-4">
+                    To ensure that your DTG-printed garments remain in good
+                    condition for as long as possible, it's important to follow
+                    the care instructions carefully. The following steps are
+                    recommended:
+                  </p>
+                  <ul className="list-disc mb-4 text-sm">
+                    <li>
+                      Machine-wash your DTG-printed garments cold and inside-out
+                      on a gentle cycle using a mild detergent and similar
+                      colors.
+                    </li>
+                    <li>
+                      Use non-chlorine bleach only when necessary. Bleach can
+                      damage the fibers of the garment and cause the print to
+                      deteriorate faster.
+                    </li>
+                    <li>
+                      Avoid using fabric softeners or dry cleaning the items.
+                      Fabric softeners can cause the print to crack, and dry
+                      cleaning can cause the colors to fade or bleed.
+                    </li>
+                    <li>
+                      While DTG-printed apparel can be tumble-dried on a low
+                      cycle, it's recommended to hang-dry them instead. This
+                      helps prevent the garment from shrinking or losing its
+                      shape, and it also helps the print to last longer.
+                    </li>
+                    <li>
+                      If you need to iron your apparel, make sure to use a cool
+                      iron inside-out and avoid ironing the print directly.
+                      Ironing the print can cause it to melt or stick to the
+                      iron, ruining the design.
+                    </li>
+                    <li>
+                      Do not dry clean your DTG-printed garments. Dry cleaning
+                      can damage the fibers of the garment and cause the print
+                      to fade or bleed.
+                    </li>
+                  </ul>
+                  <p className="text-sm">
+                    By following these instructions carefully, you can help
+                    ensure that your printed apparel remains in good condition
+                    for as long as possible. This will help you get the most out
+                    of your investment and enjoy your favorite designs for years
+                    to come.
+                  </p>
+                </div>
+              </Accordion>
+            )}
+            {composition && (
+              <Accordion title={'Composition'} animations>
+                <div
+                  className="prose border-t border-gray-200 pt-6 text-black text-md list-disc	"
+                  dangerouslySetInnerHTML={{
+                    __html: composition.replaceAll('.:', '•'),
+                  }}
+                />
+              </Accordion>
+            )}
+            <Accordion title="Shipping" animations>
+              <div className="">
+                <p>
+                  <strong>SHIPPING TIMES</strong>&nbsp;
+                </p>
+                <p>
+                  We custom make every order in-house. Please allow 2 to 4
+                  business days for all items to be made before shipment. After
+                  your item(s) have been processed, you will receive a tracking
+                  code in your email. Deliveries typically take{' '}
+                  {['sweatshirt', 'shirt', 'hoodie'].includes(
+                    getProductType(product.title)?.toLowerCase(),
+                  )
+                    ? '3-5 business days'
+                    : '2-4 weeks'}
+                  after fulfillment. Tracking numbers are always provided. We
+                  are not responsible for delays caused by individual carriers,
+                  but we will always do everything we can to make sure you
+                  receive your order as fast as possible.&nbsp;
+                </p>
+                <br />
+                <p>
+                  <strong>TRACKING NUMBERS</strong>
+                </p>
+                <p>
+                  Tracking numbers are always provided for every order. If your
+                  order is shipped in&nbsp;multiple packages, you will get a
+                  tracking number for each.
+                </p>
+                <br />
+                <p>
+                  <strong>CANCELLATIONS</strong>
+                </p>
+
+                <p>
+                  Order changes or cancellation requests can be within 24 hours
+                  of your order being made. We do not offer any sort of
+                  exchanges or refund for change of mind items after this time.
+                  This also includes exchanges or refunds for size changes so
+                  please double check sizing charts prior to making your
+                  purchase. A 3% transaction fee will be removed from the
+                  refunded amount.
+                </p>
+                <br />
+                <p>
+                  Returns or exchanges will only be accepted if you received the
+                  wrong items or defective/damaged items. To be eligible for a
+                  return, your item must be unused and in the same condition
+                  that you received it. We reserve the right to deny any item
+                  that does not meet these requirements.
+                </p>
+              </div>
+            </Accordion>
+          </div>
         </div>
       </div>
       <div className="hidden"></div>
@@ -389,17 +418,17 @@ type AccordionProps = {
   children: JSX.Element;
   animations: boolean;
 };
+
 export function Accordion({title, animations, children}: AccordionProps) {
   return (
-    <div className="px-5 border-b border-neutral-200 w-full">
+    <div className="px-5 border border-t-0 border-neutral-200 w-full md:max-w-lg md:text-sm tracking-widest">
       <Disclosure>
         {({open}) => (
           <>
             <Disclosure.Button
-              className={`py-4 flex justify-between w-full ${
-                open ? 'text-md font-lg' : ' text-sm '
-              } `}
+              className={`py-4 flex justify-between w-full tracking-widest `}
             >
+              <div></div>
               {title}
               <ChevronRightIcon
                 className={`w-5 h-5 stroke-1	  ${
@@ -410,18 +439,20 @@ export function Accordion({title, animations, children}: AccordionProps) {
               />
             </Disclosure.Button>
 
-            {open && animations && (
-              <motion.div
-                className="overflow-hidden"
-                layout
-                initial={{height: 0, opacity: 0}}
-                animate={{height: 'fit-content', opacity: 1}}
-                exit={{height: 0, opacity: 0}}
-                transition={{duration: 0.4}}
-              >
-                {children}
-              </motion.div>
-            )}
+            <AnimatePresence>
+              {open && animations && (
+                <motion.div
+                  className="overflow-hidden"
+                  key="content"
+                  initial={{height: 0, opacity: 0, translateY: -10}}
+                  animate={{height: 'auto', opacity: 1, translateY: 0}}
+                  exit={{height: 0, opacity: 0, translateY: -10}}
+                  transition={{duration: 0.4}}
+                >
+                  {children}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {open && !animations && (
               <div className="overflow-hidden">{children}</div>

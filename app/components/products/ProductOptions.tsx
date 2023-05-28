@@ -52,7 +52,7 @@ export default function ProductOptions({
     : paramsWithDefaults;
 
   return (
-    <div className="grid my-4  border-b border-neutral-200">
+    <div className="grid my-4 md:my-2 border-b border-neutral-200">
       {options.map((option) => {
         if (!option.values.length) {
           return;
