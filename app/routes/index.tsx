@@ -188,7 +188,7 @@ export default function Homepage() {
         >
           {' '}
           <ParallaxText baseVelocity={5}>
-            SPRING SALE IS LIVE | ALL ITEMS 69% OFF
+            SPRING SALE IS LIVE | ALL ITEMS 50% OFF
           </ParallaxText>
         </motion.div>
       </div>
