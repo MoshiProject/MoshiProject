@@ -11,7 +11,7 @@ export function FeaturedProductGrid({
   title = 'Featured Products',
   products = mockProducts,
   count = 12,
-  titleStyling = 'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-4',
+  titleStyling = 'text-2xl mt-2 font-semibold  tracking-widest text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-4',
   ...props
 }: {
   title?: string;
@@ -29,7 +29,7 @@ export function FeaturedProductGrid({
         to="/collections/featured-products"
         className={'flex justify-center  mb-4'}
       >
-        <div className="text-white text-center mt-3 w-1/2 md:w-1/4 md:mb-4 text-md font-medium bg-red-600 px-4 py-3 rounded-sm">
+        <div className="text-white text-center  tracking-widest mt-3 w-1/2 md:w-1/4 md:mb-4 text-md font-medium bg-red-600 px-4 py-3 rounded-sm">
           Shop Best Sellers →
         </div>
       </Link>

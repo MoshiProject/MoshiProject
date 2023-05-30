@@ -27,7 +27,7 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
   return (
     <div className="p-4 w-full md:w-1/2 m-auto mt-4">
       <div className="flex justify-center mb-4">
-        <h2 className="text-xl font-semibold ml-2">
+        <h2 className="text-xl tracking-widest font-semibold ml-2">
           {averageRating.toFixed(1)}
         </h2>
         <div className="flex items-center justify-center ml-1 mr-4">
@@ -36,7 +36,7 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
               return (
                 <StarIcon
                   key={star}
-                  className={`h-5 w-5 mb-1 ${
+                  className={`h-5 w-5 mb-1 tracking-widest ${
                     star <= filledStars ? 'text-black' : 'text-neutral-400'
                   }`}
                 />
@@ -61,7 +61,7 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
           })}
         </div>
         <div className="flex items-center">
-          <h3 className="text-xs  font-semibold text-neutral-500">
+          <h3 className="text-xs  font-semibold text-neutral-500 tracking-widest">
             Based on {totalReviews} reviews
           </h3>
         </div>

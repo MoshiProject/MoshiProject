@@ -15,25 +15,36 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
 
   //console.log('judgeReviews', judgeReviews);
-  const imageReviews = product.metafield
-    ? product.metafields
-        .find((metafield) => {
-          return metafield.key === 'reviews';
-        })
-        .references.nodes.map((node) => ({
-          author: node.fields.find((field) => field.key === 'author').value,
-          body: node.fields.find((field) => field.key === 'body').value,
-          imageSrc: node.fields.find((field) => field.key === 'image').reference
-            .image.url,
-          starCount: node.fields.find((field) => field.key === 'star_count')
-            .value,
-        }))
+  const reviewString = product.metafield
+    ? '[' +
+      product.metafields.find((metafield) => {
+        return metafield.key === 'reviews';
+      }).value +
+      ']'
     : [];
+  console.log('reviewString', reviewString);
+  const customReviews =
+    reviewString && reviewString.length > 0 ? JSON.parse(reviewString) : [];
+  // const imageReviews = product.metafield
+  //   ? product.metafields
+  //       .find((metafield) => {
+  //         return metafield.key === 'reviews';
+  //       })
+  //       .references.nodes.map((node) => ({
+  //         author: node.fields.find((field) => field.key === 'author').value,
+  //         body: node.fields.find((field) => field.key === 'body').value,
+  //         imageSrc: node.fields.find((field) => field.key === 'image').reference
+  //           .image.url,
+  //         starCount: node.fields.find((field) => field.key === 'star_count')
+  //           .value,
+  //       }))
+  //   : [];
+  console.log('customReviews', customReviews);
   const counterArr = [0, 0, 0, 0, 0];
-  imageReviews.forEach((review) => {
-    const rating = review.starCount;
+  customReviews.forEach((review) => {
+    const rating = review.rating;
     counterArr[rating - 1] += 1;
-    //console.log('rating: ' + rating);
+    console.log('rating: ' + rating);
   });
   judgeReviews.forEach((review) => {
     const rating = review.rating;
@@ -45,12 +56,11 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
   const noReviews =
     counterArr.reduce((partialSum, a) => partialSum + a, 0) === 0;
   //console.log('no reviews', noReviews);
-
   //console.log(`Reviews`, product);
   // console.log(`Reviews`, judgeReviews);
   return noReviews ? (
     <div>
-      <WriteReview isAdmin={isAdmin} />
+      <WriteReview isAdmin={isAdmin} id={product.id} />
     </div>
   ) : (
     <div className="py-6 bg-white">
@@ -63,15 +73,17 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
         <WriteReview isAdmin={isAdmin} />
         <ReviewsCounter reviews={counterArr} />
         <div className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1">
-          {imageReviews.map((review, index) => (
-            <ReviewCard
-              key={index}
-              imgSrc={review.imageSrc}
-              author={review.author}
-              stars={Number(review.starCount)}
-              body={review.body}
-            />
-          ))}
+          {customReviews
+            .sort((a, b) => b.rating - a.rating)
+            .map((review, index) => (
+              <ReviewCard
+                key={index}
+                imgSrc={review.imageSrc}
+                author={review.author}
+                stars={Number(review.rating)}
+                body={review.body}
+              />
+            ))}
           {/* Judge Reviews */}
           {judgeReviews.map((review, index) => (
             <ReviewCard

@@ -85,12 +85,12 @@ const Hero: React.FC<Props> = ({
           <motion.ul
             key="hero container"
             variants={textContainerVariants}
-            className="flex flex-col justify-center items-center text-center text-white list-none p-0 m-0"
+            className="flex flex-col justify-center items-center text-center tracking-widest text-white list-none p-0 m-0"
           >
             <motion.li className="h-fit overflow-hidden">
               <motion.div
                 variants={textVariants}
-                className="text-5xl font-semibold md:text-8xl"
+                className="text-5xl font-semibold md:text-8xl tracking-widest"
               >
                 {title}
               </motion.div>
@@ -98,14 +98,14 @@ const Hero: React.FC<Props> = ({
             <motion.li className="h-fit overflow-hidden">
               <motion.div
                 variants={textVariants}
-                className="mt-2 text-xl md:text-3xl"
+                className="mt-2 text-xl md:text-3xl tracking-widest"
               >
                 {subtitle}
               </motion.div>
             </motion.li>
             <motion.li variants={buttonVariants}>
               <Link to="/collections/featured-products">
-                <div className="mt-3 w-full text-lg md:text-lg font-medium bg-red-700 px-6 md:px-8 py-2 md:py-3 rounded-sm">
+                <div className="mt-3 w-full text-lg md:text-lg tracking-widest font-medium bg-red-700 px-6 md:px-8 py-2 md:py-3 rounded-sm">
                   {buttonText}
                 </div>
               </Link>

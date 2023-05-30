@@ -19,7 +19,7 @@ import titleFilter, {
 } from '~/functions/titleFilter';
 import ReviewsSection from '~/components/products/ReviewsSection';
 import Rand, {PRNG} from 'rand-seed';
-import {authors, shirtReviews} from '~/data/reviews';
+import {authors, highHoodieReviews, lowHoodieReviews} from '~/data/reviews';
 import ShippingEstimation from '~/components/products/ShippingEstimation';
 import Hero from '~/components/HomePage/Hero';
 import SizingChart from '~/components/products/SizingChart';
@@ -31,7 +31,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   const storeDomain = context.storefront.getShopifyDomain();
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
-
+  console.log('handle', handle);
   //###load admin mode if required
   const selectedOptions: Option[] = [];
   let isAdmin = false;
@@ -136,28 +136,156 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     reviewCount = 0;
   }
 
-  const rand = new Rand(id);
-
-  let generatedReviews = [];
-  for (let i = 0; generatedReviews.length < reviewCount; i++) {
-    const randNum = Math.floor(rand.next() * shirtReviews.length);
-    let review = shirtReviews[randNum];
-    review.author = authors[randNum];
-    generatedReviews.push(review);
-    generatedReviews = [...new Set(generatedReviews)];
-  }
   return json({
     judgeReviews,
     product,
     selectedVariant,
     storeDomain,
     productAnimeRecommendations: productAnimeRecommendations?.products?.nodes,
-
     productTypeRecommendations: productTypeRecommendations?.products?.nodes,
     isAdmin,
   });
 };
 // };
+
+export async function action({request, context, params}: ActionArgs) {
+  const body = await request.formData();
+  const userEmail = body.get('user_email');
+  const name = body.get('name');
+  const rating = body.get('rating');
+  const reviewBody = body.get('review_body');
+  const reviews = body.get('reviewsString');
+
+  const {handle} = params;
+  const searchParams = new URL(request.url).searchParams;
+  const selectedOptions: Option[] = [];
+  let isAdmin = false;
+  // set selected options from the query string
+  searchParams.forEach((value, name) => {
+    selectedOptions.push({name, value});
+    isAdmin = name === 'mode' && value === 'admin';
+  });
+  const {product}: {product: Product} = await context.storefront.query(
+    PRODUCT_QUERY,
+    {
+      variables: {
+        handle,
+        selectedOptions,
+      },
+    },
+  );
+  if (!product?.id) {
+    throw new Response(null, {status: 404});
+  }
+  const id = product.id.substr(product.id.lastIndexOf('/') + 1);
+
+  // const query = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-04/products/${id}/metafields.json`;
+  // console.log('query', query);
+  // // Make a GET request to the Shopify Admin API to fetch a product
+  // const response = await fetch(query, {
+  //   method: 'POST',
+  //   headers: {
+  //     'X-Shopify-Access-Token': context.env.ADMIN_API_ACCESS_TOKEN,
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     metafield: {
+  //       namespace: 'my_fields',
+  //       key: 'type',
+  //       value: 'phone case',
+  //       type: 'string',
+  //     },
+  //   }),
+  // });
+  // console.log('response', response.json());
+
+  const url = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-04/products/${id}/metafields.json`;
+
+  const accessToken = context.env.ADMIN_API_ACCESS_TOKEN;
+
+  const headers = {
+    'X-Shopify-Access-Token': accessToken,
+    'Content-Type': 'application/json',
+  };
+  let oldReviews = '';
+  fetch(url, {
+    method: 'GET',
+    headers,
+  })
+    .then((response) => response.json())
+    .then((result: any) => {
+      //console.log('result', result);
+      oldReviews = result.metafields.find((metafield) => {
+        return (
+          metafield.namespace === 'hydrogen' && metafield.key === 'reviews'
+        );
+      });
+      if (!oldReviews) {
+        oldReviews = '';
+      }
+      console.log('oldReviews.value', oldReviews.value);
+      console.log('oldReviews', oldReviews);
+      let newReviews = '';
+      newReviews += reviews?.toString();
+      newReviews += oldReviews.value ? ',' + oldReviews.value : '';
+      newReviews = newReviews.replace(',,', ',');
+      const data = {
+        metafield: {
+          namespace: 'hydrogen',
+          key: 'reviews',
+          value: newReviews,
+          type: 'multi_line_text_field',
+        },
+      };
+
+      console.log('newReviews', JSON.stringify(data));
+      fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+  if (isAdmin) {
+    return 'admin';
+  }
+  console.log('body', userEmail, name, rating, reviewBody);
+  if (userEmail === '') {
+    return 'noEmail';
+  } else if (name === '') {
+    return 'noName';
+  }
+
+  //write review
+  try {
+    const response = await fetch(
+      `https://judge.me/api/v1/reviews?api_token=${context.env.JUDGE_ME_PRIVATE_TOKEN}&shop_domain=${context.env.PUBLIC_STORE_DOMAIN}` +
+        `&id=${id}&platform=shopify&name=${name}&email=${userEmail}&rating=${rating}&body=${reviewBody
+          ?.toString()
+          .replace(' ', '%20')}`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    );
+    console.log('response', response);
+  } catch (error) {
+    console.error(error);
+  }
+  return '';
+}
 
 export default function ProductHandle() {
   const {
@@ -165,7 +293,6 @@ export default function ProductHandle() {
     product,
     selectedVariant,
     storeDomain,
-    productRecommendations,
     productTypeRecommendations,
     productAnimeRecommendations,
     isAdmin,
@@ -395,7 +522,7 @@ export default function ProductHandle() {
         <ReviewsSection
           product={product}
           judgeReviews={judgeReviews}
-          isAdmin
+          isAdmin={isAdmin}
         ></ReviewsSection>
       </div>
       <ProductRecommendations

@@ -43,7 +43,7 @@ const animeCollections = [
 ];
 
 const AnimeCarousel = ({
-  titleStyling = 'text-2xl md:text-4xl mt-2 font-semibold  text-center px-0.5 lg:text-4xl lg:font-semibold lg:px-4',
+  titleStyling = 'text-2xl md:text-4xl mt-2 tracking-widest font-semibold  text-center px-0.5 lg:text-4xl lg:font-semibold lg:px-4',
 }) => {
   return (
     <div className="px-2 py-3 bg-white">
