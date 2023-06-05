@@ -70,13 +70,13 @@ export default function ProductGrid({productsList, url}) {
             >
               <Squares2X2Icon className=" stroke-1 h-7 w-7" />
             </button>
-            <button
+            {/* <button
               onClick={() => {
                 setGridType('row');
               }}
             >
               <Bars3Icon className="stroke-1 h-8 w-8" />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

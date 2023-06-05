@@ -202,9 +202,6 @@ export default function HeaderMenu({cart}: any) {
                       className="object-cover object-center h-10"
                     />
                   </a>
-                  <span className="hidden md:block">
-                    <DesktopMegaMenu />
-                  </span>
 
                   <div className="flex flex-1 items-center justify-end">
                     {/* <a
@@ -223,11 +220,14 @@ export default function HeaderMenu({cart}: any) {
                       <div className="flex flex-1 items-center lg:hidden">
                         <button
                           type="button"
-                          className=" rounded-md bg-neutral-950 p-2 text-gray-200"
+                          className=" rounded-md bg-neutral-950 p-2 pr-0 text-gray-200"
                           onClick={() => setOpen(true)}
                         >
                           <span className="sr-only">Open menu</span>
-                          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                          <Bars3Icon
+                            className="h-9 w-[38px]"
+                            aria-hidden="true"
+                          />
                         </button>
                       </div>
                       {/* <a
@@ -240,6 +240,9 @@ export default function HeaderMenu({cart}: any) {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="hidden md:block mx-auto md:max-w-[80%] px-4 sm:px-6 lg:px-8">
+            <DesktopMegaMenu />
           </div>
         </nav>
       </header>

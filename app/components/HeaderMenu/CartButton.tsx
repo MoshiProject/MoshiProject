@@ -35,7 +35,7 @@ export default function CartButton(cart: any) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="white"
-                className="w-6 h-6 md:w-8 md:h-8"
+                className="w-7 h-7 md:w-8 md:h-8"
               >
                 <title>Bag</title>
                 <path

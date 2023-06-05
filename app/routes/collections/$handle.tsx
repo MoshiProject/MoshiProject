@@ -137,7 +137,7 @@ export default function Collection() {
   return (
     <div key={sortParam} className="md:mx-[-48px]">
       <header className="grid w-full gap-2 py-6 pl-2 justify-items-start">
-        <h1 className="text-2xl whitespace-pre-wrap font-semibold inline-block">
+        <h1 className="text-2xl whitespace-pre-wrap font-semibold inline-block uppercase tracking-widest">
           {collection.title}
         </h1>
 

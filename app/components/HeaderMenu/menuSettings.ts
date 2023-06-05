@@ -8,8 +8,8 @@ export const currencies = ['USD', 'CAD', 'AUD', 'EUR', 'GBP'];
 
 export const navigation: MenuItem[] = [
   {title: 'FEATURED', url: '/collections/featured-products', children: []},
-  {title: 'HOODIES', url: '/collections/hoodie', children: []},
   {title: 'T-SHIRTS', url: '/collections/t-shirt', children: []},
+  {title: 'HOODIES', url: '/collections/hoodie', children: []},
   {title: 'SWEATSHIRTS', url: '/collections/sweatshirts', children: []},
   {title: 'FIGURES', url: '/collections/figurines', children: []},
   {

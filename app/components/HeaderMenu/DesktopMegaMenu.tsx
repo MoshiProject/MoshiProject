@@ -22,7 +22,7 @@ const DesktopMegaMenu: React.FC = () => {
         key={item.title}
         className={`${
           hasChildren ? 'group' : ''
-        } h-6 min-w-fit w-28 text-center capitalize text-xl font-semibold hover:text-red-500 tracking-widest hover:border-b-2 hover:border-red-500`}
+        } h-10 min-w-fit w-28 text-center bg-neutral-950 py-1 capitalize text-xl font-semibold hover:text-red-500 tracking-widest hover:border-b-2 hover:border-red-500`}
         onMouseEnter={() => handleMouseEnter(item.title)}
         onMouseLeave={handleMouseLeave}
       >
@@ -60,7 +60,7 @@ const DesktopMegaMenu: React.FC = () => {
 
   return (
     <div className="relative ">
-      <ul className=" flex bg-neutral-950 text-white w-fit justify-center tracking-widest">
+      <ul className=" flex bg-neutral-950 text-white justify-center tracking-widest w-full">
         {navigation.map((item) => renderMenuItem(item))}
       </ul>
     </div>

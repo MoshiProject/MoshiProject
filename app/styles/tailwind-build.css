@@ -1740,6 +1740,9 @@ input:checked + .toggle-bg {
 .w-3\/5 {
   width: 60%;
 }
+.w-\[38px\] {
+  width: 38px;
+}
 .min-w-\[0\.75rem\] {
   min-width: 0.75rem;
 }
@@ -3133,6 +3136,21 @@ input:checked + .toggle-bg {
 }
 .pt-6 {
   padding-top: 1.5rem;
+}
+.pr-0 {
+  padding-right: 0px;
+}
+.pt-\[6px\] {
+  padding-top: 6px;
+}
+.pt-\[2px\] {
+  padding-top: 2px;
+}
+.pt-\[1px\] {
+  padding-top: 1px;
+}
+.pt-\[3px\] {
+  padding-top: 3px;
 }
 .text-left {
   text-align: left;
