@@ -1,5 +1,5 @@
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {FeaturedCollections} from '~/components/HomePage/FeaturedCollections';
 import Hero from '~/components/HomePage/Hero';
@@ -18,6 +18,7 @@ import {COLLECTION_QUERY, SMALL_COLLECTION_QUERY} from './collections/$handle';
 import AnimeCarousel from '~/components/HomePage/AnimeCarousel';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
 import ReviewsCounter from '~/components/HomePage/ReviewsCounter';
+import {ReviewCard} from '~/components/products/ReviewsSection';
 interface HomeSeoData {
   shop: {
     name: string;
@@ -98,9 +99,41 @@ export async function loader({params, context, request}: LoaderArgs) {
       },
     },
   );
+  let judgeReviews = [];
+  try {
+    const response = await fetch(
+      `https://judge.me/api/v1/reviews?api_token=${context.env.JUDGE_ME_PRIVATE_TOKEN}&shop_domain=${context.env.PUBLIC_STORE_DOMAIN}&per_page=100`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    );
+    const response2 = await fetch(
+      `https://judge.me/api/v1/reviews?api_token=${context.env.JUDGE_ME_PRIVATE_TOKEN}&shop_domain=${context.env.PUBLIC_STORE_DOMAIN}&page=2&per_page=100`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    );
+    const data: {reviews: []} = await response.json();
+    const data2: {reviews: []} = await response2.json();
+    judgeReviews = data.reviews.concat(data2.reviews);
+  } catch (error) {
+    console.error(error);
+  }
+  judgeReviews = judgeReviews.filter((review) => {
+    console.log(review.curated);
+    return review.curated !== 'spam';
+  });
+  console.log('judgeReviews', judgeReviews.length);
   return defer({
     shop,
     primaryHero: hero,
+    judgeReviews,
     // These different queries are separated to illustrate how 3rd party content
     // fetching can be optimized for both above and below the fold.
     featuredProducts: collection,
@@ -145,6 +178,7 @@ export default function Homepage() {
     tertiaryHero,
     featuredCollections,
     featuredProducts,
+    judgeReviews,
   } = useLoaderData<typeof loader>();
 
   // TODO: skeletons vs placeholders
@@ -211,9 +245,7 @@ export default function Homepage() {
         </Suspense>
       )}
       <ItemTypeCollections />
-      <div className="block md:hidden">
-        <ReviewsCounter reviews={[12, 24, 45, 169, 1124]} />
-      </div>
+      <ReviewContainer judgeReviews={judgeReviews} />
     </>
   );
 }
@@ -306,3 +338,46 @@ export const FEATURED_COLLECTIONS_QUERY = `#graphql
     }
   }
 `;
+export function ReviewContainer(judgeReviews: {
+  judgeReviews: [
+    {imageSrc: string; body: string; rating: string; reviewer: any},
+  ];
+}) {
+  const [reviewCount, setReviewCount] = useState(5);
+  return (
+    <div className="block md:hidden px-3">
+      <ReviewsCounter reviews={[12, 24, 45, 169, 1124]} />
+      <div>
+        {judgeReviews.judgeReviews.map((review, index) => (
+          <div
+            className={`my-2 ${index < reviewCount ? 'block' : 'hidden'}`}
+            key={index}
+          >
+            <ReviewCard
+              imgSrc={review.imageSrc}
+              author={review.reviewer.name}
+              stars={review.rating}
+              body={review.body}
+              product={{
+                url: '/products/' + review.product_handle,
+                title: review.product_title,
+              }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center mt-8 mb-4">
+        <button
+          className="bg-neutral-950 text-white rounded-md p-2 px-6"
+          onClick={() => {
+            setTimeout(() => {
+              setReviewCount(reviewCount + 5);
+            }, 350);
+          }}
+        >
+          Show More
+        </button>
+      </div>
+    </div>
+  );
+}

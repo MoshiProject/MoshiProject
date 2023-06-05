@@ -29,7 +29,7 @@ export function FeaturedProductGrid({
         to="/collections/featured-products"
         className={'flex justify-center  mb-4'}
       >
-        <div className="text-white text-center  tracking-widest mt-3 w-1/2 md:w-1/4 md:mb-4 text-md font-medium bg-red-600 px-4 py-3 rounded-sm">
+        <div className="text-white text-center  tracking-widest mt-3 w-3/5 md:w-1/4 md:mb-4 text-md font-medium bg-red-600 px-4 py-3 rounded-sm">
           Shop Best Sellers →
         </div>
       </Link>

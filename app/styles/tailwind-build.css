@@ -1737,6 +1737,9 @@ input:checked + .toggle-bg {
 .w-screen {
   width: 100vw;
 }
+.w-3\/5 {
+  width: 60%;
+}
 .min-w-\[0\.75rem\] {
   min-width: 0.75rem;
 }
@@ -1813,6 +1816,9 @@ input:checked + .toggle-bg {
 }
 .flex-shrink-0 {
   flex-shrink: 0;
+}
+.shrink {
+  flex-shrink: 1;
 }
 .shrink-0 {
   flex-shrink: 0;

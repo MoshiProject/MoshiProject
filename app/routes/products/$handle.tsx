@@ -40,8 +40,6 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     selectedOptions.push({name, value});
     isAdmin = name === 'mode' && value === 'admin';
   });
-  console.log('selected', selectedOptions, 'isAdmin', isAdmin);
-
   //###load product
   const {product}: {product: Product} = await context.storefront.query(
     PRODUCT_QUERY,
@@ -67,15 +65,16 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   const productAnime = getProductAnime(product.title);
   const animeHandle = productAnimeHandles[productAnime];
 
-  const {collection: productTypeRecommendations}: any =
-    await context.storefront.query(SMALL_COLLECTION_QUERY, {
-      variables: {
-        handle: typeHandle,
-        cursor,
-        rev,
-        sort,
-      },
-    });
+  const {collection: productTypeRecommendations}: any = animeHandle
+    ? await context.storefront.query(SMALL_COLLECTION_QUERY, {
+        variables: {
+          handle: typeHandle,
+          cursor,
+          rev,
+          sort,
+        },
+      })
+    : {collection: []};
   const animeCollectionExists = animeHandle !== undefined;
   const {collection: productAnimeRecommendations}: any =
     await context.storefront.query(SMALL_COLLECTION_QUERY, {

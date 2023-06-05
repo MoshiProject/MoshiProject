@@ -8,21 +8,10 @@ export const currencies = ['USD', 'CAD', 'AUD', 'EUR', 'GBP'];
 
 export const navigation: MenuItem[] = [
   {title: 'FEATURED', url: '/collections/featured-products', children: []},
-  {
-    title: 'SHOP BY PRODUCT',
-    url: '',
-    children: [
-      {title: 'HOODIES', url: '/collections/hoodie', children: []},
-      {title: 'T-SHIRTS', url: '/collections/t-shirt', children: []},
-      {title: 'SWEATSHIRTS', url: '/collections/sweatshirts', children: []},
-      {title: 'FIGURES', url: '/collections/figurines', children: []},
-      {title: 'PHONE CASES', url: '/collections/phone-cases', children: []},
-      {title: 'MOUSE PADS', url: '/collections/mouse-pads', children: []},
-      {title: 'STICKERS', url: '/collections/stickers', children: []},
-      {title: 'MUGS', url: '/collections/mugs', children: []},
-      {title: '3D LAMPS', url: '/collections/3d-lamp', children: []},
-    ],
-  },
+  {title: 'HOODIES', url: '/collections/hoodie', children: []},
+  {title: 'T-SHIRTS', url: '/collections/t-shirt', children: []},
+  {title: 'SWEATSHIRTS', url: '/collections/sweatshirts', children: []},
+  {title: 'FIGURES', url: '/collections/figurines', children: []},
   {
     title: 'SHOP BY ANIME',
     url: '',
@@ -120,11 +109,27 @@ export const navigation: MenuItem[] = [
     ],
   },
   {
+    title: 'ACCESSORIES',
+    url: '',
+    children: [
+      {title: 'PHONE CASES', url: '/collections/phone-cases', children: []},
+      {title: 'MOUSE PADS', url: '/collections/mouse-pads', children: []},
+      {title: 'STICKERS', url: '/collections/stickers', children: []},
+      {title: 'MUGS', url: '/collections/mugs', children: []},
+      {title: '3D LAMPS', url: '/collections/3d-lamp', children: []},
+    ],
+  },
+  {
     title: 'BEST SELLERS',
     url: '/collections/best-selling-collection',
     children: [],
   },
+  {title: 'REVIEWS', url: '/pages/reviews', children: []},
+  {
+    title: 'GIFT CARDS',
+    url: '/products/moshiproject-store-digital-gift-card',
+    children: [],
+  },
   // {title: 'SIZING CHARTS', url: '', children: []},
   {title: 'CONTACT US', url: '/pages/contact-us', children: []},
-  // {title: 'REVIEWS', url: '', children: []},
 ];

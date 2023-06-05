@@ -4,6 +4,7 @@ import ReviewsCounter from '../HomePage/ReviewsCounter';
 import {reviews} from '~/data/reviews';
 import WriteReview from './WriteReview';
 import {StarIcon} from '@heroicons/react/24/solid';
+import titleFilter from '~/functions/titleFilter';
 
 type Props = {
   product: Product;
@@ -15,14 +16,13 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
 
   //console.log('judgeReviews', judgeReviews);
-  const reviewString = product.metafield
+  const reviewString = product?.metafield
     ? '[' +
       product.metafields.find((metafield) => {
         return metafield.key === 'reviews';
       }).value +
       ']'
     : [];
-  console.log('reviewString', reviewString);
   const customReviews =
     reviewString && reviewString.length > 0 ? JSON.parse(reviewString) : [];
   // const imageReviews = product.metafield
@@ -102,18 +102,20 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
 
 export default ReviewsSection;
 
-type ReviewCardProps = {
+export type ReviewCardProps = {
   author: string;
   imgSrc: string;
   stars: number;
   body: string;
+  product?: {url: string; title: string};
 };
 
-function ReviewCard({
+export function ReviewCard({
   author,
   imgSrc,
   stars,
   body,
+  product,
 }: ReviewCardProps): JSX.Element {
   const rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
 
@@ -145,8 +147,9 @@ function ReviewCard({
           </div>
           {/* <div> 2 weeks ago</div> */}
         </div>
-        <div className="flex items-baseline mb-4">
-          <div className="flex bg-primary text-gray-600 text-xs px-2 rounded-full uppercase font-semibold tracking-wide mt-4">
+
+        <div className="flex items-baseline mb-3">
+          <div className="flex bg-primary text-gray-600 text-xs rounded-full uppercase font-semibold tracking-wide mt-3">
             {Array.from(Array(stars).keys()).map((star) => (
               <StarIcon
                 key={star}
@@ -160,9 +163,37 @@ function ReviewCard({
               />
             ))}
           </div>
+
           <div className="ml-2 text-gray-600 text-xs uppercase font-semibold tracking-wide"></div>
         </div>
+
         <p className="text-neutral-950 text-sm font-semibold">{body}</p>
+        {product && (
+          <div className="mt-2">
+            <a
+              className=" flex justify-end text-xs font-semibold text-red-600"
+              href={product.url}
+            >
+              <div className="flex">
+                {titleFilter(product.title)}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-4 h-4 ml-1"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </div>
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );
