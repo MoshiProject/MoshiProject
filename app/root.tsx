@@ -8,7 +8,6 @@ import {
 } from '@remix-run/react';
 import {type LoaderArgs} from '@shopify/remix-oxygen';
 import tailwind from './styles/tailwind-build.css';
-import favicon from '../public/favicon.svg';
 import {Layout} from './components/Layout';
 import {Seo} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
@@ -28,10 +27,18 @@ export const links = () => {
     {rel: 'stylesheet', href: styles},
     {rel: 'stylesheet', href: swiperBCSS},
     {
+      rel: 'icon',
+      href: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Favicon.png?v=1643314556',
+    },
+    {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Favicon.png?v=1643314556',
+    },
   ];
 };
 

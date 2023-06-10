@@ -59,26 +59,30 @@ interface SocialMediaIconsProps {
 const SocialMediaIcons: React.FC<SocialMediaIconsProps> = ({className}) => {
   return (
     <div
-      className={`flex w-full justify-center items-center ${className} mb-4`}
+      className={`flex w-full justify-center items-center ${className} mb-4 md:justify-start`}
     >
-      <InstagramIcon
-        width={18}
-        height={18}
-        color="white"
-        className="w-6 h-6 mx-1 text-white"
-      />
-      <FacebookIcon
-        width={18}
-        height={18}
-        color="white"
-        className="w-6 h-6 mx-1 text-white"
-      />
+      <a href="https://www.instagram.com/moshiiproject/?hl=en">
+        <InstagramIcon
+          width={18}
+          height={18}
+          color="white"
+          className="w-6 md:w-8 h-6 md:h-8 md:mx-2 mx-1 text-white"
+        />
+      </a>
+      <a href="https://www.facebook.com/people/MoshiProject/100079962272638/">
+        <FacebookIcon
+          width={18}
+          height={18}
+          color="white"
+          className="w-6 md:w-8 h-6 md:h-8 md:mx-2 mx-1 text-white"
+        />
+      </a>
 
       <PinterestIcon
         width={18}
         height={18}
         color="white"
-        className="w-6 h-6 mx-1 text-white"
+        className="w-6 md:w-8 h-6 md:h-8 md:mx-2 mx-1 text-white"
       />
     </div>
   );

@@ -320,7 +320,7 @@ export default function ProductHandle() {
   return (
     <section className="w-full gap-2 px-5  md:gap-8 grid  md:px-24 md:mt-16">
       <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
-        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit mt-4">
+        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit md:mt-20 mt-4">
           <ProductGallery
             media={product.media.nodes}
             selectedImage={selectedImage}
@@ -328,7 +328,7 @@ export default function ProductHandle() {
         </div>
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2 first:mt-4">
-            <h1 className="text-center tracking-widest md:text-start text-2xl md:text-3xl md:font-semibold font-bold leading-8 whitespace-normal uppercase">
+            <h1 className="text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
               {titleFilter(product.title)}
             </h1>
             <div className="grid gap-2 justify-center items-center md:justify-start md:items-start">
@@ -399,53 +399,21 @@ export default function ProductHandle() {
               getProductType(product.title)?.toLowerCase(),
             ) && (
               <Accordion title={'Care Instructions'} animations>
-                <div className="bg-white rounded-lg shadow-lg">
+                <div className="bg-white">
                   <p className="text-sm mb-4">
                     To ensure that your DTG-printed garments remain in good
                     condition for as long as possible, it's important to follow
                     the care instructions carefully. The following steps are
                     recommended:
                   </p>
-                  <ul className="list-disc mb-4 text-sm">
-                    <li>
-                      Machine-wash your DTG-printed garments cold and inside-out
-                      on a gentle cycle using a mild detergent and similar
-                      colors.
-                    </li>
-                    <li>
-                      Use non-chlorine bleach only when necessary. Bleach can
-                      damage the fibers of the garment and cause the print to
-                      deteriorate faster.
-                    </li>
-                    <li>
-                      Avoid using fabric softeners or dry cleaning the items.
-                      Fabric softeners can cause the print to crack, and dry
-                      cleaning can cause the colors to fade or bleed.
-                    </li>
-                    <li>
-                      While DTG-printed apparel can be tumble-dried on a low
-                      cycle, it's recommended to hang-dry them instead. This
-                      helps prevent the garment from shrinking or losing its
-                      shape, and it also helps the print to last longer.
-                    </li>
-                    <li>
-                      If you need to iron your apparel, make sure to use a cool
-                      iron inside-out and avoid ironing the print directly.
-                      Ironing the print can cause it to melt or stick to the
-                      iron, ruining the design.
-                    </li>
-                    <li>
-                      Do not dry clean your DTG-printed garments. Dry cleaning
-                      can damage the fibers of the garment and cause the print
-                      to fade or bleed.
-                    </li>
-                  </ul>
-                  <p className="text-sm">
-                    By following these instructions carefully, you can help
-                    ensure that your printed apparel remains in good condition
-                    for as long as possible. This will help you get the most out
-                    of your investment and enjoy your favorite designs for years
-                    to come.
+                  <p className="text-sm mb-4">
+                    Machine-wash your DTG-printed garments cold and inside-out
+                    on a gentle cycle using a mild detergent and similar colors.
+                    Use non-chlorine bleach only when necessary. While
+                    DTG-printed apparel can be tumble-dried on a low cycle, it's
+                    recommended to hang-dry them instead. Do not dry clean your
+                    DTG-printed garments. Dry cleaning can damage the fibers of
+                    the garment and cause the print to fade or bleed.
                   </p>
                 </div>
               </Accordion>
@@ -552,12 +520,12 @@ export function Accordion({title, animations, children}: AccordionProps) {
         {({open}) => (
           <>
             <Disclosure.Button
-              className={`py-4 flex justify-between w-full tracking-widest `}
+              className={`py-4 flex justify-between w-full tracking-widest uppercase items-center `}
             >
               <div></div>
               {title}
               <ChevronRightIcon
-                className={`w-5 h-5 stroke-1	  ${
+                className={`w-7 h-7 stroke-1	  ${
                   open
                     ? 'rotate-270 transform transition-transform duration-200'
                     : 'rotate-90'

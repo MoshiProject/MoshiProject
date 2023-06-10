@@ -36,7 +36,7 @@ export default function MegaMenuItem({
               }`}
             >
               {item.title}
-              <motion.span animate={{rotate: open ? 180 : 0}}>
+              <motion.span animate={{rotate: !open ? 180 : 0}}>
                 <ChevronUpIcon />
               </motion.span>
             </Menu.Button>

@@ -1,9 +1,9 @@
 import {MenuItem} from './MegaMenuItem';
 
-export const logoURL =
-  'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Moshi_899c7b09-e639-4c9d-b230-1732c2f3ba02.png?v=1680244718';
 export const logoWhiteURL =
-  'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Moshi_W.png?v=1681360647';
+  'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Moshi_899c7b09-e639-4c9d-b230-1732c2f3ba02.png?v=1680244718';
+export const logoURL =
+  'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/logoB_copy.png?v=1685990850';
 export const currencies = ['USD', 'CAD', 'AUD', 'EUR', 'GBP'];
 
 export const navigation: MenuItem[] = [

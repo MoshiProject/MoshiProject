@@ -28,13 +28,12 @@ export default function CartButton(cart: any) {
         <Await resolve={cart}>
           {(data) => (
             <button
-              className="relative ml-auto flex items-center justify-center w-10 h-10"
+              className="relative ml-auto flex items-center justify-center w-10 h-10 md:text-black text-white fill-white md:fill-black"
               onClick={openDrawer}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
-                fill="white"
                 className="w-7 h-7 md:w-8 md:h-8"
               >
                 <title>Bag</title>

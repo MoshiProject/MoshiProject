@@ -8,7 +8,7 @@ import {
 import {ChevronDownIcon} from '@heroicons/react/20/solid';
 import ParallaxText from './ParallaxText';
 import {Image} from '@shopify/hydrogen';
-import {currencies, logoURL} from './menuSettings';
+import {currencies, logoURL, logoWhiteURL} from './menuSettings';
 import MegaMenuMobile from './MegaMenuMobile';
 import CartButton from './CartButton';
 
@@ -22,7 +22,7 @@ export default function HeaderMenu({cart}: any) {
 
   return (
     <div
-      className={`bg-neutral-950 text-neutral-50 fixed z-40 h-fit w-screen transition-all duration-500 tracking-widest ${
+      className={`bg-neutral-950 text-neutral-50 fixed z-40 h-fit w-screen transition-all duration-500 tracking-widest md:border-b md:border-neutral-300 md:shadow-neutral-200 md:bg-white md:text-black ${
         scrollDirection === 'down' ? '-top-24' : 'top-0'
       }`}
     >
@@ -33,7 +33,7 @@ export default function HeaderMenu({cart}: any) {
           FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.
         </ParallaxText>
       </div>
-      <div className="py-1 hidden md:flex justify-center scroller tracking-wider font-medium">
+      <div className="py-2 hidden md:flex justify-center scroller tracking-wider font-medium bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-bold text-lg">
         <span>FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.</span>
       </div>
       <Transition.Root show={open} as={Fragment}>
@@ -47,7 +47,7 @@ export default function HeaderMenu({cart}: any) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25 " />
+            <div className="fixed inset-0 bg-black bg-opacity-25 md:bg-white md:text-black" />
           </Transition.Child>
 
           <div className="fixed inset-0 z-40 flex right-0 justify-end ">
@@ -70,7 +70,7 @@ export default function HeaderMenu({cart}: any) {
                       <Image
                         sizes="h-10 md:h-14"
                         data={{
-                          url: logoURL,
+                          url: logoWhiteURL,
                           altText: 'logo',
                         }}
                         width={'full'}
@@ -161,8 +161,8 @@ export default function HeaderMenu({cart}: any) {
       <header className="relative z-10">
         <nav aria-label="Top">
           {/* Secondary navigation */}
-          <div className=" bg-neutral-950">
-            <div className="mx-auto md:max-w-[80%] px-4 sm:px-6 lg:px-8">
+          <div className=" bg-neutral-950 md:bg-white md:text-black">
+            <div className="mx-auto md:max-w-[82.7%] px-4 sm:px-6 lg:px-8 md:mt-2">
               <div className="">
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
@@ -194,7 +194,7 @@ export default function HeaderMenu({cart}: any) {
                     <span className="sr-only">MoshiProject</span>
                     <Image
                       data={{
-                        url: logoURL,
+                        url: logoWhiteURL,
                         altText: 'item.imageAlt',
                       }}
                       width={'full'}
@@ -217,10 +217,11 @@ export default function HeaderMenu({cart}: any) {
                       <SearchBar />
 
                       {/* Mobile menu and search (lg-) */}
+                      {CartButton(cart)}
                       <div className="flex flex-1 items-center lg:hidden">
                         <button
                           type="button"
-                          className=" rounded-md bg-neutral-950 p-2 pr-0 text-gray-200"
+                          className=" rounded-md bg-neutral-950  text-gray-200  md:text-black"
                           onClick={() => setOpen(true)}
                         >
                           <span className="sr-only">Open menu</span>
@@ -234,14 +235,13 @@ export default function HeaderMenu({cart}: any) {
                         href="/FAQ"
                         className="hidden text-sm font-medium text-gray-100 hover:text-gray-50 lg:block"
                       ></a> */}
-                      {CartButton(cart)}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="hidden md:block mx-auto md:max-w-[80%] px-4 sm:px-6 lg:px-8">
+          <div className="hidden md:block md:mt-2 md:max-w-[86.5%] px-4 sm:px-6 lg:px-8">
             <DesktopMegaMenu />
           </div>
         </nav>
