@@ -1255,6 +1255,15 @@ input:checked + .toggle-bg {
 .top-\[6rem\] {
   top: 6rem;
 }
+.top-\[20vh\] {
+  top: 20vh;
+}
+.top-\[8vh\] {
+  top: 8vh;
+}
+.top-\[7vh\] {
+  top: 7vh;
+}
 .z-10 {
   z-index: 10;
 }
@@ -1325,10 +1334,6 @@ input:checked + .toggle-bg {
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
-}
-.mx-6 {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
 }
 .mx-auto {
   margin-left: auto;
@@ -1613,6 +1618,15 @@ input:checked + .toggle-bg {
 .h-screen {
   height: 100vh;
 }
+.h-\[80vh\] {
+  height: 80vh;
+}
+.h-\[92vh\] {
+  height: 92vh;
+}
+.h-\[93vh\] {
+  height: 93vh;
+}
 .max-h-60 {
   max-height: 15rem;
 }
@@ -1737,6 +1751,12 @@ input:checked + .toggle-bg {
 .w-screen {
   width: 100vw;
 }
+.w-2\/3 {
+  width: 66.666667%;
+}
+.w-1\/2 {
+  width: 50%;
+}
 .min-w-\[0\.75rem\] {
   min-width: 0.75rem;
 }
@@ -1776,6 +1796,9 @@ input:checked + .toggle-bg {
 }
 .max-w-\[120\%\] {
   max-width: 120%;
+}
+.max-w-\[22rem\] {
+  max-width: 22rem;
 }
 .max-w-\[400px\] {
   max-width: 400px;
@@ -2258,6 +2281,9 @@ input:checked + .toggle-bg {
 .border-t-4 {
   border-top-width: 4px;
 }
+.border-b-\[1px\] {
+  border-bottom-width: 1px;
+}
 .border-none {
   border-style: none;
 }
@@ -2439,6 +2465,14 @@ input:checked + .toggle-bg {
 .border-yellow-600 {
   --tw-border-opacity: 1;
   border-color: rgb(159 88 10 / var(--tw-border-opacity));
+}
+.border-neutral-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(82 82 82 / var(--tw-border-opacity));
+}
+.border-neutral-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(64 64 64 / var(--tw-border-opacity));
 }
 .border-l-neutral-100 {
   --tw-border-opacity: 1;
@@ -3063,6 +3097,10 @@ input:checked + .toggle-bg {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -3149,6 +3187,18 @@ input:checked + .toggle-bg {
 }
 .pt-\[3px\] {
   padding-top: 3px;
+}
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+.pt-8 {
+  padding-top: 2rem;
+}
+.pt-10 {
+  padding-top: 2.5rem;
+}
+.pb-6 {
+  padding-bottom: 1.5rem;
 }
 .text-left {
   text-align: left;
@@ -3511,6 +3561,10 @@ input:checked + .toggle-bg {
 .text-yellow-900 {
   --tw-text-opacity: 1;
   color: rgb(99 49 18 / var(--tw-text-opacity));
+}
+.text-neutral-700 {
+  --tw-text-opacity: 1;
+  color: rgb(64 64 64 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;

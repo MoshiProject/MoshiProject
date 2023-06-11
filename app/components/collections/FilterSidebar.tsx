@@ -118,9 +118,10 @@ function FilterSidebar({
               leaveTo="-translate-x-full"
             >
               <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-neutral-950 pb-12 shadow-xl text-gray-200">
-                <div className="flex px-6 pt-5 pb-2 justify-between">
-                  <div className="lg:flex lg:flex-1 lg:items-center">
-                    Filters
+                <div className="flex px-6 pt-5 pb-4 justify-between border-b border-neutral-900">
+                  <div></div>
+                  <div className="lg:flex lg:flex-1 lg:items-center font-semibold tracking-widest uppercase">
+                    Filter
                   </div>
                   <button
                     type="button"
@@ -131,7 +132,7 @@ function FilterSidebar({
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
-                <div className="mx-6">
+                <div className="mx-1">
                   <>
                     <CollectionFilter
                       products={filteredProducts}
@@ -139,7 +140,7 @@ function FilterSidebar({
                       setSelected={setFilteredAnime}
                       setProducts={setProducts}
                       type={'anime'}
-                      title="Filter by Anime"
+                      title="Anime"
                     />
                   </>
                   <>
@@ -149,7 +150,7 @@ function FilterSidebar({
                       setSelected={setFilteredCharacters}
                       setProducts={setProducts}
                       type={'character'}
-                      title="Filter by Character"
+                      title="Character"
                     />
                   </>
                   <>
@@ -159,7 +160,7 @@ function FilterSidebar({
                       setSelected={setFilteredProductType}
                       setProducts={setProducts}
                       type={'productType'}
-                      title="Filter by Product Type"
+                      title="Product"
                     />
                   </>
                 </div>

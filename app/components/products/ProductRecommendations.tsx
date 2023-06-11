@@ -18,7 +18,7 @@ export default function ProductRecommendations({
       <div className="mt-6 swiper-container">
         <h2 className="text-lg font-medium text-gray-900 mb-4">{title}</h2>
         <Swiper
-          slidesPerView={2}
+          slidesPerView={1.4}
           spaceBetween={10}
           breakpoints={{
             // eslint-disable-next-line @typescript-eslint/naming-convention

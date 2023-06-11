@@ -60,7 +60,7 @@ export default function HeaderMenu({cart}: any) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-neutral-950 pb-12 shadow-xl ">
+              <Dialog.Panel className="relative flex w-full max-w-[22rem] flex-col overflow-y-auto bg-neutral-950 pb-12 shadow-xl ">
                 <div className="flex px-6 pt-5 pb-2 justify-between">
                   <div className="-m-2 inline-flex items-center justify-center rounded-md p-6 text-gray-200 tracking-widest"></div>
 

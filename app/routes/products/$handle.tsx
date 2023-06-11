@@ -511,11 +511,21 @@ type AccordionProps = {
   title: string | JSX.Element;
   children: JSX.Element;
   animations: boolean;
+  border?: boolean;
 };
 
-export function Accordion({title, animations, children}: AccordionProps) {
+export function Accordion({
+  title,
+  animations,
+  children,
+  border = true,
+}: AccordionProps) {
   return (
-    <div className="px-5 border border-t-0 border-neutral-200 w-full md:max-w-lg md:text-sm tracking-widest">
+    <div
+      className={`px-5 ${
+        border ? 'border' : ''
+      } border-t-0 border-neutral-200 w-full md:max-w-lg md:text-sm tracking-widest`}
+    >
       <Disclosure>
         {({open}) => (
           <>
