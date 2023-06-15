@@ -17,7 +17,10 @@ import swiperBCSS from 'swiper/swiper-bundle.min.css';
 import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
 import {useLocation} from '@remix-run/react';
 import {useEffect} from 'react';
-import {useAnalyticsFromLoaders} from './functions/utils';
+import {
+  useAnalyticsFromActions,
+  useAnalyticsFromLoaders,
+} from './functions/utils';
 import {
   AnalyticsEventName,
   getClientBrowserParameters,
@@ -58,7 +61,7 @@ export const meta = () => ({
 
 export async function loader({context, request}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
-
+  console.log(JSON.stringify(context));
   //get cookie data for recently Viewed
   // const cookieHeader = request.headers.get('Cookie');
   // const cookie = await recentlyViewedCookie.parse(cookieHeader);
@@ -85,7 +88,7 @@ export async function loader({context, request}: LoaderArgs) {
       cart: cartId ? getCart(context, cartId) : undefined,
       layout: await context.storefront.query(LAYOUT_QUERY),
       analytics: {
-        shopId: 'gid://shopify/Shop/1',
+        shopId: 'gid://shopify/Shop/55241212109',
       },
     });
   }
@@ -95,6 +98,8 @@ export default function App() {
   const data = useLoaderData();
   const location = useLocation();
   const pageAnalytics = useAnalyticsFromLoaders();
+  const analyticsFromActions = useAnalyticsFromActions();
+
   useShopifyCookies({hasUserConsent: true});
   useEffect(() => {
     const payload = {
@@ -103,7 +108,7 @@ export default function App() {
       hasUserConsent: true,
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
     };
-
+    console.log('payload', payload);
     sendShopifyAnalytics({
       eventName: AnalyticsEventName.PAGE_VIEW,
       payload,

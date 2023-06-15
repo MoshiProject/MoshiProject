@@ -39,7 +39,7 @@ export const animeNames = [
 
 export const productTypeHandles = {
   Hoodie: 'hoodie',
-  Shirt: 't-shirt',
+  'T-Shirt': 't-shirt',
   Sweatshirt: 'sweatshirts',
   Figure: 'figurines',
   Stickers: 'stickers',

@@ -97,7 +97,15 @@ export async function action({request, context}: ActionArgs) {
   headers.set('Set-Cookie', await session.commit());
 
   const {cart, errors} = result;
-  return json({cart, errors}, {status, headers});
+  return json(
+    {cart, errors},
+    {status, headers},
+    {
+      analytics: {
+        cartId,
+      },
+    },
+  );
 }
 
 export default function Cart() {
