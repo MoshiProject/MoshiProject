@@ -28,8 +28,8 @@ export async function loader({context: {storefront}}: LoaderArgs) {
       policies,
     },
     {
-      headers: {
-        // TODO cacheLong()
+      analytics: {
+        pageType: 'policy',
       },
     },
   );

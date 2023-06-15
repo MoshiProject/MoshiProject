@@ -25,7 +25,7 @@ import Hero from '~/components/HomePage/Hero';
 import SizingChart from '~/components/products/SizingChart';
 import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
 import {useEffect, useState} from 'react';
-
+import {AnalyticsPageType} from '@shopify/hydrogen';
 export const loader = async ({params, context, request}: LoaderArgs) => {
   //###load necessary parameters
   const storeDomain = context.storefront.getShopifyDomain();
@@ -142,6 +142,10 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     storeDomain,
     productAnimeRecommendations: productAnimeRecommendations?.products?.nodes,
     productTypeRecommendations: productTypeRecommendations?.products?.nodes,
+    analytics: {
+      pageType: AnalyticsPageType.product,
+      products: [product],
+    },
     isAdmin,
   });
 };

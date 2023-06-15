@@ -126,10 +126,8 @@ export async function loader({params, context, request}: LoaderArgs) {
     console.error(error);
   }
   judgeReviews = judgeReviews.filter((review) => {
-    console.log(review.curated);
     return review.curated !== 'spam';
   });
-  console.log('judgeReviews', judgeReviews.length);
   return defer({
     shop,
     primaryHero: hero,

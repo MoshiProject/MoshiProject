@@ -56,6 +56,9 @@ export async function loader({params, context, request}: LoaderArgs) {
       cursor,
       rev,
       sort,
+      analytics: {
+        pageType: 'collection',
+      },
     },
   });
   //filtering tags setup
@@ -64,10 +67,10 @@ export async function loader({params, context, request}: LoaderArgs) {
       //prep
       product.filters = {anime: '', productType: '', character: ''};
       let tempTitle = product.title
-        .replace('T-Shirt', 'Tee')
-        .replace('Shirt', 'Tee')
+        .replace('T-Shirt', 'T-Shirt')
+        .replace('Shirt', 'T-Shirt')
         .replace('3d', '3D')
-        .replace('T-shirt', 'Tee')
+        .replace('T-shirt', 'T-Shirt')
         .replace('Unisex Heavy Blend™ Crewneck ', '')
         .replace('Heavy Blend™ Crewneck ', '')
         .replace('Heavy Blend™', '')

@@ -37,6 +37,9 @@ export async function loader({params, context, request}: LoaderArgs) {
   });
   return defer({
     judgeReviews,
+    analytics: {
+      pageType: 'reviews',
+    },
   });
 }
 export default function ReviewPage() {

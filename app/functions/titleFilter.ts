@@ -79,7 +79,7 @@ export const collectionIdDict = {
 export const productTypes = [
   'Sweatshirt',
   'Hoodie',
-  'Shirt',
+  'T-Shirt',
   'Figure',
   'Stickers',
   'Mug',
@@ -91,10 +91,10 @@ export const productTypes = [
 
 export const titleCleanup = (title: string) => {
   return title
-    .replace('T-Shirt', 'Shirt')
-    .replace('Shirt', 'Shirt')
+    .replace('T-Shirt', 'T-Shirt')
+    .replace('Shirt', 'T-Shirt')
     .replace('3d', '3D')
-    .replace('T-shirt', 'Shirt')
+    .replace('T-shirt', 'T-Shirt')
     .replace('Unisex Heavy Blend™ Crewneck ', '')
     .replace('Heavy Blend™ Crewneck ', '')
     .replace('Heavy Blend™', '')
@@ -254,6 +254,7 @@ export const charactersMap = {
 export const getProductType = (productTitle: string) => {
   const cleanTitle = titleCleanup(productTitle);
   for (const type of productTypes) {
+    console.log(type, cleanTitle.includes(type));
     if (cleanTitle.includes(type)) {
       return type;
     }

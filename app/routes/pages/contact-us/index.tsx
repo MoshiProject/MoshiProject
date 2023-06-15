@@ -26,6 +26,9 @@ export async function loader({params, context, request}: LoaderArgs) {
   // https://remix.run/docs/en/v1/utils/json
   return json({
     sortParam,
+    analytics: {
+      pageType: 'contact',
+    },
   });
 }
 

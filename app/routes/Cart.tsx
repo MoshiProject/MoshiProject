@@ -3,6 +3,7 @@ import {ActionArgs, json, LoaderArgs} from '@shopify/remix-oxygen';
 import {CartLineItems} from '~/components/Cart';
 import {CART_QUERY} from '~/queries/cart';
 import {CartActions, CartSummary} from '~/components/Cart';
+import {AnalyticsPageType} from '@shopify/hydrogen';
 
 export async function loader({context}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
@@ -20,7 +21,12 @@ export async function loader({context}: LoaderArgs) {
       ).cart
     : null;
 
-  return {cart};
+  return {
+    cart,
+    analytics: {
+      pageType: AnalyticsPageType.cart,
+    },
+  };
 }
 
 export async function action({request, context}: ActionArgs) {

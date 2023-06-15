@@ -45,7 +45,11 @@ export async function loader({request, context, params}: LoaderArgs) {
   // use sessionId to retrieve session from app's session storage
   // getSessionFromStorage() must be provided by application
 
-  return defer({});
+  return defer({
+    analytics: {
+      pageType: 'tracking',
+    },
+  });
 }
 
 export async function action({request, context, params}: ActionArgs) {

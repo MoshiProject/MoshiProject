@@ -15,7 +15,16 @@ import {CART_QUERY} from '~/queries/cart';
 import styles from '~/styles/app.css';
 import swiperBCSS from 'swiper/swiper-bundle.min.css';
 import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
-
+import {useLocation} from '@remix-run/react';
+import {useEffect} from 'react';
+import {useAnalyticsFromLoaders} from './functions/utils';
+import {
+  AnalyticsEventName,
+  getClientBrowserParameters,
+  sendShopifyAnalytics,
+  ShopifySalesChannel,
+  useShopifyCookies,
+} from '@shopify/hydrogen';
 export const links = () => {
   return [
     {rel: 'stylesheet', href: tailwind},
@@ -49,6 +58,7 @@ export const meta = () => ({
 
 export async function loader({context, request}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
+
   //get cookie data for recently Viewed
   // const cookieHeader = request.headers.get('Cookie');
   // const cookie = await recentlyViewedCookie.parse(cookieHeader);
@@ -74,12 +84,32 @@ export async function loader({context, request}: LoaderArgs) {
     return defer({
       cart: cartId ? getCart(context, cartId) : undefined,
       layout: await context.storefront.query(LAYOUT_QUERY),
+      analytics: {
+        shopId: 'gid://shopify/Shop/1',
+      },
     });
   }
 }
 
 export default function App() {
   const data = useLoaderData();
+  const location = useLocation();
+  const pageAnalytics = useAnalyticsFromLoaders();
+  useShopifyCookies({hasUserConsent: true});
+  useEffect(() => {
+    const payload = {
+      ...getClientBrowserParameters(),
+      ...pageAnalytics,
+      hasUserConsent: true,
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
+    };
+
+    sendShopifyAnalytics({
+      eventName: AnalyticsEventName.PAGE_VIEW,
+      payload,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   const {name} = data.layout.shop;
   //const recentlyViewed = data.recentlyViewed;
