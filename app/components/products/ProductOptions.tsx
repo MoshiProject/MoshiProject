@@ -72,7 +72,7 @@ export default function ProductOptions({
         onViewportEnter={() => {
           setOptionsBar(false);
         }}
-        className="grid my-4 md:my-2 border-b border-neutral-100"
+        className="grid my-3 md:my-2 border-b border-neutral-100"
       >
         {options.map((option) => {
           if (!option.values.length) {

@@ -307,10 +307,17 @@ export default function ProductHandle() {
   } = useLoaderData();
   const desc = product.descriptionHtml;
   const [selectedImage, setSelectedImage] = useState(selectedVariant.image.url);
+  const [reviewCount, setReviewCount] = useState(1);
   const data = useActionData();
   const reviewsRef = useRef(null);
-  const executeScroll = () => myRef.current.scrollIntoView();
-
+  const executeScroll = (event) => {
+    const elmnt = reviewsRef;
+    elmnt.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'start',
+    });
+  };
   const composition =
     desc.indexOf('<ul>') !== -1
       ? desc.substring(desc.indexOf('<ul>'), desc.lastIndexOf('</ul>') + 5)
@@ -330,43 +337,7 @@ export default function ProductHandle() {
   }, [selectedVariant]);
   const orderable = selectedVariant?.availableForSale || false;
   return (
-    <section className="w-full  gap-2 px-2  md:gap-8 grid  md:px-24 md:mt-0">
-      <motion.div
-        initial={{opacity: 0, x: -200}}
-        animate={{opacity: 1, x: 0, transition: {delay: 0, duration: 0.6}}}
-      >
-        <motion.h1 className="md:hidden mt-4 tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
-          {titleFilter(product.title)}
-        </motion.h1>
-        <div>
-          <button className="hidden" onClick={executeScroll}>
-            <div className="flex items-center font-bold text-base">
-              {[0, 1, 2, 3, 4].map((star) => {
-                return (
-                  <StarIcon key={star} className={`h-5 w-5 ${'text-black'}`} />
-                );
-              })}
-              <span className="">(15)</span>
-            </div>
-          </button>
-        </div>
-        <div className="flex justify-between">
-          <div className="md:hidden flex md:justify-start md:items-start">
-            {selectedVariant.compareAtPrice && (
-              <Money
-                withoutTrailingZeros
-                data={selectedVariant.compareAtPrice}
-                className="text-md font-semibold text-neutral-800 line-through	mr-3"
-              />
-            )}
-            <Money
-              withoutTrailingZeros
-              data={selectedVariant.price}
-              className="text-md font-semibold text-red-600 "
-            />
-          </div>
-        </div>
-      </motion.div>
+    <section className="w-full  gap-2 px-2  md:gap-8 grid  mt-1 md:px-24 md:mt-0">
       <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit md:mt-20 mt-4">
           <ProductGallery
@@ -374,6 +345,47 @@ export default function ProductHandle() {
             selectedImage={selectedImage}
           />
         </div>
+        <motion.div
+          initial={{opacity: 0, x: -200}}
+          animate={{opacity: 1, x: 0, transition: {delay: 0, duration: 0.6}}}
+        >
+          <motion.h1 className="md:hidden mt-4 text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
+            {titleFilter(product.title)}
+          </motion.h1>
+          {reviewCount > 0 && (
+            <div className="my-2" key={reviewCount}>
+              <button className="w-full" onClick={executeScroll}>
+                <div className="flex items-center justify-center font-bold text-neutral-600 text-md w-full">
+                  {[0, 1, 2, 3, 4].map((star) => {
+                    return (
+                      <SharpStarIcon
+                        key={star}
+                        className={`h-5 w-5 ${'text-black'}`}
+                      />
+                    );
+                  })}
+                  <span className="ml-1">({reviewCount})</span>
+                </div>
+              </button>
+            </div>
+          )}
+          <div className="flex justify-center">
+            <div className="md:hidden flex md:justify-start md:items-start">
+              {selectedVariant.compareAtPrice && (
+                <Money
+                  withoutTrailingZeros
+                  data={selectedVariant.compareAtPrice}
+                  className="text-md font-semibold text-neutral-800 line-through	mr-3"
+                />
+              )}
+              <Money
+                withoutTrailingZeros
+                data={selectedVariant.price}
+                className="text-md font-semibold text-red-600 "
+              />
+            </div>
+          </div>
+        </motion.div>
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2">
             <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
@@ -446,12 +458,13 @@ export default function ProductHandle() {
         <DescriptionBlock product={product} />
       </div>
       <Seperator />
-      <div className="">
+      <div key={reviewCount}>
         <ReviewsSection
-          ref={reviewsRef}
+          forwardRef={reviewsRef}
           product={product}
           judgeReviews={judgeReviews}
           isAdmin={isAdmin}
+          setReviewCount={setReviewCount}
         ></ReviewsSection>
       </div>
       <Seperator />
@@ -545,66 +558,71 @@ function DescriptionBlock({product}) {
       />
     </Accordion> */}
 
-        <div className="py-3 md:max-w-[502px]">
-          <motion.div
-            initial={{opacity: 0, x: -200}}
-            viewport={{once: true}}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-              transition: {delay: 0, duration: 0.4},
-            }}
-            className="mt-5 px-2"
-          >
-            <motion.h3 className="text-2xl font-bold tracking-widest mb-1">
-              SUPERIOR COMFORT
-            </motion.h3>
-            <p className="text-sm">
-              Experience a level of comfort that simply cannot be matched with
-              our incredibly soft and cozy{' '}
-              <span className="lowercase">{getProductType(product.title)}</span>
-              s.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{opacity: 0, x: -200}}
-            viewport={{once: true}}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-              transition: {delay: 0, duration: 0.4},
-            }}
-            className="mt-12 px-2"
-          >
-            <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
-              PREMIUM QUALITY
-            </h3>
-            <p className="text-sm">
-              Experience the superior quality of our{' '}
-              <span className="font-bold">100% ring-spun cotton</span>{' '}
-              <span className="lowercase">{getProductType(product.title)}</span>
-              s and embrace the comfort that will keep you coming back for more
-              with our ing-spun cotton.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{opacity: 0, x: -200}}
-            viewport={{once: true}}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-              transition: {delay: 0, duration: 0.4},
-            }}
-            className="mt-12 px-2"
-          >
-            <h3 className="text-2xl font-bold tracking-widest mb-3 mt-3">
-              UNMATCHED DESIGNS
-            </h3>
-            <p className="text-sm">
-              Elevate your style with our unmatched prints, boasting vibrant
-              colors and impeccable clarity. Experience t-shirt artistry like
-              never before, designed to make you stand out from the crowd.
-              {/* <ul className="list-disc pl-8 space-y-2">
+        <DescriptionTab title="Description" height="420px">
+          <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal">
+            <motion.div
+              initial={{opacity: 0, x: -200}}
+              viewport={{once: true}}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {delay: 0, duration: 0.4},
+              }}
+              className="px-2"
+            >
+              <motion.h3 className="text-2xl font-bold tracking-widest mb-1">
+                SUPERIOR COMFORT
+              </motion.h3>
+              <p className="text-sm ">
+                Experience a level of comfort that simply cannot be matched with
+                our incredibly soft and cozy{' '}
+                <span className="lowercase">
+                  {getProductType(product.title)}
+                </span>
+                s.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{opacity: 0, x: -200}}
+              viewport={{once: true}}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {delay: 0, duration: 0.4},
+              }}
+              className="mt-12 px-2"
+            >
+              <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
+                PREMIUM QUALITY
+              </h3>
+              <p className="text-sm">
+                Experience the superior quality of our{' '}
+                <span className="font-bold">100% ring-spun cotton</span>{' '}
+                <span className="lowercase">
+                  {getProductType(product.title)}
+                </span>
+                s and embrace the comfort that will keep you coming back for
+                more with our ing-spun cotton.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{opacity: 0, x: -200}}
+              viewport={{once: true}}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {delay: 0, duration: 0.4},
+              }}
+              className="mt-12 px-2"
+            >
+              <h3 className="text-2xl font-bold tracking-widest mb-3 mt-3">
+                UNMATCHED DESIGNS
+              </h3>
+              <p className="text-sm">
+                Elevate your style with our unmatched prints, boasting vibrant
+                colors and impeccable clarity. Experience t-shirt artistry like
+                never before, designed to make you stand out from the crowd.
+                {/* <ul className="list-disc pl-8 space-y-2">
                 <li>Side seams for lasting quality and durability.</li>
                 <li>
                   100% cotton for superior comfort, warmth, and durability.
@@ -615,9 +633,10 @@ function DescriptionBlock({product}) {
                   stretch.
                 </li>
               </ul> */}
-            </p>
-          </motion.div>
-        </div>
+              </p>
+            </motion.div>
+          </div>
+        </DescriptionTab>
 
         {/* {['sweatshirt', 'shirt', 'hoodie'].includes(
       getProductType(product.title)?.toLowerCase(),
@@ -706,7 +725,7 @@ function DescriptionBlock({product}) {
       </div>
     </Accordion> */}
       </div>
-      <div className="mt-6 mb-[-8px]">
+      <div className="mb-[-8px]">
         <ShippingInfo />
         <ReturnInfo />
         <DescriptionTab title="Contact Us" height="768px">
@@ -716,3 +735,16 @@ function DescriptionBlock({product}) {
     </div>
   );
 }
+const SharpStarIcon = ({className}) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="{24}"
+      height="{24}"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z" />
+    </svg>
+  );
+};

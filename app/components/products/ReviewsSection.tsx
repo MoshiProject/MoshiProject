@@ -5,14 +5,22 @@ import {reviews} from '~/data/reviews';
 import WriteReview from './WriteReview';
 import {StarIcon} from '@heroicons/react/24/solid';
 import titleFilter from '~/functions/titleFilter';
-
+import {useEffect} from 'react';
 type Props = {
   product: Product;
   judgeReviews: any[];
   isAdmin: boolean;
+  forwardRef: any;
+  setReviewCount: (value: number) => void;
 };
 
-const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
+const ReviewsSection: React.FC<Props> = ({
+  product,
+  judgeReviews,
+  isAdmin,
+  forwardRef,
+  setReviewCount,
+}) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
 
   const reviewString = product?.metafield
@@ -50,17 +58,20 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
     counterArr[rating - 1] += 1;
   });
   //console.log('counter', counterArr);
-  const noReviews =
-    counterArr.reduce((partialSum, a) => partialSum + a, 0) === 0;
+  const reviewCount = counterArr.reduce((partialSum, a) => partialSum + a, 0);
+  const noReviews = reviewCount === 0;
+  useEffect(() => {
+    setReviewCount(reviewCount);
+  }, [reviewCount]);
   //console.log('no reviews', noReviews);
   //console.log(`Reviews`, product);
   // console.log(`Reviews`, judgeReviews);
   return noReviews ? (
-    <div>
+    <div ref={forwardRef}>
       <WriteReview isAdmin={isAdmin} id={product.id} />
     </div>
   ) : (
-    <div className="py-6 bg-white">
+    <div ref={forwardRef} className="py-6 bg-white">
       <div className="max-w-screen-xl mx-auto sm:px-6 lg:px-8">
         <div className="lg:text-center">
           <h2 className="text-xl text-primary font-semibold tracking-wide uppercase text-center mb-4">
