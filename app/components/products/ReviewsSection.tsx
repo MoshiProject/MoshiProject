@@ -15,7 +15,6 @@ type Props = {
 const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
 
-  //console.log('judgeReviews', judgeReviews);
   const reviewString = product?.metafield
     ? '[' +
       product.metafields.find((metafield) => {
@@ -39,12 +38,10 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
   //           .value,
   //       }))
   //   : [];
-  console.log('customReviews', customReviews);
   const counterArr = [0, 0, 0, 0, 0];
   customReviews.forEach((review) => {
     const rating = review.rating;
     counterArr[rating - 1] += 1;
-    console.log('rating: ' + rating);
   });
   judgeReviews.forEach((review) => {
     const rating = review.rating;
@@ -66,13 +63,13 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
     <div className="py-6 bg-white">
       <div className="max-w-screen-xl mx-auto sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <h2 className="text-base text-primary font-semibold tracking-wide uppercase text-center mb-2">
-            Customer Reviews
+          <h2 className="text-xl text-primary font-semibold tracking-wide uppercase text-center mb-4">
+            CUSTOMER REVIEWS
           </h2>
         </div>
         <WriteReview isAdmin={isAdmin} />
         <ReviewsCounter reviews={counterArr} />
-        <div className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1">
+        <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
           {customReviews
             .sort((a, b) => b.rating - a.rating)
             .map((review, index) => (
@@ -94,7 +91,7 @@ const ReviewsSection: React.FC<Props> = ({product, judgeReviews, isAdmin}) => {
               body={review.body}
             />
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );
@@ -108,6 +105,7 @@ export type ReviewCardProps = {
   stars: number;
   body: string;
   product?: {url: string; title: string};
+  className?: string;
 };
 
 export function ReviewCard({
@@ -116,6 +114,7 @@ export function ReviewCard({
   stars,
   body,
   product,
+  className = '',
 }: ReviewCardProps): JSX.Element {
   const rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
 
@@ -126,7 +125,12 @@ export function ReviewCard({
   ).toUpperCase();
 
   return (
-    <div className="overflow-hidden border-b border-neutral-300 py-4 md:py-6">
+    <li
+      className={
+        'overflow-hidden list-none border-b border-neutral-300 py-4 md:py-6 last:border-b-0 ' +
+        className
+      }
+    >
       {imgSrc && (
         <div className="aspect-w-3 aspect-h-4">
           <img className="object-cover" src={imgSrc} alt="" />
@@ -195,7 +199,7 @@ export function ReviewCard({
           </div>
         )}
       </div>
-    </div>
+    </li>
   );
 }
 

@@ -25,7 +25,6 @@ function CollectionFilter({
   const getFilters = (filterName: FilterType) => {
     const animeFilters = products
       .map((product: Product) => {
-        console.log('product', product);
         return product.filters ? product.filters[filterName] : null;
       })
       .filter(onlyUnique);
@@ -35,15 +34,16 @@ function CollectionFilter({
   let filters = getFilters(type);
   filters.forEach((filter) => {
     if (type === 'character') {
-      const mappedCharacters = charactersMap[filter];
+      const mappedCharacters =
+        charactersMap[filter as keyof typeof charactersMap];
       if (Array.isArray(mappedCharacters)) {
         return mappedCharacters.forEach((character) => {
           return options.push({value: character, label: character});
         });
       }
       return options.push({
-        value: charactersMap[filter],
-        label: charactersMap[filter],
+        value: charactersMap[filter as keyof typeof charactersMap],
+        label: charactersMap[filter as keyof typeof charactersMap],
       });
     }
 
@@ -73,9 +73,7 @@ function CollectionFilter({
     });
     filters = getFilters(type);
   }
-  console.log('filters', filters);
-  console.log('selected', selected);
-  console.log('products', products);
+
   useEffect(() => {
     setSelected(selected);
     if (selected.length === 0) {

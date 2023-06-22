@@ -25,12 +25,12 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
     );
   }, [averageRating]);
   return (
-    <div className="p-4 w-full md:w-1/2 m-auto mt-4">
-      <div className="flex justify-center mb-4">
+    <div className="p-4 md:pl-0 w-full m-auto md:mx-0  md:w-5/12 mt-4">
+      <div className="flex justify-center md:justify-start mb-4">
         <h2 className="text-xl tracking-widest font-semibold ml-2">
           {averageRating.toFixed(1)}
         </h2>
-        <div className="flex items-center justify-center ml-1 mr-4">
+        <div className="flex items-center justify-center md:justify-start ml-1 mr-4">
           {[0, 1, 2, 3, 4].map((star) => {
             if (!(averageRating - star < 1 && averageRating - star > 0)) {
               return (

@@ -10,7 +10,10 @@ import {
 } from '@heroicons/react/24/outline';
 import {Image} from '@shopify/hydrogen';
 import {useEffect} from 'react';
-
+import ScaleOutScrollAnim from '../animations/ScaleOutScrollAnim';
+import ExitToLeftScrollAnim from '../animations/FadeOutScrollAnim';
+import FadeOutScrollAnim from '../animations/FadeOutScrollAnim';
+import {motion} from 'framer-motion';
 export default function ProductGallery({
   media,
   selectedImage,
@@ -88,6 +91,7 @@ export default function ProductGallery({
   });
   return (
     <div className="swiper-container w-full max-w-full max-h-full h-fit flex-col md:flex md:flex-row">
+      {/* desktop */}
       <div className="hidden md:block w-fit">
         <Swiper
           modules={[Controller]}
@@ -111,7 +115,12 @@ export default function ProductGallery({
           {swiperSlides}
         </Swiper>
       </div>
-      <div className="md:w-11/12">
+      {/* top swiper mobile */}
+      <motion.div
+        initial={{opacity: 0, x: -200}}
+        animate={{opacity: 1, x: 0, transition: {delay: 0.3, duration: 0.6}}}
+        className="md:w-11/12 relative"
+      >
         {' '}
         <Swiper
           modules={[Controller]}
@@ -158,15 +167,15 @@ export default function ProductGallery({
                 <Image
                   data={data.image}
                   loading="eager"
-                  sizes="100vw"
+                  sizes="150vw"
                   alt={data.image.altText}
                 ></Image>
               </SwiperSlide>
             );
           })}
         </Swiper>
-      </div>
-      <button
+      </motion.div>
+      {/* <button
         type="button"
         className="absolute top-24 right-0 m-4 text-gray-400 hover:text-gray-500 block md:hidden"
       >
@@ -174,29 +183,35 @@ export default function ProductGallery({
         <div className=" bg-neutral-100 shadow-md rounded-full p-2 border-neutral-200 border">
           <MagnifyingGlassIcon className="w-6 h-6 text-black" />
         </div>
-      </button>
-      <div className="md:hidden">
-        <Swiper
-          modules={[Controller]}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          onSwiper={setFirstSwiper}
-          // controller={{control: secondSwiper}}
-          effect={'coverflow'}
-          grabCursor={true}
-          slidesPerView={5}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
-          }}
-          className="w-full max-w-full"
+      </button> */}
+      <FadeOutScrollAnim>
+        <motion.div
+          initial={{opacity: 0, x: 0}}
+          animate={{opacity: 1, x: 0, transition: {delay: 0.4, duration: 0.6}}}
+          className="md:hidden"
         >
-          {swiperSlides}
-        </Swiper>
-      </div>
+          <Swiper
+            modules={[Controller]}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            onSwiper={setFirstSwiper}
+            // controller={{control: secondSwiper}}
+            effect={'coverflow'}
+            grabCursor={true}
+            slidesPerView={5}
+            coverflowEffect={{
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            }}
+            className="w-full max-w-full"
+          >
+            {swiperSlides}
+          </Swiper>
+        </motion.div>
+      </FadeOutScrollAnim>
     </div>
   );
 }

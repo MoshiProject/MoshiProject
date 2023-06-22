@@ -1,10 +1,8 @@
 import {Form, useActionData} from '@remix-run/react';
-import {ActionArgs} from '@shopify/remix-oxygen';
 import {useState} from 'react';
-import {Option, Product} from './products';
-import {PRODUCT_QUERY} from '~/queries/product';
-import {StarIcon} from '@heroicons/react/24/solid';
+import {StarIcon, XMarkIcon} from '@heroicons/react/24/solid';
 import {authors, highHoodieReviews, lowHoodieReviews} from '~/data/reviews';
+import {motion} from 'framer-motion';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
@@ -106,17 +104,15 @@ function WriteReview({isAdmin, id}: {isAdmin: boolean; id: string}) {
         revs[rand].body = '';
       }
     }
-    console.log(revs);
     setReviews(revs);
   };
-  console.log('asdasds', reviews);
   return (
     <>
       {open ? (
         isAdmin ? (
           reviews.length === 0 ? (
             <>
-              <div className="flex flex-col items-center justify-center ">
+              <div className="flex flex-col items-center justify-center relative">
                 <Form
                   className="rounded px-4 pt-6 pb-2 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center"
                   method="post"
@@ -416,7 +412,21 @@ function WriteReview({isAdmin, id}: {isAdmin: boolean; id: string}) {
             </Form>
           )
         ) : (
-          <div className="flex flex-col items-center justify-center ">
+          <motion.div
+            initial={{height: 0, opacity: 0}}
+            animate={{height: 'fit-content', opacity: 1}}
+            exit={{height: 0, opacity: 0}}
+            className="flex flex-col items-center justify-center relative overflow-hidden"
+          >
+            <div className="absolute top-2 right-2">
+              <button
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
             <Form
               className="rounded px-4 pt-6 pb-2 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center"
               method="post"
@@ -521,7 +531,7 @@ function WriteReview({isAdmin, id}: {isAdmin: boolean; id: string}) {
                 </button>
               </div>
             </Form>
-          </div>
+          </motion.div>
         )
       ) : (
         <div className="flex justify-center ">

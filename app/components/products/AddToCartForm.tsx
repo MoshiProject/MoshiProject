@@ -2,9 +2,15 @@ import {useMatches, useFetcher} from '@remix-run/react';
 
 type AddToCartFormProps = {
   variantId: number;
+  textColor: string;
+  backgroundColor: string;
 };
 
-export default function AddToCartForm({variantId}: AddToCartFormProps) {
+export default function AddToCartForm({
+  variantId,
+  textColor = 'text-white',
+  backgroundColor = 'bg-black',
+}: AddToCartFormProps) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
@@ -20,7 +26,9 @@ export default function AddToCartForm({variantId}: AddToCartFormProps) {
         value={selectedLocale?.country ?? 'US'}
       />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button className="bg-black text-white px-6 py-3 w-full text-center tracking-widest font-semibold text-base max-w-[400px] md:max-w-none uppercase">
+      <button
+        className={`${backgroundColor} ${textColor} px-6 py-3 w-full text-center tracking-widest font-semibold text-base max-w-[400px] md:max-w-none uppercase`}
+      >
         Add to Cart
       </button>
     </fetcher.Form>

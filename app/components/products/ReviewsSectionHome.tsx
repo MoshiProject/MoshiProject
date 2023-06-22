@@ -33,12 +33,10 @@ const ReviewsSectionHome: React.FC<Props> = ({judgeReviews}) => {
   //           .value,
   //       }))
   //   : [];
-  console.log('customReviews', customReviews);
   const counterArr = [0, 0, 0, 0, 0];
   customReviews.forEach((review) => {
     const rating = review.rating;
     counterArr[rating - 1] += 1;
-    console.log('rating: ' + rating);
   });
   judgeReviews.forEach((review) => {
     const rating = review.rating;

@@ -91,8 +91,9 @@ export const productTypes = [
 
 export const titleCleanup = (title: string) => {
   return title
+    .replace(' Shirt', ' T-Shirt')
+
     .replace('T-Shirt', 'T-Shirt')
-    .replace('Shirt', 'T-Shirt')
     .replace('3d', '3D')
     .replace('T-shirt', 'T-Shirt')
     .replace('Unisex Heavy Blend™ Crewneck ', '')
@@ -254,7 +255,6 @@ export const charactersMap = {
 export const getProductType = (productTitle: string) => {
   const cleanTitle = titleCleanup(productTitle);
   for (const type of productTypes) {
-    console.log(type, cleanTitle.includes(type));
     if (cleanTitle.includes(type)) {
       return type;
     }

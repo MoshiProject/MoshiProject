@@ -16,7 +16,9 @@ export default function ProductRecommendations({
   return (
     recommendations && (
       <div className="mt-6 swiper-container">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">{title}</h2>
+        <h2 className="text-xl font-medium text-gray-900 mb-4 uppercase">
+          {title}
+        </h2>
         <Swiper
           slidesPerView={1.4}
           spaceBetween={10}

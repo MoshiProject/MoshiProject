@@ -8,9 +8,14 @@ import {motion} from 'framer-motion';
 type PrdouctCardType = {
   product: Product;
   row?: boolean;
+  optimization?: 'sm' | 'md' | 'lg' | 'xl';
 };
 
-export default function ProductCard({product, row = false}: PrdouctCardType) {
+export default function ProductCard({
+  product,
+  row = false,
+  optimization,
+}: PrdouctCardType) {
   const {price, compareAtPrice} = product.variants?.nodes[0] || {};
   const isDiscounted = compareAtPrice?.amount > price?.amount;
   const ref = useRef(null);
@@ -59,7 +64,7 @@ export default function ProductCard({product, row = false}: PrdouctCardType) {
           <Image
             width={'full'}
             height={'full'}
-            sizes="80wv"
+            sizes="100wv"
             data={product.variants.nodes[0].image}
             alt={titleFilter(product.title)}
             className={`overflow-hidden ${

@@ -1,7 +1,6 @@
 import {Link, useFetcher} from '@remix-run/react';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen-react';
 import {LineItemType} from './products/products';
-import {reviews} from '~/data/reviews';
 
 export function CartLineItems({linesObj}: any) {
   const lines = flattenConnection(linesObj);
@@ -160,7 +159,6 @@ export function CartSummary({
 
 export function CartActions({checkoutUrl}: {checkoutUrl: string}) {
   if (!checkoutUrl) return null;
-
   return (
     <div className="flex flex-col mt-2">
       <a

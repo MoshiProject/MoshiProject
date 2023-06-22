@@ -23,7 +23,7 @@ export default function HeaderMenu({cart}: any) {
   return (
     <div
       className={`bg-neutral-950 text-neutral-50 fixed z-40 h-fit w-screen transition-all duration-500 tracking-widest md:border-b md:border-neutral-300 md:shadow-neutral-200 md:bg-white md:text-black ${
-        scrollDirection === 'down' ? '-top-24' : 'top-0'
+        scrollDirection === 'down' ? '-top-24 md:-top-32' : 'top-0'
       }`}
     >
       {/* Mobile menu */}
@@ -60,7 +60,7 @@ export default function HeaderMenu({cart}: any) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-[22rem] flex-col overflow-y-auto bg-neutral-950 pb-12 shadow-xl ">
+              <Dialog.Panel className="relative flex w-full max-w-[22rem] flex-col overflow-y-auto bg-neutral-950  shadow-xl ">
                 <div className="flex px-6 pt-5 pb-2 justify-between">
                   <div className="-m-2 inline-flex items-center justify-center rounded-md p-6 text-gray-200 tracking-widest"></div>
 

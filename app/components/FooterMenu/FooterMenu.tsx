@@ -287,7 +287,6 @@ const KlaviyoForm = () => {
 const CustomForm = () => {
   const fetcher = useFetcher();
   const ref = useRef();
-  console.log('fetcvher', fetcher);
 
   return (
     <div className="flex flex-col md:w-1/3 md:mr-20">

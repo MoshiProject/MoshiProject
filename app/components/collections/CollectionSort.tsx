@@ -33,7 +33,7 @@ export default function CollectionSort() {
     <Listbox value={selectedSortOption} onChange={handleSortOptionChange}>
       {({open}) => (
         <>
-          <div className="relative">
+          <div className="relative z-30">
             <Listbox.Button
               className={`w-48 h-full pl-1 pr-1 text-xs tracking-widest font-medium border-gray-300 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md`}
             >
@@ -89,10 +89,10 @@ export default function CollectionSort() {
                             open ? 'text-white' : 'text-red-600'
                           }`}
                         >
-                          <ChevronDownIcon
+                          {/* <ChevronDownIcon
                             className={`w-5 h-5`}
                             aria-hidden="true"
-                          />
+                          /> */}
                         </span>
                       ) : null}
                     </>

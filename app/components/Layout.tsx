@@ -25,7 +25,7 @@ export function Layout({children, title}: LayoutProps) {
         id="mainContent"
         className="flex-grow mt-0 mb-4 md:p-8 lg:p-12"
       >
-        <div className=" h-24 md:h-8 w-full bg-neutral-950 md:bg-white"></div>
+        <div className=" h-24 md:h-32 w-full bg-neutral-950 md:bg-white"></div>
         {children}
         {/* <RecentlyViewed recentlyViewed={recentlyViewed} /> */}
       </main>

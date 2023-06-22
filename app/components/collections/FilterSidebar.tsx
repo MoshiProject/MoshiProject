@@ -27,7 +27,6 @@ function FilterSidebar({
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [filteredAnime, setFilteredAnime] = useState([]);
   const [filteredProductType, setFilteredProductType] = useState([]);
-  console.log("products", products);
   //   Handle Character Filtering
   useEffect(() => {
     if (filteredCharacters.length > 0) {

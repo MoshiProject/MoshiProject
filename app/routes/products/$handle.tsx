@@ -24,14 +24,20 @@ import ShippingEstimation from '~/components/products/ShippingEstimation';
 import Hero from '~/components/HomePage/Hero';
 import SizingChart from '~/components/products/SizingChart';
 import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
+import Seperator from '~/components/products/Seperator';
+import {StarIcon} from '@heroicons/react/24/solid';
+import ShippingInfo from '~/components/products/ShippingInfo';
+import DescriptionTab from '~/components/products/DescriptionTab';
+import ContactUs from '../pages/contact-us';
+import ReturnInfo from '~/components/products/ReturnInfo';
+
 export const loader = async ({params, context, request}: LoaderArgs) => {
   //###load necessary parameters
   const storeDomain = context.storefront.getShopifyDomain();
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
-  console.log('handle', handle);
   //###load admin mode if required
   const selectedOptions: Option[] = [];
   let isAdmin = false;
@@ -64,7 +70,6 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 
   const productAnime = getProductAnime(product.title);
   const animeHandle = productAnimeHandles[productAnime];
-
   const {collection: productTypeRecommendations}: any = animeHandle
     ? await context.storefront.query(SMALL_COLLECTION_QUERY, {
         variables: {
@@ -303,6 +308,9 @@ export default function ProductHandle() {
   const desc = product.descriptionHtml;
   const [selectedImage, setSelectedImage] = useState(selectedVariant.image.url);
   const data = useActionData();
+  const reviewsRef = useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
+
   const composition =
     desc.indexOf('<ul>') !== -1
       ? desc.substring(desc.indexOf('<ul>'), desc.lastIndexOf('</ul>') + 5)
@@ -322,7 +330,43 @@ export default function ProductHandle() {
   }, [selectedVariant]);
   const orderable = selectedVariant?.availableForSale || false;
   return (
-    <section className="w-full gap-2 px-5  md:gap-8 grid  md:px-24 md:mt-16">
+    <section className="w-full  gap-2 px-2  md:gap-8 grid  md:px-24 md:mt-0">
+      <motion.div
+        initial={{opacity: 0, x: -200}}
+        animate={{opacity: 1, x: 0, transition: {delay: 0, duration: 0.6}}}
+      >
+        <motion.h1 className="md:hidden mt-4 tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
+          {titleFilter(product.title)}
+        </motion.h1>
+        <div>
+          <button className="hidden" onClick={executeScroll}>
+            <div className="flex items-center font-bold text-base">
+              {[0, 1, 2, 3, 4].map((star) => {
+                return (
+                  <StarIcon key={star} className={`h-5 w-5 ${'text-black'}`} />
+                );
+              })}
+              <span className="">(15)</span>
+            </div>
+          </button>
+        </div>
+        <div className="flex justify-between">
+          <div className="md:hidden flex md:justify-start md:items-start">
+            {selectedVariant.compareAtPrice && (
+              <Money
+                withoutTrailingZeros
+                data={selectedVariant.compareAtPrice}
+                className="text-md font-semibold text-neutral-800 line-through	mr-3"
+              />
+            )}
+            <Money
+              withoutTrailingZeros
+              data={selectedVariant.price}
+              className="text-md font-semibold text-red-600 "
+            />
+          </div>
+        </div>
+      </motion.div>
       <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit md:mt-20 mt-4">
           <ProductGallery
@@ -331,12 +375,12 @@ export default function ProductHandle() {
           />
         </div>
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
-          <div className="grid gap-2 first:mt-4">
-            <h1 className="text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
+          <div className="grid gap-2">
+            <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
               {titleFilter(product.title)}
             </h1>
             <div className="grid gap-2 justify-center items-center md:justify-start md:items-start">
-              <div className="flex justify-center md:justify-start md:items-start">
+              <div className="hidden md:flex justify-center md:justify-start md:items-start">
                 {selectedVariant.compareAtPrice && (
                   <Money
                     withoutTrailingZeros
@@ -350,11 +394,11 @@ export default function ProductHandle() {
                   className="text-lg font-semibold text-red-600 "
                 />
               </div>
-              <div className="flex justify-center mt-1 md:justify-start md:items-start">
+              {/* <div className="flex justify-center mt-1 md:justify-start md:items-start">
                 <span className="text-xs text-neutral-500 uppercase tracking-widest">
                   Free Shipping + Tax Included
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
           <ProductOptions
@@ -367,7 +411,7 @@ export default function ProductHandle() {
               <span className="md:block hidden ">
                 <SizingChart productType={getProductType(product.title)} />
               </span>
-              <div>
+              <div className="hidden">
                 <ShippingEstimation />
               </div>
               <AddToCartForm variantId={selectedVariant?.id} />
@@ -388,114 +432,29 @@ export default function ProductHandle() {
                   {/* @ts-ignore  */}
                 </shopify-payment-terms>
               </div>
+              <div className="hidden md:block">
+                <DescriptionBlock product={product} />
+              </div>
             </div>
           )}
-          <div className="md:max-w-[502px] border-t  text-sm md:mt-0 mt-8">
-            <Accordion title={'Description'} animations>
-              <div
-                className="prose border-t border-gray-200 pt-6 text-black text-sm mb-4"
-                dangerouslySetInnerHTML={{
-                  __html: description,
-                }}
-              />
-            </Accordion>
-            {['sweatshirt', 'shirt', 'hoodie'].includes(
-              getProductType(product.title)?.toLowerCase(),
-            ) && (
-              <Accordion title={'Care Instructions'} animations>
-                <div className="bg-white">
-                  <p className="text-sm mb-4">
-                    To ensure that your DTG-printed garments remain in good
-                    condition for as long as possible, it's important to follow
-                    the care instructions carefully. The following steps are
-                    recommended:
-                  </p>
-                  <p className="text-sm mb-4">
-                    Machine-wash your DTG-printed garments cold and inside-out
-                    on a gentle cycle using a mild detergent and similar colors.
-                    Use non-chlorine bleach only when necessary. While
-                    DTG-printed apparel can be tumble-dried on a low cycle, it's
-                    recommended to hang-dry them instead. Do not dry clean your
-                    DTG-printed garments. Dry cleaning can damage the fibers of
-                    the garment and cause the print to fade or bleed.
-                  </p>
-                </div>
-              </Accordion>
-            )}
-            {composition && (
-              <Accordion title={'Composition'} animations>
-                <div
-                  className="prose border-t border-gray-200 pt-6 text-black text-md list-disc	"
-                  dangerouslySetInnerHTML={{
-                    __html: composition.replaceAll('.:', '•'),
-                  }}
-                />
-              </Accordion>
-            )}
-            <Accordion title="Shipping" animations>
-              <div className="">
-                <p>
-                  <strong>SHIPPING TIMES</strong>&nbsp;
-                </p>
-                <p>
-                  We custom make every order in-house. Please allow 2 to 4
-                  business days for all items to be made before shipment. After
-                  your item(s) have been processed, you will receive a tracking
-                  code in your email. Deliveries typically take{' '}
-                  {['sweatshirt', 'shirt', 'hoodie'].includes(
-                    getProductType(product.title)?.toLowerCase(),
-                  )
-                    ? '3-5 business days'
-                    : '2-4 weeks'}
-                  after fulfillment. Tracking numbers are always provided. We
-                  are not responsible for delays caused by individual carriers,
-                  but we will always do everything we can to make sure you
-                  receive your order as fast as possible.&nbsp;
-                </p>
-                <br />
-                <p>
-                  <strong>TRACKING NUMBERS</strong>
-                </p>
-                <p>
-                  Tracking numbers are always provided for every order. If your
-                  order is shipped in&nbsp;multiple packages, you will get a
-                  tracking number for each.
-                </p>
-                <br />
-                <p>
-                  <strong>CANCELLATIONS</strong>
-                </p>
-
-                <p>
-                  Order changes or cancellation requests can be within 24 hours
-                  of your order being made. We do not offer any sort of
-                  exchanges or refund for change of mind items after this time.
-                  This also includes exchanges or refunds for size changes so
-                  please double check sizing charts prior to making your
-                  purchase. A 3% transaction fee will be removed from the
-                  refunded amount.
-                </p>
-                <br />
-                <p>
-                  Returns or exchanges will only be accepted if you received the
-                  wrong items or defective/damaged items. To be eligible for a
-                  return, your item must be unused and in the same condition
-                  that you received it. We reserve the right to deny any item
-                  that does not meet these requirements.
-                </p>
-              </div>
-            </Accordion>
-          </div>
         </div>
+      </div>{' '}
+      <div className="md:hidden">
+        <Seperator />
       </div>
-      <div className="hidden"></div>
+      <div className="md:hidden">
+        <DescriptionBlock product={product} />
+      </div>
+      <Seperator />
       <div className="">
         <ReviewsSection
+          ref={reviewsRef}
           product={product}
           judgeReviews={judgeReviews}
           isAdmin={isAdmin}
         ></ReviewsSection>
       </div>
+      <Seperator />
       <ProductRecommendations
         recommendations={productAnimeRecommendations}
         title={
@@ -504,6 +463,7 @@ export default function ProductHandle() {
             : `Shop ${getProductAnime(product.title)}`
         }
       />
+      <Seperator />
       <ProductRecommendations
         recommendations={productTypeRecommendations}
         title={`Shop ${getProductType(product.title)}s`}
@@ -568,6 +528,191 @@ export function Accordion({
           </>
         )}
       </Disclosure>
+    </div>
+  );
+}
+function DescriptionBlock({product}) {
+  return (
+    <div className="md:max-w-[502px]">
+      {' '}
+      <div className="md:max-w-[502px] text-sm md:mt-0 mt-4">
+        {/* <Accordion title={'Description'} animations>
+      <div
+        className="prose border-t border-gray-200 pt-6 text-black text-sm mb-4"
+        dangerouslySetInnerHTML={{
+          __html: description,
+        }}
+      />
+    </Accordion> */}
+
+        <div className="py-3 md:max-w-[502px]">
+          <motion.div
+            initial={{opacity: 0, x: -200}}
+            viewport={{once: true}}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {delay: 0, duration: 0.4},
+            }}
+            className="mt-5 px-2"
+          >
+            <motion.h3 className="text-2xl font-bold tracking-widest mb-1">
+              SUPERIOR COMFORT
+            </motion.h3>
+            <p className="text-sm">
+              Experience a level of comfort that simply cannot be matched with
+              our incredibly soft and cozy{' '}
+              <span className="lowercase">{getProductType(product.title)}</span>
+              s.
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{opacity: 0, x: -200}}
+            viewport={{once: true}}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {delay: 0, duration: 0.4},
+            }}
+            className="mt-12 px-2"
+          >
+            <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
+              PREMIUM QUALITY
+            </h3>
+            <p className="text-sm">
+              Experience the superior quality of our{' '}
+              <span className="font-bold">100% ring-spun cotton</span>{' '}
+              <span className="lowercase">{getProductType(product.title)}</span>
+              s and embrace the comfort that will keep you coming back for more
+              with our ing-spun cotton.
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{opacity: 0, x: -200}}
+            viewport={{once: true}}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {delay: 0, duration: 0.4},
+            }}
+            className="mt-12 px-2"
+          >
+            <h3 className="text-2xl font-bold tracking-widest mb-3 mt-3">
+              UNMATCHED DESIGNS
+            </h3>
+            <p className="text-sm">
+              Elevate your style with our unmatched prints, boasting vibrant
+              colors and impeccable clarity. Experience t-shirt artistry like
+              never before, designed to make you stand out from the crowd.
+              {/* <ul className="list-disc pl-8 space-y-2">
+                <li>Side seams for lasting quality and durability.</li>
+                <li>
+                  100% cotton for superior comfort, warmth, and durability.
+                </li>
+
+                <li>
+                  It feels soft and lightweight, with the right amount of
+                  stretch.
+                </li>
+              </ul> */}
+            </p>
+          </motion.div>
+        </div>
+
+        {/* {['sweatshirt', 'shirt', 'hoodie'].includes(
+      getProductType(product.title)?.toLowerCase(),
+    ) && (
+      <Accordion title={'Care Instructions'} animations>
+        <div className="bg-white">
+          <p className="text-sm mb-4">
+            To ensure that your DTG-printed garments remain in good
+            condition for as long as possible, it's important to follow
+            the care instructions carefully. The following steps are
+            recommended:
+          </p>
+          <p className="text-sm mb-4">
+            Machine-wash your DTG-printed garments cold and inside-out
+            on a gentle cycle using a mild detergent and similar colors.
+            Use non-chlorine bleach only when necessary. While
+            DTG-printed apparel can be tumble-dried on a low cycle, it's
+            recommended to hang-dry them instead. Do not dry clean your
+            DTG-printed garments. Dry cleaning can damage the fibers of
+            the garment and cause the print to fade or bleed.
+          </p>
+        </div>
+      </Accordion>
+    )}
+    {composition && (
+      <Accordion title={'Composition'} animations>
+        <div
+          className="prose border-t border-gray-200 pt-6 text-black text-md list-disc	"
+          dangerouslySetInnerHTML={{
+            __html: composition.replaceAll('.:', '•'),
+          }}
+        />
+      </Accordion>
+    )}
+    <Accordion title="Shipping" animations>
+      <div className="">
+        <p>
+          <strong>SHIPPING TIMES</strong>&nbsp;
+        </p>
+        <p>
+          We custom make every order in-house. Please allow 2 to 4
+          business days for all items to be made before shipment. After
+          your item(s) have been processed, you will receive a tracking
+          code in your email. Deliveries typically take{' '}
+          {['sweatshirt', 'shirt', 'hoodie'].includes(
+            getProductType(product.title)?.toLowerCase(),
+          )
+            ? '3-5 business days'
+            : '2-4 weeks'}
+          after fulfillment. Tracking numbers are always provided. We
+          are not responsible for delays caused by individual carriers,
+          but we will always do everything we can to make sure you
+          receive your order as fast as possible.&nbsp;
+        </p>
+        <br />
+        <p>
+          <strong>TRACKING NUMBERS</strong>
+        </p>
+        <p>
+          Tracking numbers are always provided for every order. If your
+          order is shipped in&nbsp;multiple packages, you will get a
+          tracking number for each.
+        </p>
+        <br />
+        <p>
+          <strong>CANCELLATIONS</strong>
+        </p>
+
+        <p>
+          Order changes or cancellation requests can be within 24 hours
+          of your order being made. We do not offer any sort of
+          exchanges or refund for change of mind items after this time.
+          This also includes exchanges or refunds for size changes so
+          please double check sizing charts prior to making your
+          purchase. A 3% transaction fee will be removed from the
+          refunded amount.
+        </p>
+        <br />
+        <p>
+          Returns or exchanges will only be accepted if you received the
+          wrong items or defective/damaged items. To be eligible for a
+          return, your item must be unused and in the same condition
+          that you received it. We reserve the right to deny any item
+          that does not meet these requirements.
+        </p>
+      </div>
+    </Accordion> */}
+      </div>
+      <div className="mt-6 mb-[-8px]">
+        <ShippingInfo />
+        <ReturnInfo />
+        <DescriptionTab title="Contact Us" height="768px">
+          <ContactUs embed={true}></ContactUs>
+        </DescriptionTab>
+      </div>
     </div>
   );
 }

@@ -39,7 +39,7 @@ export const meta: MetaFunction = ({data}) => {
   };
 };
 
-export default function ContactUs() {
+export default function ContactUs({embed = false}) {
   const form = useRef();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -70,10 +70,14 @@ export default function ContactUs() {
   return (
     <>
       {sent ? (
-        <div className="flex flex-col items-center justify-center ">
-          <div className="rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full">
+          <div
+            className={`rounded px-8 pt-6 pb-8 mb-4 ${
+              !embed ? 'md:w-1/3' : ''
+            } w-full h-2/3 flex flex-col items-center justify-center`}
+          >
             <h1 className="font-semibold text-4xl mb-2">Contact Us</h1>
-            <div className="flex items-center">
+            <div className="flex items-center whitespace-normal">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-16 h-16 mb-4"
@@ -86,7 +90,10 @@ export default function ContactUs() {
                   fill="#43a047"
                 />
               </svg>
-              <h2 className="font-normal text-center">
+              <h2
+                style={{textOverflow: 'wrap'}}
+                className="font-normal text-center w-full"
+              >
                 Successfully Submitted! We'll get back to you as soon as
                 possible!
               </h2>
@@ -97,7 +104,9 @@ export default function ContactUs() {
         <div className="flex flex-col items-center justify-center ">
           <form
             ref={form}
-            className="rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/3 h-2/3 flex flex-col items-center justify-center"
+            className={`rounded px-8 pt-6 pb-8 mb-4 ${
+              !embed ? 'md:w-1/3' : ''
+            } w-full h-2/3 flex flex-col items-center justify-center`}
             onSubmit={sendEmail}
           >
             <h1 className="font-semibold text-4xl mb-2">Contact Us</h1>

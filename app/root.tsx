@@ -61,7 +61,6 @@ export const meta = () => ({
 
 export async function loader({context, request}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
-  console.log(JSON.stringify(context));
   //get cookie data for recently Viewed
   // const cookieHeader = request.headers.get('Cookie');
   // const cookie = await recentlyViewedCookie.parse(cookieHeader);
@@ -108,7 +107,6 @@ export default function App() {
       hasUserConsent: true,
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
     };
-    console.log('payload', payload);
     sendShopifyAnalytics({
       eventName: AnalyticsEventName.PAGE_VIEW,
       payload,

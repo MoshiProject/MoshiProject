@@ -45,7 +45,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
 
               <div className="flex items-center justify-center min-h-screen ">
                 <div
-                  className={`relative bg-white rounded-lg shadow-lg overflow-hidden z-[100000] m-4 h-fit w-fit pb-4 md:w-1/2 ${
+                  className={`relative bg-white rounded-lg shadow-lg overflow-hidden z-[100000] m-4 h-fit w-fit pb-4 md:w-1/2 md:mt-56 ${
                     scrollDirection !== 'down' ? 'mt-28' : ''
                   }`}
                 >

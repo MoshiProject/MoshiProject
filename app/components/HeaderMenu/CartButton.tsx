@@ -8,6 +8,7 @@ import {useEffect} from 'react';
 export default function CartButton(cart: any) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
+
   // Grab all the fetchers that are adding to cart
   const addToCartFetchers = [];
   for (const fetcher of fetchers) {
@@ -61,6 +62,7 @@ export default function CartButton(cart: any) {
                     <div className="flex-1 overflow-y-auto">
                       <div className="flex flex-col space-y-7 justify-between items-center md:py-8 md:px-12 px-4 py-6">
                         <CartLineItems linesObj={data.lines} />
+                        {console.log('data', data)}
                       </div>
                     </div>
                     <div className="w-full md:px-12 px-4 py-6 space-y-6 border-t border-neutral-800">
