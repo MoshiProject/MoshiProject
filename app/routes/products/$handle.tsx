@@ -346,6 +346,7 @@ export default function ProductHandle() {
           />
         </div>
         <motion.div
+          className="md:hidden"
           initial={{opacity: 0, x: -200}}
           animate={{opacity: 1, x: 0, transition: {delay: 0, duration: 0.6}}}
         >
