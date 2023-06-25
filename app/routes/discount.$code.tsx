@@ -8,6 +8,7 @@ import {type AppLoadContext} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 import {cartCreate} from './Cart';
 
+// DISCOUNT CODE UPDATE FUNCTIONS
 export async function cartDiscountCodesUpdate({
   cartId,
   discountCodes,
@@ -52,6 +53,51 @@ const DISCOUNT_CODES_UPDATE = `#graphql
   }
 `;
 
+// CART ATTRIBUTE UPDATE FUNCTIONS
+export async function cartAttributeUpdate({
+  cartId,
+  attribute,
+  storefront,
+}: {
+  cartId: string;
+  attribute: {discountData: any};
+  storefront: AppLoadContext['storefront'];
+}) {
+  const {cartAttributesUpdate} = await storefront.mutate<{
+    cartAttributesUpdate: {cart: CartType; errors: UserError[]};
+  }>(ATTRIBUTE_UPDATE, {
+    variables: {
+      cartId,
+      attributes: [{key: 'data', value: JSON.stringify(attribute)}],
+    },
+  });
+
+  invariant(
+    cartDiscountCodesUpdate,
+    'No data returned from the cartDiscountCodesUpdate mutation',
+  );
+
+  return cartDiscountCodesUpdate;
+}
+
+const ATTRIBUTE_UPDATE = `#graphql
+  mutation cartAttributesUpdate($cartId: ID!, $attributes: [AttributeInput!]!, $country: CountryCode = ZZ)
+    @inContext(country: $country) {
+      cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+      cart {
+        id
+        attributes {
+          key
+          value
+        }
+      }
+      errors: userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
 /**
  * Automatically applies a discount found on the url
  * If a cart exists it's updated with the discount, otherwise a cart is created with the discount already applied

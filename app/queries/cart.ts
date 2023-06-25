@@ -94,6 +94,7 @@ export const CART_QUERY = `#graphql
     }
     discountCodes {
       code
+      applicable
     }
   }
 

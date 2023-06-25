@@ -1,10 +1,11 @@
 import {Drawer, useDrawer} from '~/components/Drawer';
 import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
 import {Suspense} from 'react';
-import {Await} from '@remix-run/react';
+import {Await, useFetcher} from '@remix-run/react';
 import {useFetchers} from '@remix-run/react';
-import {useEffect} from 'react';
-
+import {useEffect, useState} from 'react';
+import {TagIcon} from '@heroicons/react/24/outline';
+import {ArrowRightIcon} from '@heroicons/react/20/solid';
 export default function CartButton(cart: any) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
@@ -65,7 +66,42 @@ export default function CartButton(cart: any) {
                         {console.log('data', data)}
                       </div>
                     </div>
-                    <div className="w-full md:px-12 px-4 py-6 space-y-6 border-t border-neutral-800">
+                    <div className="w-full md:px-12 px-4 py-6 space-y-6 border-t border-neutral-800 pt-1">
+                      <div>
+                        {data.discountCodes.map((discount) => (
+                          <div
+                            className="flex justify-between items-center w-full"
+                            key={discount.code}
+                          >
+                            <div>
+                              {' '}
+                              <span
+                                className={`flex items-center border-2 ${
+                                  discount.applicable
+                                    ? 'border-green-500'
+                                    : 'border-red-600'
+                                } bg-neutral-700 bg-opacity-50 p-1 text-sm w-fit rounded-md px-4`}
+                              >
+                                <TagIcon className="h-5 w-5 rotate-90 mr-1" />{' '}
+                                <span className="mx-2">{discount.code}</span>
+                                <RemoveDiscountButton></RemoveDiscountButton>
+                              </span>
+                            </div>
+                            <div className="text-xs w-1/3">
+                              {!discount.applicable
+                                ? 'discount not applied. Minimum requirements not met.'
+                                : data.attributes.map((attribute) => {
+                                    const value = JSON.parse(attribute.value);
+                                    console.log(value);
+                                    return value.discountData.data
+                                      .codeDiscountNodeByCode.codeDiscount
+                                      .summary;
+                                  })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <DiscountForm></DiscountForm>
                       <CartSummary
                         cost={data.cost}
                         compareCost={data.lines.edges
@@ -101,5 +137,42 @@ export default function CartButton(cart: any) {
 
       <span className="sr-only">items in cart, view bag</span>
     </div>
+  );
+}
+
+function RemoveDiscountButton() {
+  const fetcher = useFetcher();
+
+  return (
+    <fetcher.Form action="/handleDiscount" method="post">
+      <input type="hidden" name="code" value={'empty'} />
+      <button
+        className=" text-white hover:text-neutral-950 hover:bg-white rounded-md font-small text-center my-2 max-w-xl leading-none flex items-center justify-center"
+        type="submit"
+      >
+        X
+      </button>
+    </fetcher.Form>
+  );
+}
+function DiscountForm() {
+  const fetcher = useFetcher();
+  return (
+    <fetcher.Form action="/handleDiscount" method="post">
+      <div className="flex items-center">
+        <input
+          className="h-10 bg-neutral-950 border-neutral-400 border-2 text-white rounded-md placeholder:text-neutral-500"
+          type="text"
+          name="code"
+          placeholder="Discount Code"
+        />
+        <button
+          className="bg-neutral-950 mx-2 border-neutral-400 text-white border-2 hover:text-neutral-950 hover:bg-white rounded-md font-small text-center max-w-xl leading-none w-10 h-10 flex items-center justify-center focus:border-red-600"
+          type="submit"
+        >
+          <ArrowRightIcon className="h-5 w-5" />
+        </button>
+      </div>
+    </fetcher.Form>
   );
 }

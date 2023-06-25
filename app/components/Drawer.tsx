@@ -36,7 +36,7 @@ function Drawer({open, onClose, children}: any) {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="max-w-lg bg-neutral-950 text-white tracking-widest transform text-left align-middle shadow-xl transition-all antialiased flex flex-col">
-                  <header className="sticky top-0 flex items-center justify-between px-4 h-24 sm:px-8 md:px-12 flex-0">
+                  <header className="sticky top-0 flex items-center justify-between px-4 h-16 sm:px-8 md:px-12 flex-0">
                     <h2
                       id="cart-contents"
                       className="whitespace-pre-wrap max-w-prose font-bold text-lg tracking-widest"
