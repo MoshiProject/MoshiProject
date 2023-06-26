@@ -1,7 +1,11 @@
 import {Form, useActionData} from '@remix-run/react';
 import {useState} from 'react';
 import {StarIcon, XMarkIcon} from '@heroicons/react/24/solid';
-import {authors, highHoodieReviews, lowHoodieReviews} from '~/data/reviews';
+import {
+  authors,
+  reviews as reviewData,
+  midreviews as midReviewData,
+} from '~/data/reviews';
 import {motion} from 'framer-motion';
 
 function useForceUpdate() {
@@ -11,7 +15,15 @@ function useForceUpdate() {
   // is better than directly setting `setValue(value + 1)`
 }
 
-function WriteReview({isAdmin, id}: {isAdmin: boolean; id: string}) {
+function WriteReview({
+  isAdmin,
+  id,
+  productType,
+}: {
+  isAdmin: boolean;
+  id: string;
+  productType: string;
+}) {
   const order = useActionData();
   const [quantity, setQuantity] = useState(0);
   const [emptyQuantity, setEmptyQuantity] = useState(0);
@@ -33,11 +45,11 @@ function WriteReview({isAdmin, id}: {isAdmin: boolean; id: string}) {
   const forceUpdate = useForceUpdate();
 
   const hoodieReviews = [
-    highHoodieReviews,
-    highHoodieReviews,
-    lowHoodieReviews,
-    lowHoodieReviews,
-    lowHoodieReviews,
+    reviewData,
+    reviewData,
+    midReviewData,
+    midReviewData,
+    midReviewData,
   ];
   const handleAdminForm = () => {
     const reviewQuantitiyArr = [0, 0, 0, 0, 0];
@@ -90,7 +102,9 @@ function WriteReview({isAdmin, id}: {isAdmin: boolean; id: string}) {
       for (let i = 0; i < quantity; i++) {
         revs.push({
           author: authors[Math.floor(Math.random() * authors.length)],
-          body: reviewsArray[Math.floor(Math.random() * reviewsArray.length)],
+          body: reviewsArray[
+            Math.floor(Math.random() * reviewsArray.length)
+          ].replace('{productType}', productType),
           rating: 5 - index,
         });
       }

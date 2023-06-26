@@ -44,7 +44,7 @@ export const lowHoodieReviews = [
   "I have mixed feelings about this {productType}. It's just average and doesn't stand out.",
 ];
 
-const reviews = [
+export const reviews = [
   'This {productType} is awesome!',
   'Love this {productType}',
   'Fits great, love it',
@@ -940,7 +940,7 @@ const reviews = [
   'Soft and affordable',
   'Impressive and versatile',
 ];
-const midreviews = [
+export const midreviews = [
   'average quality {productType}',
   'decent but not exceptional',
   'just an okay {productType}',

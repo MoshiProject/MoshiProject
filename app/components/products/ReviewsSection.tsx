@@ -4,7 +4,7 @@ import ReviewsCounter from '../HomePage/ReviewsCounter';
 import {reviews} from '~/data/reviews';
 import WriteReview from './WriteReview';
 import {StarIcon} from '@heroicons/react/24/solid';
-import titleFilter from '~/functions/titleFilter';
+import titleFilter, {getProductType} from '~/functions/titleFilter';
 import {useEffect} from 'react';
 type Props = {
   product: Product;
@@ -68,7 +68,11 @@ const ReviewsSection: React.FC<Props> = ({
   // console.log(`Reviews`, judgeReviews);
   return noReviews ? (
     <div ref={forwardRef}>
-      <WriteReview isAdmin={isAdmin} id={product.id} />
+      <WriteReview
+        isAdmin={isAdmin}
+        id={product.id}
+        productType={getProductType(product.title)?.toLowerCase()}
+      />
     </div>
   ) : (
     <div ref={forwardRef} className="py-6 bg-white">
@@ -78,7 +82,11 @@ const ReviewsSection: React.FC<Props> = ({
             CUSTOMER REVIEWS
           </h2>
         </div>
-        <WriteReview isAdmin={isAdmin} />
+        <WriteReview
+          isAdmin={isAdmin}
+          id={product.id}
+          productType={getProductType(product.title)?.toLowerCase()}
+        />
         <ReviewsCounter reviews={counterArr} />
         <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
           {customReviews
