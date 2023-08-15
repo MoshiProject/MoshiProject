@@ -223,11 +223,13 @@ export async function action({request, context, params}: ActionArgs) {
     .then((response) => response.json())
     .then((result: any) => {
       //console.log('result', result);
-      oldReviews = result.metafields.find((metafield) => {
-        return (
-          metafield.namespace === 'hydrogen' && metafield.key === 'reviews'
-        );
-      });
+      oldReviews = result.metafields
+        ? result.metafields.find((metafield) => {
+            return (
+              metafield.namespace === 'hydrogen' && metafield.key === 'reviews'
+            );
+          })
+        : '';
       if (!oldReviews) {
         oldReviews = '';
       }
