@@ -207,7 +207,7 @@ export async function action({request, context, params}: ActionArgs) {
   // });
   // console.log('response', response.json());
 
-  const url = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-04/products/${id}/metafields.json`;
+  const url = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-07/products/${id}/metafields.json`;
 
   const accessToken = context.env.ADMIN_API_ACCESS_TOKEN;
 
@@ -256,7 +256,7 @@ export async function action({request, context, params}: ActionArgs) {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
+          console.log('resu;ttttt', result);
         })
         .catch((error) => {
           console.error('Error:', error);
