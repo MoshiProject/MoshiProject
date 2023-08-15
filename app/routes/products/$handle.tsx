@@ -186,26 +186,7 @@ export async function action({request, context, params}: ActionArgs) {
     throw new Response(null, {status: 404});
   }
   const id = product.id.substr(product.id.lastIndexOf('/') + 1);
-
-  // const query = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-04/products/${id}/metafields.json`;
-  // console.log('query', query);
-  // // Make a GET request to the Shopify Admin API to fetch a product
-  // const response = await fetch(query, {
-  //   method: 'POST',
-  //   headers: {
-  //     'X-Shopify-Access-Token': context.env.ADMIN_API_ACCESS_TOKEN,
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     metafield: {
-  //       namespace: 'my_fields',
-  //       key: 'type',
-  //       value: 'phone case',
-  //       type: 'string',
-  //     },
-  //   }),
-  // });
-  // console.log('response', response.json());
+  console.log('isAdmin: ' + isAdmin);
 
   const url = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-07/products/${id}/metafields.json`;
 
@@ -215,6 +196,7 @@ export async function action({request, context, params}: ActionArgs) {
     'X-Shopify-Access-Token': accessToken,
     'Content-Type': 'application/json',
   };
+  console.log(headers);
   let oldReviews = '';
   fetch(url, {
     method: 'GET',
@@ -222,7 +204,7 @@ export async function action({request, context, params}: ActionArgs) {
   })
     .then((response) => response.json())
     .then((result: any) => {
-      //console.log('result', result);
+      console.log('result', result);
       oldReviews = result.metafields
         ? result.metafields.find((metafield) => {
             return (
