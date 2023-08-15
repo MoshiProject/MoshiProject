@@ -197,56 +197,58 @@ export async function action({request, context, params}: ActionArgs) {
     'Content-Type': 'application/json',
   };
   console.log(headers);
-  let oldReviews = '';
-  fetch(url, {
-    method: 'GET',
-    headers,
-  })
-    .then((response) => response.json())
-    .then((result: any) => {
-      console.log('result', result);
-      oldReviews = result.metafields
-        ? result.metafields.find((metafield) => {
-            return (
-              metafield.namespace === 'hydrogen' && metafield.key === 'reviews'
-            );
-          })
-        : '';
-      if (!oldReviews) {
-        oldReviews = '';
-      }
-      console.log('oldReviews.value', oldReviews.value);
-      console.log('oldReviews', oldReviews);
-      let newReviews = '';
-      newReviews += reviews?.toString();
-      newReviews += oldReviews.value ? ',' + oldReviews.value : '';
-      newReviews = newReviews.replace(',,', ',');
-      const data = {
-        metafield: {
-          namespace: 'hydrogen',
-          key: 'reviews',
-          value: newReviews,
-          type: 'multi_line_text_field',
-        },
-      };
-
-      console.log('newReviews', JSON.stringify(data));
-      fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log('resu;ttttt', result);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
     });
+
+    const result = await response.json();
+    console.log('result', result);
+
+    let oldReviews = '';
+    if (result.metafields) {
+      oldReviews = result.metafields.find((metafield) => {
+        return (
+          metafield.namespace === 'hydrogen' && metafield.key === 'reviews'
+        );
+      });
+    }
+
+    if (!oldReviews) {
+      oldReviews = '';
+    }
+
+    console.log('oldReviews.value', oldReviews.value);
+    console.log('oldReviews', oldReviews);
+
+    let newReviews = '';
+    newReviews += reviews?.toString();
+    newReviews += oldReviews.value ? ',' + oldReviews.value : '';
+    newReviews = newReviews.replace(',,', ',');
+
+    const data = {
+      metafield: {
+        namespace: 'hydrogen',
+        key: 'reviews',
+        value: newReviews,
+        type: 'multi_line_text_field',
+      },
+    };
+
+    console.log('newReviews', JSON.stringify(data));
+
+    const postResponse = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    });
+
+    const postResult = await postResponse.json();
+    console.log('result', postResult);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 
   if (isAdmin) {
     return 'admin';
