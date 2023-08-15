@@ -118,10 +118,21 @@ function WriteReview({
         });
       }
     });
-    if (emptyQuantity) {
-      for (let i = 0; i < emptyQuantity; i++) {
+    const numNonEmptyReviews = revs.filter((review) => {
+      return review.rating === 5 || review.rating === 1;
+    }).length;
+    const maxEmptyReviews =
+      Math.min(emptyQuantity, numNonEmptyReviews) -
+      (reviewQuantity - numNonEmptyReviews);
+
+    console.log('maxEmptyReviews', maxEmptyReviews);
+    if (maxEmptyReviews !== 0) {
+      for (let i = 0; i < maxEmptyReviews; i++) {
         let rand = Math.floor(Math.random() * revs.length);
-        while (revs[rand] === '') {
+        console.log('body1', revs[rand].body);
+        while (revs[rand].body === '') {
+          console.log('body2', revs[rand].body);
+
           rand = Math.floor(Math.random() * revs.length);
         }
         revs[rand].body = '';
