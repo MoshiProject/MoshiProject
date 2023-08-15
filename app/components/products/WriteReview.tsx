@@ -100,11 +100,20 @@ function WriteReview({
     reviewQuantitiyArr.forEach((quantity, index) => {
       const reviewsArray = hoodieReviews[index];
       for (let i = 0; i < quantity; i++) {
+        const body =
+          index == 0 || index === 4
+            ? reviewsArray[Math.floor(Math.random() * reviewsArray.length)]
+                .replaceAll('{productType}', productType)
+                .replace('{productType}', productType)
+            : '';
         revs.push({
-          author: authors[Math.floor(Math.random() * authors.length)],
-          body: reviewsArray[
-            Math.floor(Math.random() * reviewsArray.length)
-          ].replace('{productType}', productType),
+          author: authors[Math.floor(Math.random() * authors.length)]
+            .toLowerCase()
+            .replace(
+              /[A-Za-zÀ-ÖØ-öø-ÿ]+/g,
+              (c) => c[0].toUpperCase() + c.substring(1),
+            ),
+          body,
           rating: 5 - index,
         });
       }
@@ -318,13 +327,14 @@ function WriteReview({
                           className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
                           onClick={() => {
                             const originalReview = reviews[index];
-                            originalReview.body =
-                              hoodieReviews[5 - review.rating][
-                                Math.floor(
-                                  Math.random() *
-                                    hoodieReviews[5 - review.rating].length,
-                                )
-                              ];
+                            originalReview.body = hoodieReviews[
+                              5 - review.rating
+                            ][
+                              Math.floor(
+                                Math.random() *
+                                  hoodieReviews[5 - review.rating].length,
+                              )
+                            ].replaceAll('{productType}', productType);
                             const newReviews = reviews;
                             newReviews[index] = originalReview;
                             setReviews(newReviews);
