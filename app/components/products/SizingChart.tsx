@@ -19,7 +19,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
   };
   const productTypeMap = {
     Sweatshirt: SweatshirtChart,
-    Shirt: shirtChart,
+    'T-Shirt': shirtChart,
     Hoodie: hoodieChart,
   };
   const data = productTypeMap[productType];
