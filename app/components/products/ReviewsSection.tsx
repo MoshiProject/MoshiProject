@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Product} from './products';
 import ReviewsCounter from '../HomePage/ReviewsCounter';
 import {reviews} from '~/data/reviews';
@@ -22,7 +22,7 @@ const ReviewsSection: React.FC<Props> = ({
   setReviewCount,
 }) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
-
+  const [showMoreCounter, setShowmoreCounter] = useState(5);
   const reviewString = product?.metafield
     ? '[' +
       product.metafields.find((metafield) => {
@@ -31,7 +31,9 @@ const ReviewsSection: React.FC<Props> = ({
       ']'
     : [];
   const customReviews =
-    reviewString && reviewString.length > 0 ? JSON.parse(reviewString) : [];
+    reviewString && reviewString.length > 0 && isJsonString(reviewString)
+      ? JSON.parse(reviewString)
+      : [];
   // const imageReviews = product.metafield
   //   ? product.metafields
   //       .find((metafield) => {
@@ -89,10 +91,29 @@ const ReviewsSection: React.FC<Props> = ({
         />
         <ReviewsCounter reviews={counterArr} />
         <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
+          {judgeReviews.map((review, index) => (
+            <ReviewCard
+              key={index}
+              className={`my-2 ${index < showMoreCounter ? 'block' : 'hidden'}`}
+              imgSrc={review.imageSrc}
+              author={review.reviewer.name}
+              stars={review.rating}
+              body={review.body}
+            />
+          ))}
           {customReviews
+            .sort(
+              (a, b) =>
+                (b.body.length > 0 ? 1 : -1) - (a.body.length > 0 ? 1 : -1),
+            )
             .sort((a, b) => b.rating - a.rating)
             .map((review, index) => (
               <ReviewCard
+                className={`my-2 ${
+                  judgeReviews.length + index < showMoreCounter
+                    ? 'block'
+                    : 'hidden'
+                }`}
                 key={index}
                 imgSrc={review.imageSrc}
                 author={review.author}
@@ -101,16 +122,19 @@ const ReviewsSection: React.FC<Props> = ({
               />
             ))}
           {/* Judge Reviews */}
-          {judgeReviews.map((review, index) => (
-            <ReviewCard
-              key={index}
-              imgSrc={review.imageSrc}
-              author={review.reviewer.name}
-              stars={review.rating}
-              body={review.body}
-            />
-          ))}
         </ul>
+        <div className="flex justify-center mt-8 mb-4">
+          <button
+            className="bg-neutral-950 text-white rounded-md p-2 px-6"
+            onClick={() => {
+              setTimeout(() => {
+                setShowmoreCounter(showMoreCounter + 5);
+              }, 550);
+            }}
+          >
+            Show More
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -236,3 +260,11 @@ const verifiedBadge = (
     />
   </svg>
 );
+function isJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
