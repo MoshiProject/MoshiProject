@@ -106,6 +106,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   const id = product.id.substr(product.id.lastIndexOf('/') + 1);
 
   const judgeReviews = getJudgeMeReviews(id, context);
+
   console.timeEnd('get judge');
   console.timeEnd('total');
 
