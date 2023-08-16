@@ -130,11 +130,6 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <script
-          async
-          type="text/javascript"
-          src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ViUH6b"
-        ></script>
         <Layout title={name}>
           <Outlet />
         </Layout>
