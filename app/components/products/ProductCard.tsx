@@ -64,7 +64,7 @@ export default function ProductCard({
           <Image
             width={'full'}
             height={'full'}
-            sizes="100wv"
+            sizes="50vw"
             data={product.variants.nodes[0].image}
             alt={titleFilter(product.title)}
             className={`overflow-hidden ${

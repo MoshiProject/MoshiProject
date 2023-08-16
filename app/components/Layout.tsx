@@ -3,7 +3,6 @@ import HeaderMenu from './HeaderMenu/HeaderMenu';
 type LayoutProps = {
   children: JSX.Element;
   title: JSX.Element;
-  recentlyViewed: any[];
 };
 import {useMatches} from '@remix-run/react';
 import {useDrawer} from './Drawer';

@@ -9,14 +9,14 @@ import {
 import {type LoaderArgs} from '@shopify/remix-oxygen';
 import tailwind from './styles/tailwind-build.css';
 import {Layout} from './components/Layout';
-import {Seo} from '@shopify/hydrogen';
+import {Seo, ShopifyPageViewPayload} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {CART_QUERY} from '~/queries/cart';
 import styles from '~/styles/app.css';
 import swiperBCSS from 'swiper/swiper-bundle.min.css';
 import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
 import {useLocation} from '@remix-run/react';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {
   useAnalyticsFromActions,
   useAnalyticsFromLoaders,
@@ -28,6 +28,7 @@ import {
   ShopifySalesChannel,
   useShopifyCookies,
 } from '@shopify/hydrogen';
+import {usePageAnalytics} from './hooks/usePageAnalytics';
 export const links = () => {
   return [
     {rel: 'stylesheet', href: tailwind},
@@ -95,25 +96,30 @@ export async function loader({context, request}: LoaderArgs) {
 
 export default function App() {
   const data = useLoaderData();
-  const location = useLocation();
-  const pageAnalytics = useAnalyticsFromLoaders();
-  const analyticsFromActions = useAnalyticsFromActions();
 
-  useShopifyCookies({hasUserConsent: true});
+  const hasUserConsent = true;
+  useShopifyCookies({hasUserConsent});
+
+  const location = useLocation();
+  const lastLocationKey = useRef<string>('');
+  const pageAnalytics = usePageAnalytics({hasUserConsent});
+
   useEffect(() => {
-    const payload = {
+    // Filter out useEffect running twice
+    if (lastLocationKey.current === location.key) return;
+
+    lastLocationKey.current = location.key;
+
+    const payload: ShopifyPageViewPayload = {
       ...getClientBrowserParameters(),
       ...pageAnalytics,
-      hasUserConsent: true,
-      shopifySalesChannel: ShopifySalesChannel.hydrogen,
     };
+
     sendShopifyAnalytics({
       eventName: AnalyticsEventName.PAGE_VIEW,
       payload,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
-
+  }, [location, pageAnalytics]);
   const {name} = data.layout.shop;
   //const recentlyViewed = data.recentlyViewed;
   return (
