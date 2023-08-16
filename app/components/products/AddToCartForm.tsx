@@ -13,15 +13,18 @@ import {usePageAnalytics} from '~/hooks/usePageAnalytics';
 
 export default function AddToCartForm({
   children,
-  lines,
+  variantId,
+  textColor = 'text-white',
+  backgroundColor = 'bg-black',
   disabled,
   analytics,
 }: {
   children: React.ReactNode;
-  lines: CartLineInput[];
   disabled?: boolean;
   analytics?: unknown;
 }) {
+  const lines = [{merchandiseId: variantId, quantity: 1}];
+
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher: FetcherWithComponents<any>) => {
@@ -32,11 +35,13 @@ export default function AddToCartForm({
               name="analytics"
               value={JSON.stringify(analytics)}
             />
+            <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
+            <input type="hidden" name="countryCode" value={'US'} />
+            <input type="hidden" name="lines" value={JSON.stringify(lines)} />
             <button
-              type="submit"
-              disabled={disabled ?? fetcher.state !== 'idle'}
+              className={`${backgroundColor} ${textColor} px-6 py-3 w-full text-center tracking-widest font-semibold text-base max-w-[400px] md:max-w-none uppercase`}
             >
-              {children}
+              Add to Cart
             </button>
           </AddToCartAnalytics>
         );
