@@ -84,10 +84,10 @@ export default function ProductGallery({
         <Image
           data={data.image}
           width={
-            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 75
+            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 150
           }
           height={
-            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 75
+            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 150
           }
           alt={data.image.altText}
         ></Image>
