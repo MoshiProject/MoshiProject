@@ -1,9 +1,9 @@
-import {useActionData, useLoaderData} from '@remix-run/react';
+import {Await, useActionData, useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 import ProductOptions from '~/components/products/ProductOptions';
 import {Money, ShopPayButton} from '@shopify/hydrogen-react';
 import {Disclosure} from '@headlessui/react';
-import {ActionArgs, LoaderArgs} from '@shopify/remix-oxygen';
+import {ActionArgs, LoaderArgs, defer} from '@shopify/remix-oxygen';
 import {Option, Product, Variant} from '~/components/products/products';
 import {ChevronRightIcon} from '@heroicons/react/20/solid';
 import {motion, AnimatePresence} from 'framer-motion';
@@ -24,7 +24,7 @@ import ShippingEstimation from '~/components/products/ShippingEstimation';
 import Hero from '~/components/HomePage/Hero';
 import SizingChart from '~/components/products/SizingChart';
 import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
-import {useEffect, useRef, useState} from 'react';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
 import Seperator from '~/components/products/Seperator';
 import {StarIcon} from '@heroicons/react/24/solid';
@@ -34,6 +34,9 @@ import ContactUs from '../pages/contact-us';
 import ReturnInfo from '~/components/products/ReturnInfo';
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
+  console.time('get Products');
+  console.time('total');
+
   //###load necessary parameters
   const storeDomain = context.storefront.getShopifyDomain();
   const {handle} = params;
@@ -59,7 +62,8 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
-
+  console.timeEnd('get Products');
+  console.time('get type Recs');
   //###handle product recommendations
   const cursor = searchParams.get('cursor');
   const rev = false;
@@ -80,9 +84,12 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
         },
       })
     : {collection: []};
+  console.timeEnd('get type Recs');
+  console.time('get anime Recs');
+
   const animeCollectionExists = animeHandle !== undefined;
   const {collection: productAnimeRecommendations}: any =
-    await context.storefront.query(SMALL_COLLECTION_QUERY, {
+    context.storefront.query(SMALL_COLLECTION_QUERY, {
       variables: {
         handle: animeCollectionExists ? animeHandle : 'featured-products',
         cursor,
@@ -90,11 +97,44 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
         sort,
       },
     });
+  console.timeEnd('get anime Recs');
+  console.time('get judge');
 
   // optionally set a default variant so you always have an "orderable" product selected
   const selectedVariant: Variant =
     product.selectedVariant ?? product?.variants?.nodes[0];
   const id = product.id.substr(product.id.lastIndexOf('/') + 1);
+
+  const judgeReviews = getJudgeMeReviews(id, context);
+  console.timeEnd('get judge');
+  console.timeEnd('total');
+
+  let reviewCount: number;
+  if (product.metafields[0] !== null && product.metafields[1] !== null) {
+    reviewCount = product.metafields.find((metafield) => {
+      return metafield && metafield.key === 'reviewCount';
+    }).value;
+  } else {
+    reviewCount = 0;
+  }
+
+  return defer({
+    judgeReviews,
+    product,
+    selectedVariant,
+    storeDomain,
+    productAnimeRecommendations: productAnimeRecommendations?.products?.nodes,
+    productTypeRecommendations: productTypeRecommendations?.products?.nodes,
+    analytics: {
+      pageType: AnalyticsPageType.product,
+      products: [product],
+    },
+    isAdmin,
+  });
+};
+// };
+
+async function getJudgeMeReviews(id: string, context) {
   //get Product ID
   let judgeID: number;
   try {
@@ -125,36 +165,14 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
         },
       },
     );
-    judgeReviews = await response.json();
-    judgeReviews = judgeReviews.reviews;
+    judgeReviews = response.json();
+
     //console.log('data', judgeReviews);
   } catch (error) {
     console.error(error);
   }
-  let reviewCount: number;
-  if (product.metafields[0] !== null && product.metafields[1] !== null) {
-    reviewCount = product.metafields.find((metafield) => {
-      return metafield && metafield.key === 'reviewCount';
-    }).value;
-  } else {
-    reviewCount = 0;
-  }
-
-  return json({
-    judgeReviews,
-    product,
-    selectedVariant,
-    storeDomain,
-    productAnimeRecommendations: productAnimeRecommendations?.products?.nodes,
-    productTypeRecommendations: productTypeRecommendations?.products?.nodes,
-    analytics: {
-      pageType: AnalyticsPageType.product,
-      products: [product],
-    },
-    isAdmin,
-  });
-};
-// };
+  return judgeReviews;
+}
 
 export async function action({request, context, params}: ActionArgs) {
   const body = await request.formData();
@@ -446,23 +464,35 @@ export default function ProductHandle() {
       </div>
       <Seperator />
       <div key={reviewCount}>
-        <ReviewsSection
-          forwardRef={reviewsRef}
-          product={product}
-          judgeReviews={judgeReviews}
-          isAdmin={isAdmin}
-          setReviewCount={setReviewCount}
-        ></ReviewsSection>
+        <Suspense fallback={<div></div>}>
+          <Await resolve={judgeReviews}>
+            {(judgeReviews) => (
+              <ReviewsSection
+                forwardRef={reviewsRef}
+                product={product}
+                judgeReviews={judgeReviews.reviews}
+                isAdmin={isAdmin}
+                setReviewCount={setReviewCount}
+              ></ReviewsSection>
+            )}
+          </Await>
+        </Suspense>
       </div>
       <Seperator />
-      <ProductRecommendations
-        recommendations={productAnimeRecommendations}
-        title={
-          getProductAnime(product.title) === undefined
-            ? `You may also like`
-            : `Shop ${getProductAnime(product.title)}`
-        }
-      />
+      <Suspense fallback={<div></div>}>
+        <Await resolve={productAnimeRecommendations}>
+          {(productAnimeRecommendations) => (
+            <ProductRecommendations
+              recommendations={productAnimeRecommendations}
+              title={
+                getProductAnime(product.title) === undefined
+                  ? `You may also like`
+                  : `Shop ${getProductAnime(product.title)}`
+              }
+            />
+          )}
+        </Await>
+      </Suspense>
       <Seperator />
       <ProductRecommendations
         recommendations={productTypeRecommendations}
