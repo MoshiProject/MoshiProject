@@ -11,7 +11,7 @@ import {useEffect} from 'react';
 
 import {usePageAnalytics} from '~/hooks/usePageAnalytics';
 
-export function AddToCartForm({
+export default function AddToCartForm({
   children,
   lines,
   disabled,
