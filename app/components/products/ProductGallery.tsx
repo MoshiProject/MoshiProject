@@ -168,7 +168,8 @@ export default function ProductGallery({
                 <Image
                   data={data.image}
                   loading={i === 0 ? 'eager' : 'lazy'}
-                  sizes="100vw"
+                  width={750}
+                  height={750}
                   alt={data.image.altText}
                 ></Image>
               </SwiperSlide>
