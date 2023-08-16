@@ -83,9 +83,12 @@ export default function ProductGallery({
       >
         <Image
           data={data.image}
-          loading="eager"
-          sizes="20vw"
-          className="max-h-[20vw] max-w-[20vw]"
+          width={
+            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 75
+          }
+          height={
+            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 75
+          }
           alt={data.image.altText}
         ></Image>
       </SwiperSlide>
