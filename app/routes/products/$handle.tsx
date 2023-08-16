@@ -350,14 +350,14 @@ export default function ProductHandle() {
             selectedImage={selectedImage}
           />
         </div>
-        <motion.div
+        <div
           className="md:hidden"
           initial={{opacity: 0, x: -200}}
           animate={{opacity: 1, x: 0, transition: {delay: 0, duration: 0.6}}}
         >
-          <motion.h1 className="md:hidden mt-4 text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
+          <h1 className="md:hidden mt-4 text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
             {titleFilter(product.title)}
-          </motion.h1>
+          </h1>
           {reviewCount > 0 && (
             <div className="my-2" key={reviewCount}>
               <button className="w-full" onClick={executeScroll}>
@@ -391,7 +391,7 @@ export default function ProductHandle() {
               />
             </div>
           </div>
-        </motion.div>
+        </div>
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2">
             <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
@@ -540,7 +540,7 @@ export function Accordion({
 
             <AnimatePresence>
               {open && animations && (
-                <motion.div
+                <div
                   className="overflow-hidden"
                   key="content"
                   initial={{height: 0, opacity: 0, translateY: -10}}
@@ -549,7 +549,7 @@ export function Accordion({
                   transition={{duration: 0.4}}
                 >
                   {children}
-                </motion.div>
+                </div>
               )}
             </AnimatePresence>
 
@@ -578,7 +578,7 @@ function DescriptionBlock({product}) {
 
         <DescriptionTab title="Description" height="420px">
           <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal">
-            <motion.div
+            <div
               initial={{opacity: 0, x: -200}}
               viewport={{once: true}}
               whileInView={{
@@ -588,9 +588,9 @@ function DescriptionBlock({product}) {
               }}
               className="px-2"
             >
-              <motion.h3 className="text-2xl font-bold tracking-widest mb-1">
+              <h3 className="text-2xl font-bold tracking-widest mb-1">
                 SUPERIOR COMFORT
-              </motion.h3>
+              </h3>
               <p className="text-sm ">
                 Experience a level of comfort that simply cannot be matched with
                 our incredibly soft and cozy{' '}
@@ -599,8 +599,8 @@ function DescriptionBlock({product}) {
                 </span>
                 s.
               </p>
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               initial={{opacity: 0, x: -200}}
               viewport={{once: true}}
               whileInView={{
@@ -622,8 +622,8 @@ function DescriptionBlock({product}) {
                 s and embrace the comfort that will keep you coming back for
                 more with our ing-spun cotton.
               </p>
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               initial={{opacity: 0, x: -200}}
               viewport={{once: true}}
               whileInView={{
@@ -652,7 +652,7 @@ function DescriptionBlock({product}) {
                 </li>
               </ul> */}
               </p>
-            </motion.div>
+            </div>
           </div>
         </DescriptionTab>
 

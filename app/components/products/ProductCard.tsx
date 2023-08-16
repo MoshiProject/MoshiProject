@@ -29,7 +29,7 @@ export default function ProductCard({
   }, [isInView]);
   return (
     <Link to={`/products/${product.handle}`} className="relative ">
-      <motion.div
+      <div
         ref={ref}
         variants={{
           inView: {opacity: 1, y: 0, transition: {duration: 0.4}},
@@ -111,7 +111,7 @@ export default function ProductCard({
             </span>
           </div>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 }

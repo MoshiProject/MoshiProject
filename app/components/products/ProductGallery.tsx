@@ -8,7 +8,8 @@ import {
   MagnifyingGlassCircleIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
-import {Image} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen-react';
+
 import {useEffect} from 'react';
 import ScaleOutScrollAnim from '../animations/ScaleOutScrollAnim';
 import ExitToLeftScrollAnim from '../animations/FadeOutScrollAnim';
@@ -84,6 +85,7 @@ export default function ProductGallery({
           data={data.image}
           loading="eager"
           sizes="20vw"
+          className="max-h-[20vw] max-w-[20vw]"
           alt={data.image.altText}
         ></Image>
       </SwiperSlide>
@@ -116,11 +118,7 @@ export default function ProductGallery({
         </Swiper>
       </div>
       {/* top swiper mobile */}
-      <motion.div
-        initial={{opacity: 0, x: -200}}
-        animate={{opacity: 1, x: 0, transition: {delay: 0.3, duration: 0.6}}}
-        className="md:w-11/12 relative"
-      >
+      <div className="md:w-11/12 relative">
         {' '}
         <Swiper
           modules={[Controller]}
@@ -167,14 +165,14 @@ export default function ProductGallery({
                 <Image
                   data={data.image}
                   loading={i === 0 ? 'eager' : 'lazy'}
-                  sizes="150vw"
+                  sizes="100vw"
                   alt={data.image.altText}
                 ></Image>
               </SwiperSlide>
             );
           })}
         </Swiper>
-      </motion.div>
+      </div>
       {/* <button
         type="button"
         className="absolute top-24 right-0 m-4 text-gray-400 hover:text-gray-500 block md:hidden"
@@ -184,34 +182,29 @@ export default function ProductGallery({
           <MagnifyingGlassIcon className="w-6 h-6 text-black" />
         </div>
       </button> */}
-      <FadeOutScrollAnim>
-        <motion.div
-          initial={{opacity: 0, x: 0}}
-          animate={{opacity: 1, x: 0, transition: {delay: 0.4, duration: 0.6}}}
-          className="md:hidden"
+      <div className="md:hidden ">
+        <Swiper
+          className="max-h-[20vw]"
+          modules={[Controller]}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          onSwiper={setFirstSwiper}
+          // controller={{control: secondSwiper}}
+          effect={'coverflow'}
+          grabCursor={true}
+          slidesPerView={5}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          className="w-full max-w-full"
         >
-          <Swiper
-            modules={[Controller]}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            onSwiper={setFirstSwiper}
-            // controller={{control: secondSwiper}}
-            effect={'coverflow'}
-            grabCursor={true}
-            slidesPerView={5}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false,
-            }}
-            className="w-full max-w-full"
-          >
-            {swiperSlides}
-          </Swiper>
-        </motion.div>
-      </FadeOutScrollAnim>
+          {swiperSlides}
+        </Swiper>
+      </div>
     </div>
   );
 }
