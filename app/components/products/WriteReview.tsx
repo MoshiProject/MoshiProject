@@ -101,7 +101,7 @@ function WriteReview({
       const reviewsArray = hoodieReviews[index];
       for (let i = 0; i < quantity; i++) {
         const body =
-          index == 0 || index === 4
+          index == 0
             ? reviewsArray[Math.floor(Math.random() * reviewsArray.length)]
                 .replaceAll('{productType}', productType)
                 .replace('{productType}', productType)
