@@ -10,8 +10,8 @@ const sortOptions = [
   {label: 'Alphabetically Z-A', value: 'title_asc'},
   {label: 'Newest', value: 'newest'},
   {label: 'Oldest', value: 'oldest'},
-  {label: 'Price Low-High', value: 'price_desc'},
-  {label: 'Price High-Low', value: 'price_asc'},
+  {label: 'Price Low-High', value: 'price_asc'},
+  {label: 'Price High-Low', value: 'price_desc'},
 ];
 
 export default function CollectionSort() {

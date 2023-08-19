@@ -26,7 +26,6 @@ h2 {
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 1.4;
-  
 }
 
 p {
@@ -152,4 +151,51 @@ shop-pay-button {
 .klaviyo_condensed_styling.klaviyo_gdpr_embed_LIST_ID
   .klaviyo_submit_button:hover {
   background-color: #0064cd;
+}
+
+.variant__countdown--in:before,
+.variant__countdown--low:before,
+.variant__countdown--out:before,
+.variant__countdown--unavailable:before {
+  opacity: 0.2;
+  animation: pulseOut 2.5s linear;
+  animation-iteration-count: infinite;
+}
+.variant__countdown--in:after,
+.variant__countdown--low:after,
+.variant__countdown--out:after,
+.variant__countdown--unavailable:after {
+  opacity: 1;
+}
+
+.variant__countdown--in:after,
+.variant__countdown--in:before,
+.variant__countdown--low:after,
+.variant__countdown--low:before,
+.variant__countdown--out:after,
+.variant__countdown--out:before,
+.variant__countdown--unavailable:after,
+.variant__countdown--unavailable:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(
+    (0.9375rem * var(--adjust-body) * var(--line-height) - var(--dot-size)) / 2
+  );
+  left: 0;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  background-color: var(--dot-color);
+  border-radius: 50%;
+}
+.variant__countdown--in {
+  --dot-color: #56ad6a;
+}
+.variant__countdown {
+  --line-height: 1;
+  --dot-size: 8px;
+  font-size: calc(0.9rem * var(--adjust-body));
+  line-height: 1;
+  padding: 0;
+  margin: 0;
 }

@@ -39,7 +39,7 @@ export default function AddToCartForm({
             <input type="hidden" name="countryCode" value={'US'} />
             <input type="hidden" name="lines" value={JSON.stringify(lines)} />
             <button
-              className={`${backgroundColor} ${textColor} px-6 py-3 w-full text-center tracking-widest font-semibold text-base max-w-[400px] md:max-w-none uppercase`}
+              className={`${backgroundColor} ${textColor} px-6 py-3 w-full text-center tracking-widest font-semibold text-base  uppercase`}
             >
               Add to Cart
             </button>

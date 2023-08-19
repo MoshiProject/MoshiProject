@@ -6,12 +6,15 @@ import WriteReview from './WriteReview';
 import {StarIcon} from '@heroicons/react/24/solid';
 import titleFilter, {getProductType} from '~/functions/titleFilter';
 import {useEffect} from 'react';
+import {Image} from '@shopify/hydrogen';
+import {Link} from '@remix-run/react';
 type Props = {
   product: Product;
   judgeReviews: any[];
   isAdmin: boolean;
   forwardRef: any;
   setReviewCount: (value: number) => void;
+  setReviewAverage: (value: number) => void;
 };
 
 const ReviewsSection: React.FC<Props> = ({
@@ -20,6 +23,7 @@ const ReviewsSection: React.FC<Props> = ({
   isAdmin,
   forwardRef,
   setReviewCount,
+  setReviewAverage,
 }) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
   const [showMoreCounter, setShowmoreCounter] = useState(5);
@@ -34,29 +38,17 @@ const ReviewsSection: React.FC<Props> = ({
     reviewString && reviewString.length > 0 && isJsonString(reviewString)
       ? JSON.parse(reviewString)
       : [];
-  // const imageReviews = product.metafield
-  //   ? product.metafields
-  //       .find((metafield) => {
-  //         return metafield.key === 'reviews';
-  //       })
-  //       .references.nodes.map((node) => ({
-  //         author: node.fields.find((field) => field.key === 'author').value,
-  //         body: node.fields.find((field) => field.key === 'body').value,
-  //         imageSrc: node.fields.find((field) => field.key === 'image').reference
-  //           .image.url,
-  //         starCount: node.fields.find((field) => field.key === 'star_count')
-  //           .value,
-  //       }))
-  //   : [];
+  let sumReviews = 0;
+
   const counterArr = [0, 0, 0, 0, 0];
   customReviews.forEach((review) => {
     const rating = review.rating;
     counterArr[rating - 1] += 1;
+    sumReviews += review.rating;
   });
   judgeReviews.forEach((review) => {
     const rating = review.rating;
-    //console.log('rating: ' + rating);
-
+    sumReviews += review.rating;
     counterArr[rating - 1] += 1;
   });
   //console.log('counter', counterArr);
@@ -64,6 +56,7 @@ const ReviewsSection: React.FC<Props> = ({
   const noReviews = reviewCount === 0;
   useEffect(() => {
     setReviewCount(reviewCount);
+    setReviewAverage(sumReviews / reviewCount);
   }, [reviewCount]);
   //console.log('no reviews', noReviews);
   //console.log(`Reviews`, product);
@@ -78,7 +71,7 @@ const ReviewsSection: React.FC<Props> = ({
     </div>
   ) : (
     <div ref={forwardRef} className="py-6 bg-white">
-      <div className="max-w-screen-xl mx-auto sm:px-6 lg:px-8">
+      <div className="max-w-screen-xl mx-auto sm:px-6 lg:px-8 ">
         <div className="lg:text-center">
           <h2 className="text-xl text-primary font-semibold tracking-wide uppercase text-center mb-4">
             CUSTOMER REVIEWS
@@ -123,7 +116,7 @@ const ReviewsSection: React.FC<Props> = ({
             ))}
           {/* Judge Reviews */}
         </ul>
-        <div className="flex justify-center mt-8 mb-4">
+        <div className="flex justify-center mt-8 mb-4 border-t border-neutral-200 pt-8">
           <button
             className="bg-neutral-950 text-white rounded-md p-2 px-6"
             onClick={() => {
@@ -148,6 +141,7 @@ export type ReviewCardProps = {
   stars: number;
   body: string;
   product?: {url: string; title: string};
+  productImageData?: any;
   className?: string;
 };
 
@@ -157,6 +151,7 @@ export function ReviewCard({
   stars,
   body,
   product,
+  productImageData,
   className = '',
 }: ReviewCardProps): JSX.Element {
   const rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
@@ -194,7 +189,26 @@ export function ReviewCard({
           </div>
           {/* <div> 2 weeks ago</div> */}
         </div>
-
+        {productImageData && (
+          <Link to={product.url}>
+            <div className="flex mt-5 mb-2">
+              <div>
+                <div className="border border-neutral-400 h-14 w-14 rounded-md ">
+                  <Image
+                    src={productImageData.media.edges[0].node.image.url}
+                    className="h-12 w-12 m-auto mt-[3px]"
+                    width={48}
+                    height={48}
+                  ></Image>
+                </div>
+              </div>
+              <div className="ml-3 text-xs">
+                <div className="font-semibold">Reviewing</div>
+                <div className="font-normal mt-1">{productImageData.title}</div>
+              </div>
+            </div>
+          </Link>
+        )}
         <div className="flex items-baseline mb-3">
           <div className="flex bg-primary text-gray-600 text-xs rounded-full uppercase font-semibold tracking-wide mt-3">
             {Array.from(Array(stars).keys()).map((star) => (

@@ -38,11 +38,13 @@ export default function ProductGallery({
 
   const [firstSwiper, setFirstSwiper] = useState(null);
   const [secondSwiper, setSecondSwiper] = useState(null);
-
+  const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const ind = getSelectedImageIndex();
     if (firstSwiper !== null) firstSwiper.slideTo(ind, 300, false);
+
     if (secondSwiper !== null) secondSwiper.slideTo(ind, 300, false);
+    setCurrentIndex(ind);
   }, [selectedImage]);
 
   const typeNameMap = {
@@ -72,30 +74,34 @@ export default function ProductGallery({
         altText: med.alt || 'Product image',
       },
     };
-
     return (
       <SwiperSlide
         key={data.id || data.image.id}
         onClick={() => {
           if (firstSwiper !== null) firstSwiper.slideTo(i, 300, false);
           if (secondSwiper !== null) secondSwiper.slideTo(i, 300, false);
+          setCurrentIndex(i);
         }}
+        className={`m-[4px] bg-neutral-200/50 rounded-lg p-[1px] max-w-[80px] h-[80px] ${
+          currentIndex === i ? 'border border-neutral-600' : ''
+        }`}
       >
         <Image
           data={data.image}
           width={
-            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 150
+            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 80
           }
           height={
-            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 150
+            typeof window !== 'undefined' && window.innerWidth > 600 ? 200 : 80
           }
+          className=""
           alt={data.image.altText}
         ></Image>
       </SwiperSlide>
     );
   });
   return (
-    <div className="swiper-container w-full max-w-full max-h-full h-fit flex-col md:flex md:flex-row">
+    <div className="swiper-container w-full max-w-full max-h-full h-fit flex-col md:flex md:flex-row ">
       {/* desktop */}
       <div className="hidden md:block w-fit">
         <Swiper
@@ -128,6 +134,7 @@ export default function ProductGallery({
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           onSwiper={setSecondSwiper}
+          onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
           controller={{control: firstSwiper}}
           effect={'slide'}
           grabCursor={true}
@@ -187,7 +194,7 @@ export default function ProductGallery({
       </button> */}
       <div className="md:hidden ">
         <Swiper
-          className="max-h-[20vw]"
+          className="w-full max-w-full"
           modules={[Controller]}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -195,7 +202,7 @@ export default function ProductGallery({
           // controller={{control: secondSwiper}}
           effect={'coverflow'}
           grabCursor={true}
-          slidesPerView={5}
+          slidesPerView={4}
           coverflowEffect={{
             rotate: 50,
             stretch: 0,
@@ -203,7 +210,6 @@ export default function ProductGallery({
             modifier: 1,
             slideShadows: false,
           }}
-          className="w-full max-w-full"
         >
           {swiperSlides}
         </Swiper>

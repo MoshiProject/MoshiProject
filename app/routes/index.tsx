@@ -17,7 +17,9 @@ import {motion} from 'framer-motion';
 import {COLLECTION_QUERY, SMALL_COLLECTION_QUERY} from './collections/$handle';
 import AnimeCarousel from '~/components/HomePage/AnimeCarousel';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
-import ReviewsCounter from '~/components/HomePage/ReviewsCounter';
+import ReviewsCounter, {
+  numberWithCommas,
+} from '~/components/HomePage/ReviewsCounter';
 import {ReviewCard} from '~/components/products/ReviewsSection';
 interface HomeSeoData {
   shop: {
@@ -50,12 +52,6 @@ export async function loader({params, context, request}: LoaderArgs) {
     throw new Response(null, {status: 404});
   }
 
-  const {shop, hero} = await context.storefront.query<{
-    hero: CollectionHero;
-    shop: HomeSeoData;
-  }>(HOMEPAGE_SEO_QUERY, {
-    variables: {handle: 'freestyle'},
-  });
   const handle = 'featured-products';
   const searchParams = new URL(request.url).searchParams;
   const sortParam = searchParams.get('sort');
@@ -101,6 +97,14 @@ export async function loader({params, context, request}: LoaderArgs) {
       },
     },
   );
+
+  return defer({
+    judgeReviews: await getJudgeReviews(context),
+    featuredProducts: collection,
+  });
+}
+
+const getJudgeReviews = async (context) => {
   let judgeReviews = [];
   try {
     const response = await fetch(
@@ -124,65 +128,41 @@ export async function loader({params, context, request}: LoaderArgs) {
     const data: {reviews: []} = await response.json();
     const data2: {reviews: []} = await response2.json();
     judgeReviews = data.reviews.concat(data2.reviews);
+    const judgeGIDs = judgeReviews.map((review) => {
+      const gid = 'gid://shopify/Product/' + review.product_external_id;
+      return gid;
+    });
+    console.log('judgeGIDs', judgeGIDs);
+    console.time('get image Data');
+
+    const moreData: any = await context.storefront.query(
+      PRODUCT_LIST_IMAGES_QUERY,
+      {
+        variables: {
+          ids: judgeGIDs,
+        },
+      },
+    );
+    console.timeEnd('get image Data');
+    judgeReviews = judgeReviews.map((review, index) => {
+      review.productData = moreData.nodes[index];
+      return review;
+    });
+
+    judgeReviews = judgeReviews.filter((review) => {
+      return review.curated !== 'spam';
+    });
+
+    return judgeReviews;
   } catch (error) {
     console.error(error);
   }
-  judgeReviews = judgeReviews.filter((review) => {
-    return review.curated !== 'spam';
-  });
-  return defer({
-    shop,
-    primaryHero: hero,
-    judgeReviews,
-    // These different queries are separated to illustrate how 3rd party content
-    // fetching can be optimized for both above and below the fold.
-    featuredProducts: collection,
-    secondaryHero: context.storefront.query<{hero: CollectionHero}>(
-      COLLECTION_HERO_QUERY,
-      {
-        variables: {
-          handle: 'backcountry',
-          country,
-          language,
-        },
-      },
-    ),
-    featuredCollections: context.storefront.query<{
-      collections: CollectionConnection;
-    }>(FEATURED_COLLECTIONS_QUERY, {
-      variables: {
-        country,
-        language,
-      },
-    }),
-    tertiaryHero: context.storefront.query<{hero: CollectionHero}>(
-      COLLECTION_HERO_QUERY,
-      {
-        variables: {
-          handle: 'winter-2022',
-          country,
-          language,
-        },
-      },
-    ),
-    analytics: {
-      pageType: AnalyticsPageType.home,
-    },
-  });
-}
+};
 
 export default function Homepage() {
-  const {
-    primaryHero,
-    secondaryHero,
-    tertiaryHero,
-    featuredCollections,
-    featuredProducts,
-    judgeReviews,
-  } = useLoaderData<typeof loader>();
+  const {featuredProducts, judgeReviews} = useLoaderData<typeof loader>();
 
   // TODO: skeletons vs placeholders
-  const skeletons = getHeroPlaceholder([{}, {}, {}]);
 
   // TODO: analytics
   // useServerAnalytics({
@@ -249,6 +229,56 @@ export default function Homepage() {
     </>
   );
 }
+const PRODUCT_LIST_IMAGES_QUERY = `#graphql
+query getProductImagesViaID($ids: [ID!]!) {
+  nodes(ids: $ids) {
+    ... on Product {
+      id
+      title
+      handle
+    media(first: 1) {
+      edges {
+        node {
+          
+          mediaContentType
+          alt
+          ...mediaFieldsByType
+        }
+      }
+    }
+    }
+  }
+}
+
+fragment mediaFieldsByType on Media {
+  ... on ExternalVideo {
+    id
+    embeddedUrl
+  }
+  ... on MediaImage {
+    image {
+      url
+    }
+  }
+  ... on Model3d {
+    sources {
+      url
+      mimeType
+      format
+      filesize
+    }
+  }
+  ... on Video {
+    sources {
+      url
+      mimeType
+      format
+      height
+      width
+    }
+  }
+}
+`;
 
 const COLLECTION_CONTENT_FRAGMENT = `#graphql
   ${MEDIA_FRAGMENT}
@@ -347,13 +377,13 @@ export function ReviewContainer(judgeReviews: {
   const reviews = [12, 24, 45, 79, 1124];
   const reviewQuantity = reviews.reduce((partialSum, a) => partialSum + a, 0);
   return (
-    <div className="block  px-3 md:mt-12 md:w-2/3 md:mx-auto">
+    <div className="block  px-3 md:mt-12 md:w-2/3 md:mx-auto ">
       <h2 className="text-center md:text-left w-full text-3xl uppercase mt-4 tracking-widest mb-[-12px]">
         Reviews
       </h2>
       <ReviewsCounter reviews={reviews} />
       <div className="border-b-2 border-neutral-200 text-sm text-neutral-500 tracking-widest">
-        <span>{reviewQuantity} reviews</span>
+        <span>{numberWithCommas(reviewQuantity)} reviews</span>
       </div>
       <div>
         {judgeReviews.judgeReviews.map((review, index) => (
@@ -363,6 +393,7 @@ export function ReviewContainer(judgeReviews: {
             imgSrc={review.imageSrc}
             author={review.reviewer.name}
             stars={review.rating}
+            productImageData={review.productData}
             body={review.body}
             product={{
               url: '/products/' + review.product_handle,

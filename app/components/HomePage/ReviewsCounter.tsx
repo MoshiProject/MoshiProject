@@ -27,7 +27,7 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
   return (
     <div className="p-4 md:pl-0 w-full m-auto md:mx-0  md:w-5/12 mt-4">
       <div className="flex justify-center md:justify-start mb-4">
-        <h2 className="text-xl tracking-widest font-semibold ml-2">
+        <h2 className="text-xl tracking-wider font-semibold ml-2">
           {averageRating.toFixed(1)}
         </h2>
         <div className="flex items-center justify-center md:justify-start ml-1 mr-4">
@@ -62,7 +62,7 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
         </div>
         <div className="flex items-center">
           <h3 className="text-xs  font-semibold text-neutral-500 tracking-widest">
-            Based on {totalReviews} reviews
+            Based on <span>{numberWithCommas(totalReviews)}</span> reviews
           </h3>
         </div>
       </div>
@@ -83,9 +83,21 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
               }}
             />
           </div>
-          <div className="text-sm text-neutral-500">{reviews[star - 1]}</div>
+          <div className="text-xs text-neutral-500 w-6 text-right">
+            {reviews[star - 1]}
+          </div>
         </div>
       ))}
+      <div className=" text-center text-xl font-bold mt-8">
+        {((averageRating * 100) / 5.0).toFixed(0)}%
+      </div>
+      <div className="mt-1 text-center text-neutral-500 text-sm font-normal">
+        would recommend these products
+      </div>
     </div>
   );
+}
+
+export function numberWithCommas(x: number) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }

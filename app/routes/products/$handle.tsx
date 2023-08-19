@@ -89,7 +89,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 
   const animeCollectionExists = animeHandle !== undefined;
   const {collection: productAnimeRecommendations}: any =
-    context.storefront.query(SMALL_COLLECTION_QUERY, {
+    await context.storefront.query(SMALL_COLLECTION_QUERY, {
       variables: {
         handle: animeCollectionExists ? animeHandle : 'featured-products',
         cursor,
@@ -110,14 +110,14 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   console.timeEnd('get judge');
   console.timeEnd('total');
 
-  let reviewCount: number;
-  if (product.metafields[0] !== null && product.metafields[1] !== null) {
-    reviewCount = product.metafields.find((metafield) => {
-      return metafield && metafield.key === 'reviewCount';
-    }).value;
-  } else {
-    reviewCount = 0;
-  }
+  // let reviewCount: number;
+  // if (product.metafields[0] !== null && product.metafields[1] !== null) {
+  //   reviewCount = product.metafields.find((metafield) => {
+  //     return metafield && metafield.key === 'reviewCount';
+  //   }).value;
+  // } else {
+  //   reviewCount = 0;
+  // }
 
   return defer({
     judgeReviews,
@@ -312,7 +312,9 @@ export default function ProductHandle() {
   } = useLoaderData();
   const desc = product.descriptionHtml;
   const [selectedImage, setSelectedImage] = useState(selectedVariant.image.url);
-  const [reviewCount, setReviewCount] = useState(1);
+  const [reviewCount, setReviewCount] = useState(null);
+  const [reviewAverage, setReviewAverage] = useState(null);
+
   const data = useActionData();
   const reviewsRef = useRef(null);
   const executeScroll = (event) => {
@@ -343,61 +345,94 @@ export default function ProductHandle() {
   const orderable = selectedVariant?.availableForSale || false;
   return (
     <section className="w-full  gap-2 px-2  md:gap-8 grid  mt-1 md:px-24 md:mt-0">
-      <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11">
+      <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11 px-3">
+        {/* Product Images */}
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit md:mt-20 mt-4">
           <ProductGallery
             media={product.media.nodes}
             selectedImage={selectedImage}
           />
         </div>
-        <div
-          className="md:hidden"
-          initial={{opacity: 0, x: -200}}
-          animate={{opacity: 1, x: 0, transition: {delay: 0, duration: 0.6}}}
-        >
-          <h1 className="md:hidden mt-4 text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
+        <div className="md:hidden grid grid-flow-row gap-3">
+          {/* Title */}
+          <h1 className="md:hidden mt-4 tracking-widest md:text-start text-[40px] md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
             {titleFilter(product.title)}
           </h1>
-          {reviewCount > 0 && (
-            <div className="my-2" key={reviewCount}>
+          {/* Reviews */}
+          {reviewCount ? (
+            reviewCount > 0 && (
+              <div className="md:my-2" key={reviewCount}>
+                <button className="w-full" onClick={executeScroll}>
+                  <div className="flex items-center font-bold text-neutral-600 text-md w-full">
+                    {[0, 1, 2, 3].map((star) => {
+                      return (
+                        <SharpStarIcon
+                          key={star}
+                          className={`h-5 w-5 ${'text-black'}`}
+                        />
+                      );
+                    })}
+                    <div className="relative h-5 w-5">
+                      <SharpStarIcon
+                        className={`h-5 w-5 fill-neutral-400  absolute left-0 top-0 `}
+                      />
+                      <div
+                        className={`absolute left-0 top-0 overflow-hidden`}
+                        style={{width: 15 * (reviewAverage - 4)}}
+                      >
+                        <SharpStarIcon className={`h-5 w-5 text-black `} />
+                      </div>
+                    </div>
+                    <span className="ml-1">({reviewCount})</span>
+                  </div>
+                </button>
+              </div>
+            )
+          ) : (
+            <div className="md:my-2" key={reviewCount}>
               <button className="w-full" onClick={executeScroll}>
-                <div className="flex items-center justify-center font-bold text-neutral-600 text-md w-full">
+                <div className="flex items-center font-bold text-neutral-600 text-md w-full">
                   {[0, 1, 2, 3, 4].map((star) => {
                     return (
                       <SharpStarIcon
                         key={star}
-                        className={`h-5 w-5 ${'text-black'}`}
+                        className={`h-5 w-5 ${'fill-neutral-400'}`}
                       />
                     );
                   })}
-                  <span className="ml-1">({reviewCount})</span>
                 </div>
               </button>
             </div>
           )}
-          <div className="flex justify-center">
+          {/* Price */}
+          <div className="flex md:justify-center">
             <div className="md:hidden flex md:justify-start md:items-start">
               {selectedVariant.compareAtPrice && (
                 <Money
                   withoutTrailingZeros
                   data={selectedVariant.compareAtPrice}
-                  className="text-md font-semibold text-neutral-800 line-through	mr-3"
+                  className="text-lg font-normal text-neutral-800 line-through	mr-3"
                 />
               )}
               <Money
                 withoutTrailingZeros
                 data={selectedVariant.price}
-                className="text-md font-semibold text-red-600 "
+                className="text-lg font-normal text-red-600 "
               />
+              <span className="text-lg font-normal text-red-600 ml-2">
+                {'  USD'}
+              </span>
             </div>
           </div>
         </div>
+        {/* <ItemIsInStock /> */}
+
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2">
             <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
               {titleFilter(product.title)}
             </h1>
-            <div className="grid gap-2 justify-center items-center md:justify-start md:items-start">
+            <div className="grid gap-2 items-center md:justify-start md:items-start">
               <div className="hidden md:flex justify-center md:justify-start md:items-start">
                 {selectedVariant.compareAtPrice && (
                   <Money
@@ -412,11 +447,6 @@ export default function ProductHandle() {
                   className="text-lg font-semibold text-red-600 "
                 />
               </div>
-              {/* <div className="flex justify-center mt-1 md:justify-start md:items-start">
-                <span className="text-xs text-neutral-500 uppercase tracking-widest">
-                  Free Shipping + Tax Included
-                </span>
-              </div> */}
             </div>
           </div>
           <ProductOptions
@@ -460,6 +490,10 @@ export default function ProductHandle() {
       <div className="md:hidden">
         <Seperator />
       </div>
+      <ProductPageGraphic />
+      <div className="md:hidden">
+        <Seperator />
+      </div>
       <div className="md:hidden">
         <DescriptionBlock product={product} />
       </div>
@@ -474,6 +508,7 @@ export default function ProductHandle() {
                 judgeReviews={judgeReviews.reviews}
                 isAdmin={isAdmin}
                 setReviewCount={setReviewCount}
+                setReviewAverage={setReviewAverage}
               ></ReviewsSection>
             )}
           </Await>
@@ -743,7 +778,7 @@ function DescriptionBlock({product}) {
       </div>
     </Accordion> */}
       </div>
-      <div className="mb-[-8px]">
+      <div className="mb-[-8px] border-b border-neutral-200">
         <ShippingInfo />
         <ReturnInfo />
         <DescriptionTab title="Contact Us" height="768px">
@@ -764,5 +799,22 @@ const SharpStarIcon = ({className}) => {
     >
       <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z" />
     </svg>
+  );
+};
+
+import React from 'react';
+import ProductPageGraphic from '~/components/products/ProductPageGraphic';
+
+const ItemIsInStock = () => {
+  return (
+    <div className="flex items-center">
+      <div className="relative mr-4 mb-2">
+        <div className="absolute w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <div className="absolute w-2 h-2 bg-green-600 rounded-full animate-ping opacity-50"></div>
+      </div>
+      <div>
+        <span className="text-xs">Item is in stock</span>
+      </div>
+    </div>
   );
 };

@@ -105,14 +105,14 @@ export default function ProductOptions({
           return (
             <div
               key={option.name}
-              className={`flex flex-col justify-center items-center pb-4 md:items-start last:mb-0 w-full pt-3 border-t border-neutral-100 gap-y-2`}
+              className={`flex flex-col justify-center pb-4 md:items-start last:mb-0 w-full pt-2 border-t border-neutral-100 gap-y-2`}
             >
               <div
                 className={`flex ${
-                  isSize ? 'justify-between' : 'justify-center md:justify-start'
+                  isSize ? 'justify-between' : 'md:justify-start'
                 } w-full`}
               >
-                {isSize && <span className="w-1/3 md:hidden"></span>}
+                {/* {isSize && <span className="w-1/3 md:hidden"></span>} */}
                 <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase pt-1 tracking-widest">
                   {option.name} -{' '}
                   <span className="text-neutral-500 text-sm">
@@ -165,7 +165,7 @@ export function Options(
   pathname: string,
 ) {
   return (
-    <div className="flex flex-wrap items-center gap-2 justify-center">
+    <div className="flex flex-wrap items-center gap-[.45rem] ">
       {option.values.map((value: string) => {
         const linkParams = new URLSearchParams(searchParams);
         const isSelected = currentOptionVal === value;
@@ -200,7 +200,7 @@ export function Options(
             to={`${pathname}?${linkParams.toString()}`}
             preventScrollReset
             replace
-            className={`w-fit md:px-1 h-8 min-w-[32px] flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer text-sm transition-all duration-200 rounded-full ${
+            className={`w-fit md:px-3 h-8 px-2 min-w-[32px] flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer text-sm transition-all duration-200 rounded-lg ${
               isSelected
                 ? 'border-neutral-800 border-2  bg-clip-content font-semibold'
                 : 'border-neutral-300 font-normal '

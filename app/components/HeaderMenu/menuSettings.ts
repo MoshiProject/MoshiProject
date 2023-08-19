@@ -37,10 +37,11 @@ export const navigation: MenuItem[] = [
         url: '/collections/kimetsu-no-yaiba',
         children: [
           {
-            title: 'HOODIES',
-            url: '/collections/demon-slayer-hoodies',
+            title: 'View All',
+            url: '/collections/kimetsu-no-yaiba',
             children: [],
           },
+
           {
             title: 'T-SHIRTS',
             url: '/collections/demon-slayer-t-shirts',
@@ -62,6 +63,7 @@ export const navigation: MenuItem[] = [
         title: 'CHAINSAW MAN',
         url: '/collections/chainsaw-man',
         children: [
+          {title: 'View All', url: '/collections/chainsaw-man', children: []},
           {
             title: 'HOODIES',
             url: '/collections/chainsaw-man-hoodies',

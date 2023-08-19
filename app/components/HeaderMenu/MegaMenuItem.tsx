@@ -15,7 +15,7 @@ export default function MegaMenuItem({
   depth: number;
 }) {
   const textDepth = ['text-xl', 'text-md', 'text-sm', 'text-xs'];
-  const textPadding = ['ml-0', 'ml-4', 'ml-12', 'ml-20', 'ml-28'];
+  const textPadding = ['ml-0', 'ml-4', 'ml-8', 'ml-12', 'ml-28'];
   const textWeight = [
     'font-semibold',
     'font-medium',
