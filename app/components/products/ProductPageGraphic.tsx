@@ -18,7 +18,7 @@ function ProductPageGraphic() {
     ></Image>
   );
   return (
-    <div className="md:hidden h-[90vh] mt-8">
+    <div className="md:hidden h-[93vh] mt-8">
       <div className=" h-[48vh]  relative">
         <div className="h-fit rounded-lg overflow-hidden absolute top-6 right-6">
           {image2}
@@ -27,11 +27,9 @@ function ProductPageGraphic() {
           {image1}
         </div>
       </div>
-      <div className="mx-4 mt-4">
-        <h3 className="text-5xl font-bold [word-spacing:-12px]">
-          Why Miss Out?
-        </h3>
-        <p className="text-md tracking-wider leading-8 mt-4">
+      <div className="mx-4 mt-3">
+        <h3 className="text-5xl font-bold">Why Miss Out?</h3>
+        <p className="text-md tracking-wide leading-7  mt-4">
           Discover a realm where your love for anime meets unmatched style –
           welcome to a community unlike any other! Dive into a world where your
           passion not only thrives but also takes on a whole new level of style.

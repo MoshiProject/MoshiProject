@@ -113,9 +113,9 @@ export default function ProductOptions({
                 } w-full`}
               >
                 {/* {isSize && <span className="w-1/3 md:hidden"></span>} */}
-                <h3 className="whitespace-pre-wrap max-w-prose font-normal text-sm uppercase pt-1 tracking-widest">
+                <h3 className="whitespace-pre-wrap max-w-prose font-normal text-xs uppercase pt-1 tracking-widest">
                   {option.name} -{' '}
-                  <span className="text-neutral-500 text-sm">
+                  <span className="text-neutral-500 text-xs">
                     {
                       selectedVariant.selectedOptions.find(
                         (opt) => opt.name === option.name,

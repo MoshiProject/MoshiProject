@@ -29,7 +29,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
         <>
           <button
             type="button"
-            className="text-sm font-medium text-blue-600 hover:text-blue-500 flex justify-end items-center mr-3"
+            className=" text-[14px] font-medium text-blue-600 hover:text-blue-500 flex justify-end items-center "
             onClick={openModal}
           >
             {rulerSVG}
@@ -233,7 +233,7 @@ const hoodieChart = [
 export default SizingChartModal;
 
 const rulerSVG = (
-  <div className="flex items-center pb-1">
+  <div className="flex items-center justify-end pb-1">
     <span className="mr-2">
       {' '}
       <svg
@@ -276,6 +276,6 @@ const rulerSVG = (
         ></path>
       </svg>
     </span>
-    <span className="size-btn__title"> Size Chart </span>
+    <span className="size-btn__title w-24 text-sm"> Sizing Chart </span>
   </div>
 );

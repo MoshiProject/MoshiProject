@@ -54,6 +54,15 @@ export const links = () => {
     },
   ];
 };
+export const handle = {
+  seo: {
+    title: 'MoshiProject',
+    titleTemplate:
+      '%s - Anime Clothing, Anime Streetwear & Anime Aesthetics Apparel',
+    description:
+      'MoshiProject - Your Destination for Premium Anime Clothing and Japanese Streetwear. Shop Trendsetting Anime T-Shirts, Anime Sweatshirts, and Anime Hoodies!',
+  },
+};
 
 export const meta = () => ({
   charset: 'utf-8',

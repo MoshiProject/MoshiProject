@@ -1256,6 +1256,12 @@ input:checked + .toggle-bg {
 .top-0 {
   top: 0px;
 }
+.top-1 {
+  top: 0.25rem;
+}
+.top-1\.5 {
+  top: 0.375rem;
+}
 .top-1\/2 {
   top: 50%;
 }
@@ -1276,12 +1282,6 @@ input:checked + .toggle-bg {
 }
 .top-\[7vh\] {
   top: 7vh;
-}
-.top-1 {
-  top: 0.25rem;
-}
-.top-1\.5 {
-  top: 0.375rem;
 }
 .z-10 {
   z-index: 10;
@@ -1648,8 +1648,8 @@ input:checked + .toggle-bg {
 .h-\[80px\] {
   height: 80px;
 }
-.h-\[85vh\] {
-  height: 85vh;
+.h-\[90vh\] {
+  height: 90vh;
 }
 .h-\[93vh\] {
   height: 93vh;
@@ -1676,9 +1676,6 @@ input:checked + .toggle-bg {
 }
 .h-screen {
   height: 100vh;
-}
-.h-\[90vh\] {
-  height: 90vh;
 }
 .max-h-60 {
   max-height: 15rem;
@@ -3208,6 +3205,12 @@ input:checked + .toggle-bg {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.pb-0 {
+  padding-bottom: 0px;
+}
+.pb-0\.5 {
+  padding-bottom: 0.125rem;
+}
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -3318,19 +3321,15 @@ input:checked + .toggle-bg {
 }
 .text-2xl {
   font-size: 1.5rem;
-  line-height: 2rem;
 }
 .text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+  font-size:  1.875rem;
 }
 .text-4xl {
   font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 .text-5xl {
   font-size: 3rem;
-  line-height: 1;
 }
 .text-\[0\.625rem\] {
   font-size: 0.625rem;
@@ -3338,28 +3337,26 @@ input:checked + .toggle-bg {
 .text-\[10px\] {
   font-size: 10px;
 }
+.text-\[14px\] {
+  font-size: 14px;
+}
 .text-\[40px\] {
   font-size: 40px;
 }
 .text-base {
   font-size: 1rem;
-  line-height: 1.5rem;
 }
 .text-lg {
   font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 .text-sm {
   font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 .text-xl {
   font-size: 1.25rem;
-  line-height: 1.75rem;
 }
 .text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: .825rem;
 }
 .font-bold {
   font-weight: 700;
@@ -3390,6 +3387,9 @@ input:checked + .toggle-bg {
 }
 .leading-tight {
   line-height: 1.25;
+}
+.leading-7 {
+  line-height: 1.75rem;
 }
 .tracking-\[\.15em\] {
   letter-spacing: .15em;
@@ -3891,9 +3891,6 @@ input:checked + .toggle-bg {
 }
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-}
-.\[word-spacing\:-12px\] {
-  word-spacing: -12px;
 }
 
 .placeholder\:text-neutral-50::-moz-placeholder {
@@ -5863,12 +5860,10 @@ input:checked + .toggle-bg {
 
   .sm\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
   }
 
   .sm\:text-xs {
-    font-size: 0.75rem;
-    line-height: 1rem;
+    font-size: .825rem;
   }
 }
 
@@ -6326,23 +6321,19 @@ input:checked + .toggle-bg {
   }
 
   .md\:text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    font-size:  1.875rem;
   }
 
   .md\:text-4xl {
     font-size: 2.25rem;
-    line-height: 2.5rem;
   }
 
   .md\:text-5xl {
     font-size: 3rem;
-    line-height: 1;
   }
 
   .md\:text-8xl {
     font-size: 6rem;
-    line-height: 1;
   }
 
   .md\:text-\[48px\] {
@@ -6351,17 +6342,14 @@ input:checked + .toggle-bg {
 
   .md\:text-base {
     font-size: 1rem;
-    line-height: 1.5rem;
   }
 
   .md\:text-lg {
     font-size: 1.125rem;
-    line-height: 1.75rem;
   }
 
   .md\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
   }
 
   .md\:font-medium {
@@ -6558,12 +6546,10 @@ input:checked + .toggle-bg {
 
   .lg\:text-2xl {
     font-size: 1.5rem;
-    line-height: 2rem;
   }
 
   .lg\:text-4xl {
     font-size: 2.25rem;
-    line-height: 2.5rem;
   }
 
   .lg\:font-semibold {

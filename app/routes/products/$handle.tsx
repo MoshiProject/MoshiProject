@@ -32,6 +32,15 @@ import ShippingInfo from '~/components/products/ShippingInfo';
 import DescriptionTab from '~/components/products/DescriptionTab';
 import ContactUs from '../pages/contact-us';
 import ReturnInfo from '~/components/products/ReturnInfo';
+import type {SeoHandleFunction} from '@shopify/hydrogen';
+
+const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
+  title: data?.product?.seo?.title,
+  description: data?.product?.seo?.description,
+});
+export const handle = {
+  seo,
+};
 
 export const loader = async ({params, context, request}: LoaderArgs) => {
   console.time('get Products');
@@ -425,8 +434,7 @@ export default function ProductHandle() {
             </div>
           </div>
         </div>
-        {/* <ItemIsInStock /> */}
-
+        <ItemIsInStock />
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[502px] grid lg:gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem] md:col-span-1 lg:col-span-5">
           <div className="grid gap-2">
             <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
@@ -807,13 +815,13 @@ import ProductPageGraphic from '~/components/products/ProductPageGraphic';
 
 const ItemIsInStock = () => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center pb-1 md:hidden">
       <div className="relative mr-4 mb-2">
         <div className="absolute w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
         <div className="absolute w-2 h-2 bg-green-600 rounded-full animate-ping opacity-50"></div>
       </div>
-      <div>
-        <span className="text-xs">Item is in stock</span>
+      <div className="pb-0.5">
+        <span className="text-xs leading-1">Item is in stock</span>
       </div>
     </div>
   );
