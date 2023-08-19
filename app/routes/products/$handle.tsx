@@ -490,13 +490,13 @@ export default function ProductHandle() {
       <div className="md:hidden">
         <Seperator />
       </div>
-      <ProductPageGraphic />
       <div className="md:hidden">
         <Seperator />
       </div>
       <div className="md:hidden">
         <DescriptionBlock product={product} />
       </div>
+      <ProductPageGraphic />
       <Seperator />
       <div key={reviewCount}>
         <Suspense fallback={<div></div>}>

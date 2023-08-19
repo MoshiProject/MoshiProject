@@ -1277,6 +1277,12 @@ input:checked + .toggle-bg {
 .top-\[7vh\] {
   top: 7vh;
 }
+.top-1 {
+  top: 0.25rem;
+}
+.top-1\.5 {
+  top: 0.375rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -1670,6 +1676,9 @@ input:checked + .toggle-bg {
 }
 .h-screen {
   height: 100vh;
+}
+.h-\[90vh\] {
+  height: 90vh;
 }
 .max-h-60 {
   max-height: 15rem;

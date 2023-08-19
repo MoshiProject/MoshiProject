@@ -217,7 +217,7 @@ export default function HeaderMenu({cart}: any) {
                       <SearchBar />
 
                       {/* Mobile menu and search (lg-) */}
-                      {CartButton(cart)}
+                      <div className="mx-1">{CartButton(cart)}</div>
                       <div className="flex flex-1 items-center lg:hidden">
                         <button
                           type="button"
@@ -226,7 +226,7 @@ export default function HeaderMenu({cart}: any) {
                         >
                           <span className="sr-only">Open menu</span>
                           <Bars3Icon
-                            className="h-9 w-[38px]"
+                            className="h-9 ml-1 w-[38px]"
                             aria-hidden="true"
                           />
                         </button>

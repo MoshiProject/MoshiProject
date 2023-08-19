@@ -18,7 +18,7 @@ function ProductPageGraphic() {
     ></Image>
   );
   return (
-    <div className="md:hidden h-[85vh] mt-8">
+    <div className="md:hidden h-[90vh] mt-8">
       <div className=" h-[48vh]  relative">
         <div className="h-fit rounded-lg overflow-hidden absolute top-6 right-6">
           {image2}

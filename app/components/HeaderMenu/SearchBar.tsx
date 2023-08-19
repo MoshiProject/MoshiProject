@@ -41,7 +41,7 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="relative flex justify-end" ref={searchBarRef}>
+    <div className="relative flex justify-end mx-1" ref={searchBarRef}>
       <AnimatePresence>
         {isSearchBarVisible ? (
           <motion.div
@@ -78,7 +78,7 @@ const SearchBar = () => {
                   exit={{opacity: '0'}}
                   transition={{when: 'afterChildren'}}
                   type="submit"
-                  className="text-black absolute top-0 right-0 px-3 py-2 pt-[3px]"
+                  className="text-black absolute top-1.5 right-0 px-3 py-2 pt-[3px]"
                 >
                   <span className="sr-only">Search</span>
                   <MagnifyingGlassIcon
