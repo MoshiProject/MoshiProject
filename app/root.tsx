@@ -29,7 +29,6 @@ import {
   useShopifyCookies,
 } from '@shopify/hydrogen';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
-import ReactPixel from 'react-facebook-pixel';
 
 export const links = () => {
   return [
@@ -118,15 +117,13 @@ export default function App() {
   useEffect(() => {
     // Filter out useEffect running twice
     if (lastLocationKey.current === location.key) return;
-    ReactPixel.init('487072912450981');
-    ReactPixel.pageView();
+
     lastLocationKey.current = location.key;
 
     const payload: ShopifyPageViewPayload = {
       ...getClientBrowserParameters(),
       ...pageAnalytics,
     };
-
     sendShopifyAnalytics({
       eventName: AnalyticsEventName.PAGE_VIEW,
       payload,
@@ -140,6 +137,33 @@ export default function App() {
         <Seo />
         <Meta />
         <Links />
+        <>
+          {/* Facebook Pixel Code */}
+          <script>
+            {`
+      !function(f,b,e,v,n,t,s) {
+        if(f.fbq) return;
+        n=f.fbq=function() {
+          n.callMethod ?
+          n.callMethod.apply(n,arguments) :
+          n.queue.push(arguments)
+        };
+        if(!f._fbq) f._fbq=n;
+        n.push=n;n.loaded=!0;
+        n.version='2.0';n.queue=[];
+        t=b.createElement(e);t.async=!0;
+        t.src=v;
+        s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      
+      fbq('init', '487072912450981');
+      fbq('track', 'PageView');
+    `}
+          </script>
+
+          {/* End Facebook Pixel Code */}
+        </>
       </head>
       <body>
         <Layout title={name}>

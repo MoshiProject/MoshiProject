@@ -3403,6 +3403,9 @@ input:checked + .toggle-bg {
 .capitalize {
   text-transform: capitalize;
 }
+.leading-3 {
+  line-height: .75rem;
+}
 .leading-4 {
   line-height: 1rem;
 }
@@ -3414,9 +3417,6 @@ input:checked + .toggle-bg {
 }
 .leading-tight {
   line-height: 1.25;
-}
-.leading-3 {
-  line-height: .75rem;
 }
 .tracking-\[\.15em\] {
   letter-spacing: .15em;
