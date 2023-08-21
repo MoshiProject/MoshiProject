@@ -7,7 +7,7 @@ import {Fragment, useState} from 'react';
  * @param onClose - Function should set the open state.
  * @param children - React children node.
  */
-function Drawer({open, onClose, children}: any) {
+function CartDrawer({open, onClose, quantity, children}: any) {
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -25,7 +25,7 @@ function Drawer({open, onClose, children}: any) {
 
         <div className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div className="fixed inset-y-0 right-0 flex left-0">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500"
@@ -35,14 +35,19 @@ function Drawer({open, onClose, children}: any) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="max-w-lg bg-neutral-950 text-white tracking-widest transform text-left align-middle shadow-xl transition-all antialiased flex flex-col">
+                <Dialog.Panel className="max-w-lg bg-neutral-950 w-screen text-white tracking-widest transform text-left align-middle shadow-xl transition-all antialiased flex flex-col">
                   <header className="sticky top-0 flex items-center justify-between px-4 h-16 sm:px-8 md:px-12 flex-0">
-                    <h2
-                      id="cart-contents"
-                      className="whitespace-pre-wrap max-w-prose font-bold text-lg tracking-widest"
-                    >
-                      Cart
-                    </h2>
+                    <div className="flex items-center">
+                      <h2
+                        id="cart-contents"
+                        className="whitespace-pre-wrap max-w-prose font-bold text-2xl tracking-widest"
+                      >
+                        Cart
+                      </h2>
+                      <span className="whitespace-pre-wrap max-w-prose font-semibold text-md mx-3 tracking-widest">
+                        ({quantity} items)
+                      </span>
+                    </div>
                     <button
                       type="button"
                       className="p-4 my-4 transition text-primary  tracking-widest hover:text-primary/50"
@@ -63,9 +68,9 @@ function Drawer({open, onClose, children}: any) {
 }
 
 /* Use for associating arialabelledby with the title*/
-Drawer.Title = Dialog.Title;
+CartDrawer.Title = Dialog.Title;
 
-export {Drawer};
+export {CartDrawer};
 
 export function useDrawer(openDefault = false) {
   const [isOpen, setIsOpen] = useState(openDefault);

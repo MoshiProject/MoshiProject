@@ -72,7 +72,7 @@ function StickyBottomCartButton({
                     ? '#444'
                     : colorMap[option.value.replace(/\s/g, '')],
               }}
-              className={`w-8 h-8 mx-1 text-sm border-2 p-1 bg-clip-content inset cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
+              className={`w-8 h-8 mx-1 leading-3 text-sm border-2 p-1 bg-clip-content inset cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
             ></button>
           ) : (
             <button
@@ -83,7 +83,7 @@ function StickyBottomCartButton({
               style={{
                 borderColor: 'white',
               }}
-              className={`w-8 h-8 mx-1 text-sm border-2 cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
+              className={`w-8 h-8 mx-1 leading-3 text-sm border-2 cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
             >
               {option.value}
             </button>

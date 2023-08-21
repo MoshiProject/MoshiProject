@@ -1,11 +1,17 @@
-import {Link, useFetcher} from '@remix-run/react';
+import {Link, useFetcher, useFetchers} from '@remix-run/react';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen-react';
 import {LineItemType} from './products/products';
+import {useEffect, useState} from 'react';
+import {
+  CartLine,
+  CartLineUpdateInput,
+} from '@shopify/hydrogen/storefront-api-types';
+import {CartForm} from '@shopify/hydrogen';
 
 export function CartLineItems({linesObj}: any) {
   const lines = flattenConnection(linesObj);
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full">
       {lines.map((line: any) => {
         return <LineItem key={line.id} lineItem={line} />;
       })}
@@ -17,34 +23,81 @@ function LineItem({lineItem}: {lineItem: LineItemType}) {
   const {merchandise, quantity} = lineItem;
 
   return (
-    <div className="flex gap-4">
+    <div className="flex justify-between tracking-normal leading-none w-full">
       <Link
         to={`/products/${merchandise.product.handle}`}
         className="flex-shrink-0"
       >
         <Image data={merchandise.image} width={110} height={110} />
       </Link>
-      <div className="flex-1">
+      <div className="flex-1 pl-2">
         <Link
           to={`/products/${merchandise.product.handle}`}
-          className="no-underline hover:underline"
+          className="no-underline leading-none hover:underline text-sm font-bold "
         >
           {merchandise.product.title}
         </Link>
-        <div className="text-neutral-200 text-sm tracking-widest">
-          {merchandise.title}
+        <div className="text-neutral-200 text-xs tracking-widest mt-4">
+          <div className="flex">
+            <div>
+              {' '}
+              {merchandise.selectedOptions.map((option) => {
+                return (
+                  <div
+                    className={'mt-2 text-[12px] text-right'}
+                    key={option.name}
+                  >
+                    <div>{option.name}</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div>
+              {merchandise.selectedOptions.map((option) => {
+                return (
+                  <div className={'mt-2 text-[12px]'} key={option.value}>
+                    <div>: {option.value}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-        <div className="text-neutral-200 text-sm tracking-widest">
-          Qty: {quantity}
+
+        <div className="flex mt-3">
+          <div className="flex">
+            <ItemUpdateButton lines={[lineItem]} quantity={quantity - 1}>
+              <button
+                className="bg-neutral-950 border-neutral-400 text-neutral-400  active:bg-white rounded-l-sm font-small text-center my-2 max-w-xl leading-none border w-5 h-6 flex items-center justify-center"
+                type="submit"
+              >
+                -
+              </button>
+            </ItemUpdateButton>
+            <span className="bg-neutral-950 border-neutral-400 text-white  active:bg-white font-small text-center my-2 max-w-xl leading-none border w-9 h-6 flex items-center justify-center">
+              {quantity}
+            </span>
+            <ItemUpdateButton lines={[lineItem]} quantity={quantity + 1}>
+              <button
+                className="bg-neutral-950 border-neutral-400 text-neutral-400 active::bg-white rounded-r-sm font-small text-center my-2 max-w-xl leading-none border w-5 h-6 flex items-center justify-center"
+                type="submit"
+              >
+                +
+              </button>
+            </ItemUpdateButton>
+          </div>
+          <ItemRemoveButton lineIds={[lineItem.id]} />
         </div>
-        <ItemRemoveButton lineIds={[lineItem.id]} />
       </div>
       <div className="flex flex-col items-end">
         <span className="line-through	text-sm text-right w-full">
-          ${lineItem.cost.compareAtAmountPerQuantity.amount * lineItem.quantity}
+          $
+          {(
+            lineItem.cost.compareAtAmountPerQuantity.amount * lineItem.quantity
+          ).toFixed(2)}
         </span>
         <Money
-          className="text-red-600 font-medium"
+          className="text-red-600 font-sm mt-2"
           data={lineItem.cost.totalAmount}
         />
       </div>
@@ -59,46 +112,52 @@ function ItemRemoveButton({lineIds}: {lineIds: string[]}) {
     <fetcher.Form action="/cart" method="post">
       <input type="hidden" name="cartAction" value="REMOVE_FROM_CART" />
       <input type="hidden" name="linesIds" value={JSON.stringify(lineIds)} />
-      <button
-        className="bg-neutral-950 border-white text-white hover:text-neutral-950 hover:bg-white rounded-md font-small text-center my-2 max-w-xl leading-none border w-10 h-10 flex items-center justify-center"
-        type="submit"
-      >
-        <IconRemove />
-      </button>
+      <div className="flex items-end h-[70%]">
+        <button
+          className="bg-neutral-950 flex items-end text-neutral-300  ml-2 font-sm text-center  leading-none underline"
+          type="submit"
+        >
+          Remove
+        </button>
+      </div>
     </fetcher.Form>
   );
 }
 
-function IconRemove() {
+function ItemUpdateButton({
+  lines,
+  quantity,
+  children,
+}: {
+  lines: any[];
+  quantity: number;
+  children: any;
+}) {
+  const fetcher = useFetcher();
+  console.log('lines input', JSON.stringify(lines));
   return (
-    <svg
-      fill="transparent"
-      stroke="currentColor"
-      viewBox="0 0 20 20"
-      className="w-5 h-5"
-    >
-      <title>Remove</title>
-      <path
-        d="M4 6H16"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <fetcher.Form action="/cart" method="post">
+      <input type="hidden" name="cartAction" value="UPDATE_IN_CART" />
+      <input
+        type="hidden"
+        name="lines"
+        value={JSON.stringify(
+          lines.map((line) => {
+            return {
+              attributes: line.attributes,
+              id: line.id,
+              merchandiseId: line.merchandise.id,
+              quantity,
+            };
+          }),
+        )}
       />
-      <path d="M8.5 9V14" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M11.5 9V14" strokeLinecap="round" strokeLinejoin="round" />
-      <path
-        d="M5.5 6L6 17H14L14.5 6"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8 6L8 5C8 4 8.75 3 10 3C11.25 3 12 4 12 5V6"
-        strokeWidth="1.25"
-      />
-    </svg>
+
+      {children}
+    </fetcher.Form>
   );
 }
+
 export function CartSummary({
   cost,
   compareCost,
@@ -108,13 +167,13 @@ export function CartSummary({
 }) {
   return (
     <>
-      <dl className="space-y-2">
+      <dl className="space-y-1 mt-1 text-sm">
         <div className="flex items-center justify-between">
           <dt>Original Price</dt>
           <dd>
             {compareCost ? (
               <span className="line-through	text-sm text-right w-full">
-                ${compareCost}
+                ${compareCost.toFixed(2)}
               </span>
             ) : (
               '-'
@@ -133,13 +192,33 @@ export function CartSummary({
             )}
           </dd>
         </div>
+        {cost?.subtotalAmount.amount > 99.99 && (
+          <div className="flex items-center justify-between">
+            <dt>% Discount</dt>
+            <dd>
+              {compareCost ? (
+                <span className="text-sm text-right w-full">
+                  ${(cost?.subtotalAmount.amount / 10.0).toFixed(2)}
+                </span>
+              ) : (
+                '-'
+              )}
+            </dd>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <dt>Final Price</dt>
           <dd>
             {cost?.subtotalAmount?.amount ? (
               <Money
                 className="text-red-600 font-medium text-lg"
-                data={cost?.subtotalAmount}
+                data={{
+                  __typename: 'MoneyV2',
+                  currencyCode: 'USD',
+                  amount: (parseFloat(cost?.subtotalAmount.amount) * 1)
+                    // (cost?.subtotalAmount?.amount > 99 ? 0.9 : 1)
+                    .toString(),
+                }}
               />
             ) : (
               '-'
@@ -157,16 +236,111 @@ export function CartSummary({
   );
 }
 
-export function CartActions({checkoutUrl}: {checkoutUrl: string}) {
+export function CartActions({
+  checkoutUrl,
+  totalAmount,
+}: {
+  checkoutUrl: string;
+  totalAmount: any;
+}) {
   if (!checkoutUrl) return null;
   return (
     <div className="flex flex-col mt-2">
       <a
         href={checkoutUrl}
-        className="bg-white text-black px-6 py-3 w-full rounded-md text-center font-medium"
+        className="bg-white text-black px-6 py-3 w-full rounded-md text-center font-medium text-sm leading-4 tracking-wide"
       >
-        Continue to Checkout
+        CHECKOUT • ${totalAmount.subtotalAmount.amount} USD
       </a>
     </div>
   );
 }
+
+export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
+  const goals = [
+    {
+      goalAmount: 59,
+      goalMessage: 'FREE shipping.',
+      goalColor: 'bg-white',
+    },
+    {
+      goalAmount: 100,
+      goalMessage: '10% off your WHOLE order!',
+      goalColor: 'bg-green-500',
+    },
+  ];
+
+  const [reachedGoals, setReachedGoals] = useState([]);
+  const [closestGoal, setClosestGoal] = useState(goals[0]);
+  const [difference, setDifference] = useState(
+    closestGoal.goalAmount - parseFloat(currentTotal?.totalAmount?.amount),
+  );
+
+  useEffect(() => {
+    const newReachedGoals = goals.filter((goal) => {
+      return parseFloat(currentTotal?.totalAmount?.amount) >= goal.goalAmount;
+    });
+    setReachedGoals(newReachedGoals);
+
+    const newClosestGoal = goals.reduce((goal1, goal2) => {
+      const diff1 =
+        goal1.goalAmount - parseFloat(currentTotal?.totalAmount?.amount);
+      return diff1 > 0 ? goal1 : goal2;
+    }, goals[0]);
+
+    setClosestGoal(newClosestGoal);
+    setDifference(
+      newClosestGoal.goalAmount - parseFloat(currentTotal?.totalAmount?.amount),
+    );
+  }, [currentTotal]);
+
+  return difference > 0 ? (
+    <div className="">
+      <div className="text-xs mx-4 tracking-normal">
+        {reachedGoals.length > 0 &&
+          `Congratulations! Your order qualifies for ${reachedGoals
+            .map((goal) => goal.goalMessage.slice(0, -1))
+            .join(' + ')}! `}
+        {`Spend $${difference.toFixed(2)} USD more for ${
+          closestGoal.goalMessage
+        }`}
+      </div>
+      <div className="relative w-11/12 h-6 mx-4 mt-3">
+        <div
+          className={`absolute w-full h-[7px] top-0 left-0 rounded-full ${
+            reachedGoals.length > 0
+              ? reachedGoals[reachedGoals.length - 1].goalColor
+              : 'bg-neutral-900'
+          }`}
+        ></div>
+        <div
+          style={{
+            width: `${((1 - difference / closestGoal.goalAmount) * 100).toFixed(
+              0,
+            )}%`,
+          }}
+          className={`absolute top-0 left-0 h-2 rounded-full ${closestGoal.goalColor}`}
+        ></div>
+      </div>
+    </div>
+  ) : (
+    <div className="">
+      <div className="text-xs mx-4 tracking-normal">
+        Congratulations! Your order qualifies for{' '}
+        {goals.map((goal) => goal.goalMessage.slice(0, -1)).join(' + ')}!
+      </div>
+      <div className="relative w-11/12 h-12 mx-4 mt-4">
+        <div
+          className={`absolute w-full top-0 left-0 h-[7px] rounded-full ${
+            reachedGoals.length > 0
+              ? reachedGoals[reachedGoals.length - 1].goalColor
+              : 'bg-neutral-900'
+          }`}
+        ></div>
+        <div
+          className={`absolute w-[100%] top-0 left-0 h-2 rounded-full ${goals[0].goalColor}`}
+        ></div>
+      </div>
+    </div>
+  );
+};

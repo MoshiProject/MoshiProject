@@ -1,6 +1,6 @@
 import {Link, useLoaderData} from '@remix-run/react';
 import {ActionArgs, json, LoaderArgs} from '@shopify/remix-oxygen';
-import {CartLineItems} from '~/components/Cart';
+import {CartLineItems, CartShippingBar} from '~/components/Cart';
 import {CART_QUERY} from '~/queries/cart';
 import {CartActions, CartSummary} from '~/components/Cart';
 import {AnalyticsPageType} from '@shopify/hydrogen';
@@ -86,6 +86,23 @@ export async function action({request, context}: ActionArgs) {
 
       cartId = result.cart.id;
       break;
+    case 'UPDATE_IN_CART':
+      const linesToUpdate = formData.get('lines')
+        ? JSON.parse(String(formData.get('lines')))
+        : [];
+      console.log('linesToUpdate', JSON.stringify(linesToUpdate));
+      if (!linesToUpdate.length) {
+        throw new Error('No lines to update');
+      }
+
+      result = await cartUpdate({
+        cartId,
+        lines: linesToUpdate,
+        storefront,
+      });
+
+      cartId = result.cart.id;
+      break;
     default:
       throw new Error('Invalid cart action');
   }
@@ -114,6 +131,7 @@ export default function Cart() {
     return (
       <div className="w-full max-w-6xl mx-auto pb-12 grid md:grid-cols-2 md:items-start gap-8 md:gap-8 lg:gap-12">
         <div className="flex-grow md:translate-y-4">
+          <CartShippingBar />
           <CartLineItems linesObj={cart.lines} />
         </div>
         <div className="fixed left-0 right-0 bottom-0 md:sticky md:top-[65px] grid gap-6 p-4 md:px-6 md:translate-y-4 bg-gray-100 rounded-md w-full">
@@ -195,7 +213,24 @@ export async function cartRemove({cartId, lineIds, storefront}: any) {
   }
   return cartLinesRemove;
 }
+export async function cartUpdate({cartId, lines, storefront}: any) {
+  console.log('lines', lines);
 
+  const {cartLinesUpdate} = await storefront.mutate(
+    UPDATE_LINE_ITEMS_MUTATION,
+    {
+      variables: {
+        cartId,
+        lines,
+      },
+    },
+  );
+
+  if (!cartLinesUpdate) {
+    throw new Error('No data returned from remove lines mutation');
+  }
+  return cartLinesUpdate;
+}
 /*
     Cart Queries
   */
@@ -277,3 +312,18 @@ const REMOVE_LINE_ITEMS_MUTATION = `#graphql
       }
     }
   `;
+const UPDATE_LINE_ITEMS_MUTATION = `#graphql
+  mutation ($cartId: ID!, $lines: [CartLineUpdateInput!]!, $country: CountryCode = ZZ, $language: LanguageCode)
+  @inContext(country: $country, language: $language) {
+    cartLinesUpdate(cartId: $cartId, lines: $lines) {
+      cart {
+        ...CartLinesFragment
+      }
+      errors: userErrors {
+        ...ErrorFragment
+      }
+    }
+  }
+  ${LINES_CART_FRAGMENT}
+  ${USER_ERROR_FRAGMENT}
+`;

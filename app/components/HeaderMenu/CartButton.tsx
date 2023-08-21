@@ -1,15 +1,21 @@
-import {Drawer, useDrawer} from '~/components/Drawer';
-import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
+import {CartDrawer, useDrawer} from '~/components/Drawer';
+import {
+  CartLineItems,
+  CartActions,
+  CartSummary,
+  CartShippingBar,
+} from '~/components/Cart';
 import {Suspense} from 'react';
 import {Await, useFetcher} from '@remix-run/react';
 import {useFetchers} from '@remix-run/react';
 import {useEffect, useState} from 'react';
 import {TagIcon} from '@heroicons/react/24/outline';
 import {ArrowRightIcon} from '@heroicons/react/20/solid';
+import siteSettings from '~/settings';
 export default function CartButton(cart: any) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
-
+  const [quantity, setQuantity] = useState(0);
   // Grab all the fetchers that are adding to cart
   const addToCartFetchers = [];
   for (const fetcher of fetchers) {
@@ -53,20 +59,23 @@ export default function CartButton(cart: any) {
           )}
         </Await>
       </Suspense>
-      <Drawer open={isOpen} onClose={closeDrawer}>
+      <CartDrawer open={isOpen} onClose={closeDrawer} quantity={quantity}>
         <Suspense>
           <Await resolve={cart}>
             {(data) => (
               <>
                 {data?.totalQuantity > 0 ? (
                   <>
+                    {setQuantity(data?.totalQuantity)}
                     <div className="flex-1 overflow-y-auto">
-                      <div className="flex flex-col space-y-7 justify-between items-center md:py-8 md:px-12 px-4 py-6">
+                      <CartShippingBar currentTotal={data.cost} />
+
+                      <div className="flex flex-col space-y-7 justify-between items-center md:py-8 md:px-12 pl-1 pr-4 py-6 pt-2">
                         <CartLineItems linesObj={data.lines} />
                         {console.log('data', data)}
                       </div>
                     </div>
-                    <div className="w-full md:px-12 px-4 py-6 space-y-6 border-t border-neutral-800 pt-1">
+                    <div className="w-full md:px-12 px-4 py-6 space-y-3 border-t border-neutral-800 pt-1">
                       <div>
                         {data.discountCodes.map((discount) => (
                           <div
@@ -113,11 +122,14 @@ export default function CartButton(cart: any) {
                           })
                           .reduce((partialSum, a) => partialSum + a, 0)}
                       />
-                      <CartActions checkoutUrl={data.checkoutUrl} />
+                      <CartActions
+                        checkoutUrl={data.checkoutUrl}
+                        totalAmount={data.cost}
+                      />
                     </div>
                   </>
                 ) : (
-                  <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 h-screen">
+                  <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 pt-2 h-screen">
                     <h2 className="whitespace-pre-wrap max-w-prose font-bold text-4xl">
                       Your cart is empty
                     </h2>
@@ -133,7 +145,7 @@ export default function CartButton(cart: any) {
             )}
           </Await>
         </Suspense>
-      </Drawer>
+      </CartDrawer>
 
       <span className="sr-only">items in cart, view bag</span>
     </div>
@@ -159,7 +171,11 @@ function DiscountForm() {
   const fetcher = useFetcher();
   return (
     <fetcher.Form action="/handleDiscount" method="post">
-      <div className="flex items-center">
+      <div
+        className={`flex items-center ${
+          siteSettings.cart.displayDiscounts ? '' : 'hidden'
+        } `}
+      >
         <input
           className="h-10 bg-neutral-950 border-neutral-400 border-2 text-white rounded-md placeholder:text-neutral-500"
           type="text"
