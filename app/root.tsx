@@ -158,7 +158,7 @@ export default function App() {
         s.parentNode.insertBefore(t,s)
       }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
       
-      fbq(&quot;init&quot;, '487072912450981');
+      fbq('init', '487072912450981');
       fbq('track', 'PageView');
     `,
             }}
