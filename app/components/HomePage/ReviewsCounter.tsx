@@ -3,9 +3,13 @@ import {useState, useEffect} from 'react';
 
 interface ReviewsCounterProps {
   reviews: number[];
+  isProduct?: boolean;
 }
 
-export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
+export default function ReviewsCounter({
+  reviews,
+  isProduct,
+}: ReviewsCounterProps) {
   const totalReviews = reviews.reduce((acc, cur) => acc + cur, 0);
   const totalStars = reviews.reduce(
     (acc, cur, idx) => acc + cur * (idx + 1),
@@ -88,12 +92,16 @@ export default function ReviewsCounter({reviews}: ReviewsCounterProps) {
           </div>
         </div>
       ))}
-      <div className=" text-center text-xl font-bold mt-8">
-        {((averageRating * 100) / 5.0).toFixed(0)}%
-      </div>
-      <div className="mt-1 text-center text-neutral-500 text-sm font-normal">
-        would recommend these products
-      </div>
+      {!isProduct && (
+        <div>
+          <div className=" text-center text-xl font-bold mt-8">
+            {((averageRating * 100) / 5.0).toFixed(0)}%
+          </div>
+          <div className="mt-1 text-center text-neutral-500 text-sm font-normal">
+            would recommend these products
+          </div>
+        </div>
+      )}
     </div>
   );
 }

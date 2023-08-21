@@ -68,18 +68,18 @@ function LineItem({lineItem}: {lineItem: LineItemType}) {
           <div className="flex">
             <ItemUpdateButton lines={[lineItem]} quantity={quantity - 1}>
               <button
-                className="bg-neutral-950 border-neutral-400 text-neutral-400  active:bg-white rounded-l-sm font-small text-center my-2 max-w-xl leading-none border w-5 h-6 flex items-center justify-center"
+                className="bg-neutral-950 border-neutral-400 text-neutral-400  active:bg-white rounded-l-sm font-small text-center my-2 max-w-xl leading-none border w-4 h-6 flex items-center justify-center"
                 type="submit"
               >
                 -
               </button>
             </ItemUpdateButton>
-            <span className="bg-neutral-950 border-neutral-400 text-white  active:bg-white font-small text-center my-2 max-w-xl leading-none border w-9 h-6 flex items-center justify-center">
+            <span className="bg-neutral-950 border-neutral-400 text-white  active:bg-white font-small text-center my-2 max-w-xl leading-none border w-8 h-6 flex items-center justify-center">
               {quantity}
             </span>
             <ItemUpdateButton lines={[lineItem]} quantity={quantity + 1}>
               <button
-                className="bg-neutral-950 border-neutral-400 text-neutral-400 active::bg-white rounded-r-sm font-small text-center my-2 max-w-xl leading-none border w-5 h-6 flex items-center justify-center"
+                className="bg-neutral-950 border-neutral-400 text-neutral-400 active::bg-white rounded-r-sm font-small text-center my-2 max-w-xl leading-none border w-4 h-6 flex items-center justify-center"
                 type="submit"
               >
                 +

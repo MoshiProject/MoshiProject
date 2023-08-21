@@ -82,7 +82,7 @@ const ReviewsSection: React.FC<Props> = ({
           id={product.id}
           productType={getProductType(product.title)?.toLowerCase()}
         />
-        <ReviewsCounter reviews={counterArr} />
+        <ReviewsCounter reviews={counterArr} isProduct />
         <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
           {judgeReviews.map((review, index) => (
             <ReviewCard
