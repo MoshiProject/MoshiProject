@@ -29,6 +29,8 @@ import {
   useShopifyCookies,
 } from '@shopify/hydrogen';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
+import ReactPixel from 'react-facebook-pixel';
+
 export const links = () => {
   return [
     {rel: 'stylesheet', href: tailwind},
@@ -116,14 +118,8 @@ export default function App() {
   useEffect(() => {
     // Filter out useEffect running twice
     if (lastLocationKey.current === location.key) return;
-
-    import('react-facebook-pixel')
-      .then((x) => x.default)
-      .then((ReactPixel) => {
-        ReactPixel.init('487072912450981'); // facebookPixelId
-        ReactPixel.pageView();
-      });
-
+    ReactPixel.init('487072912450981');
+    ReactPixel.pageView();
     lastLocationKey.current = location.key;
 
     const payload: ShopifyPageViewPayload = {
