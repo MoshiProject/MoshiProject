@@ -139,8 +139,9 @@ export default function App() {
         <Links />
         <>
           {/* Facebook Pixel Code */}
-          <script>
-            {`
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
       !function(f,b,e,v,n,t,s) {
         if(f.fbq) return;
         n=f.fbq=function() {
@@ -157,10 +158,11 @@ export default function App() {
         s.parentNode.insertBefore(t,s)
       }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
       
-      fbq('init', '487072912450981');
+      fbq(&quot;init&quot;, '487072912450981');
       fbq('track', 'PageView');
-    `}
-          </script>
+    `,
+            }}
+          ></script>
 
           {/* End Facebook Pixel Code */}
         </>
