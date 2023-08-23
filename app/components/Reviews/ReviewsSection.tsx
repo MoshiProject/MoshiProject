@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Product} from './products';
-import ReviewsCounter from '../HomePage/ReviewsCounter';
+import {Product} from '../products/products';
+import ReviewsCounter from './ReviewsCounter';
 import {reviews} from '~/data/reviews';
-import WriteReview from './WriteReview';
+import WriteReview from '../products/WriteReview';
 import {StarIcon} from '@heroicons/react/24/solid';
 import titleFilter, {getProductType} from '~/functions/titleFilter';
 import {useEffect} from 'react';

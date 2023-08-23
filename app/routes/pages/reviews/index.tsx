@@ -1,7 +1,7 @@
 import {useLoaderData} from '@remix-run/react';
 import {LoaderArgs, defer} from '@shopify/remix-oxygen';
-import {ReviewContainer} from '~/routes';
-
+import {getJudgeReviews} from '~/routes';
+import ReviewContainer from '~/components/Reviews/ReviewContainer';
 export async function loader({params, context, request}: LoaderArgs) {
   const searchParams = new URL(request.url).searchParams;
 
@@ -36,7 +36,7 @@ export async function loader({params, context, request}: LoaderArgs) {
     return review.curated !== 'spam';
   });
   return defer({
-    judgeReviews,
+    judgeReviews: await getJudgeReviews(context),
     analytics: {
       pageType: 'reviews',
     },

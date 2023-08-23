@@ -17,7 +17,7 @@ import titleFilter, {
   productAnimeHandles,
   productTypeHandles,
 } from '~/functions/titleFilter';
-import ReviewsSection from '~/components/products/ReviewsSection';
+import ReviewsSection from '~/components/Reviews/ReviewsSection';
 import Rand, {PRNG} from 'rand-seed';
 import {authors, highHoodieReviews, lowHoodieReviews} from '~/data/reviews';
 import ShippingEstimation from '~/components/products/ShippingEstimation';

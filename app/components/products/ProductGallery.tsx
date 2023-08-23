@@ -174,7 +174,7 @@ export default function ProductGallery({
               <SwiperSlide key={data.id || data.image.id}>
                 <Image
                   data={data.image}
-                  loading={i === 0 ? 'eager' : 'lazy'}
+                  loading={'eager'}
                   sizes="100vw"
                   alt={data.image.altText}
                 ></Image>

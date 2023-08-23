@@ -1,26 +1,25 @@
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
-import {Suspense, useState} from 'react';
+import {Suspense, useState, lazy} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
-import {FeaturedCollections} from '~/components/HomePage/FeaturedCollections';
 import Hero from '~/components/HomePage/Hero';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-import {getHeroPlaceholder} from '~/lib/placeholders';
-import type {
-  CollectionConnection,
-  Metafield,
-  ProductConnection,
-} from '@shopify/hydrogen/storefront-api-types';
-import {AnalyticsPageType} from '@shopify/hydrogen';
+import type {Metafield} from '@shopify/hydrogen/storefront-api-types';
 import {FeaturedProductGrid} from '~/components/FeaturedProductGrid';
 import ParallaxText from '~/components/HeaderMenu/ParallaxText';
 import {motion} from 'framer-motion';
-import {COLLECTION_QUERY, SMALL_COLLECTION_QUERY} from './collections/$handle';
-import AnimeCarousel from '~/components/HomePage/AnimeCarousel';
+import {SMALL_COLLECTION_QUERY} from './collections/$handle';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
 import ReviewsCounter, {
   numberWithCommas,
-} from '~/components/HomePage/ReviewsCounter';
-import {ReviewCard} from '~/components/products/ReviewsSection';
+} from '~/components/Reviews/ReviewsCounter';
+import {ReviewCard} from '~/components/Reviews/ReviewsSection';
+const LazyAnimeCarousel = lazy(
+  () => import('~/components/HomePage/AnimeCarousel'),
+);
+
+const LazyReviewContainer = lazy(
+  () => import('~/components/Reviews/ReviewContainer'),
+);
 interface HomeSeoData {
   shop: {
     name: string;
@@ -104,7 +103,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   });
 }
 
-const getJudgeReviews = async (context) => {
+export const getJudgeReviews = async (context) => {
   let judgeReviews = [];
   try {
     const response = await fetch(
@@ -206,7 +205,7 @@ export default function Homepage() {
           </ParallaxText>
         </motion.div>
       </div>
-      <AnimeCarousel titleStyling={titleStyling} />
+      <LazyAnimeCarousel titleStyling={titleStyling} />
       {featuredProducts && (
         <Suspense>
           <Await resolve={featuredProducts}>
@@ -225,7 +224,9 @@ export default function Homepage() {
         </Suspense>
       )}
       <ItemTypeCollections />
-      <ReviewContainer judgeReviews={judgeReviews} />
+      <Suspense>
+        <LazyReviewContainer judgeReviews={judgeReviews} />;
+      </Suspense>
     </>
   );
 }
@@ -309,30 +310,6 @@ const COLLECTION_CONTENT_FRAGMENT = `#graphql
   }
 `;
 
-const HOMEPAGE_SEO_QUERY = `#graphql
-  ${COLLECTION_CONTENT_FRAGMENT}
-  query collectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-    shop {
-      name
-      description
-    }
-  }
-`;
-
-const COLLECTION_HERO_QUERY = `#graphql
-  ${COLLECTION_CONTENT_FRAGMENT}
-  query collectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-  }
-`;
-
 // @see: https://shopify.dev/api/storefront/latest/queries/products
 export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   ${PRODUCT_CARD_FRAGMENT}
@@ -368,52 +345,3 @@ export const FEATURED_COLLECTIONS_QUERY = `#graphql
     }
   }
 `;
-export function ReviewContainer(judgeReviews: {
-  judgeReviews: [
-    {imageSrc: string; body: string; rating: string; reviewer: any},
-  ];
-}) {
-  const [reviewCount, setReviewCount] = useState(5);
-  const reviews = [12, 24, 45, 79, 1124];
-  const reviewQuantity = reviews.reduce((partialSum, a) => partialSum + a, 0);
-  return (
-    <div className="block  px-3 md:mt-12 md:w-2/3 md:mx-auto ">
-      <h2 className="text-center md:text-left w-full text-3xl uppercase mt-4 tracking-widest mb-[-12px]">
-        Reviews
-      </h2>
-      <ReviewsCounter reviews={reviews} />
-      <div className="border-b-2 border-neutral-200 text-sm text-neutral-500 tracking-widest">
-        <span>{numberWithCommas(reviewQuantity)} reviews</span>
-      </div>
-      <div>
-        {judgeReviews.judgeReviews.map((review, index) => (
-          <ReviewCard
-            className={`my-2 ${index < reviewCount ? 'block' : 'hidden'}`}
-            key={'reviewCard' + index}
-            imgSrc={review.imageSrc}
-            author={review.reviewer.name}
-            stars={review.rating}
-            productImageData={review.productData}
-            body={review.body}
-            product={{
-              url: '/products/' + review.product_handle,
-              title: review.product_title,
-            }}
-          />
-        ))}
-      </div>
-      <div className="flex justify-center mt-8 mb-4">
-        <button
-          className="bg-neutral-950 text-white rounded-md p-2 px-6"
-          onClick={() => {
-            setTimeout(() => {
-              setReviewCount(reviewCount + 5);
-            }, 350);
-          }}
-        >
-          Show More
-        </button>
-      </div>
-    </div>
-  );
-}
