@@ -1,18 +1,15 @@
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
-import {Suspense, useState, lazy} from 'react';
+import {Suspense, lazy} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import Hero from '~/components/HomePage/Hero';
-import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
+import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import type {Metafield} from '@shopify/hydrogen/storefront-api-types';
 import {FeaturedProductGrid} from '~/components/FeaturedProductGrid';
 import ParallaxText from '~/components/HeaderMenu/ParallaxText';
 import {motion} from 'framer-motion';
 import {SMALL_COLLECTION_QUERY} from './collections/$handle';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
-import ReviewsCounter, {
-  numberWithCommas,
-} from '~/components/Reviews/ReviewsCounter';
-import {ReviewCard} from '~/components/Reviews/ReviewsSection';
+
 const LazyAnimeCarousel = lazy(
   () => import('~/components/HomePage/AnimeCarousel'),
 );
@@ -94,6 +91,7 @@ export async function loader({params, context, request}: LoaderArgs) {
         rev,
         sort,
       },
+      cache: context.storefront.CacheLong(),
     },
   );
 
@@ -161,14 +159,6 @@ export const getJudgeReviews = async (context) => {
 export default function Homepage() {
   const {featuredProducts, judgeReviews} = useLoaderData<typeof loader>();
 
-  // TODO: skeletons vs placeholders
-
-  // TODO: analytics
-  // useServerAnalytics({
-  //   shopify: {
-  //     pageType: ShopifyAnalyticsConstants.pageType.home,
-  //   },
-  // });
   const titleStyling =
     'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-0 ';
   return (
@@ -279,35 +269,6 @@ fragment mediaFieldsByType on Media {
     }
   }
 }
-`;
-
-const COLLECTION_CONTENT_FRAGMENT = `#graphql
-  ${MEDIA_FRAGMENT}
-  fragment CollectionContent on Collection {
-    id
-    handle
-    title
-    descriptionHtml
-    heading: metafield(namespace: "hero", key: "title") {
-      value
-    }
-    byline: metafield(namespace: "hero", key: "byline") {
-      value
-    }
-    cta: metafield(namespace: "hero", key: "cta") {
-      value
-    }
-    spread: metafield(namespace: "hero", key: "spread") {
-      reference {
-        ...Media
-      }
-    }
-    spreadSecondary: metafield(namespace: "hero", key: "spread_secondary") {
-      reference {
-        ...Media
-      }
-    }
-  }
 `;
 
 // @see: https://shopify.dev/api/storefront/latest/queries/products

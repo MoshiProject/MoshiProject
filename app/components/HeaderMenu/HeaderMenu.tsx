@@ -69,6 +69,7 @@ export default function HeaderMenu({cart}: any) {
                       <span className="sr-only">MoshiProject</span>
                       <Image
                         sizes="h-10 md:h-14"
+                        loading="eager"
                         data={{
                           url: logoWhiteURL,
                           altText: 'logo',
@@ -193,6 +194,7 @@ export default function HeaderMenu({cart}: any) {
                   <a href="/" className="lg:hidden">
                     <span className="sr-only">MoshiProject</span>
                     <Image
+                      loading="eager"
                       data={{
                         url: logoWhiteURL,
                         altText: 'item.imageAlt',

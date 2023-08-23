@@ -1,20 +1,9 @@
-import {MediaFile} from '@shopify/hydrogen-react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {ImageType} from '~/components/products/products';
 import {Controller} from 'swiper';
-import ImageModal from './ImageModal';
-import {
-  MagnifyingGlassCircleIcon,
-  MagnifyingGlassIcon,
-} from '@heroicons/react/24/outline';
 import {Image} from '@shopify/hydrogen-react';
 
-import {useEffect} from 'react';
-import ScaleOutScrollAnim from '../animations/ScaleOutScrollAnim';
-import ExitToLeftScrollAnim from '../animations/FadeOutScrollAnim';
-import FadeOutScrollAnim from '../animations/FadeOutScrollAnim';
-import {motion} from 'framer-motion';
 export default function ProductGallery({
   media,
   selectedImage,
@@ -46,6 +35,13 @@ export default function ProductGallery({
     if (secondSwiper !== null) secondSwiper.slideTo(ind, 300, false);
     setCurrentIndex(ind);
   }, [selectedImage]);
+
+  useEffect(() => {
+    const imagesToBePreloaded = media.map((med) => med.image.src);
+    imagesToBePreloaded.forEach((image) => {
+      <img src={image} alt="" />;
+    });
+  }, []);
 
   const typeNameMap = {
     MODEL_3D: 'Model3d',

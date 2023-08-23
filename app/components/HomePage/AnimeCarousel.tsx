@@ -85,6 +85,7 @@ const AnimeCarousel = ({
                 className="w-full"
                 src={item.img}
                 alt={`Item ${index}`}
+                loading="lazy"
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 0.5, delay: index * 0.1}}
