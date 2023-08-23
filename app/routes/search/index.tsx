@@ -1,16 +1,13 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/naming-convention */
-import {useLoaderData} from '@remix-run/react';
-import {json} from '@shopify/remix-oxygen';
-import ProductGrid from '../../components/collections/ProductGrid';
-import {type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
+import {MagnifyingGlassIcon} from '@heroicons/react/20/solid';
+import {useLoaderData, useNavigate} from '@remix-run/react';
 import {type SeoHandleFunction} from '@shopify/hydrogen';
-import {useEffect} from 'react';
+import {json, type LoaderArgs, type MetaFunction} from '@shopify/remix-oxygen';
+import {FormEventHandler, useState} from 'react';
 import {Product} from '~/components/products/products';
 import {animeNames, productTypes} from '~/functions/titleFilter';
-import {FormEventHandler, useState} from 'react';
-import {useNavigate} from '@remix-run/react';
-import {MagnifyingGlassIcon} from '@heroicons/react/20/solid';
+import ProductGrid from '../../components/collections/ProductGrid';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.products?.title,

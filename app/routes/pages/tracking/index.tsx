@@ -1,18 +1,12 @@
-import React, {useState} from 'react';
+import {LoaderArgs, defer} from '@shopify/remix-oxygen';
+import {LATEST_API_VERSION} from '@shopify/shopify-api';
 import '@shopify/shopify-api/adapters/cf-worker';
-import {shopifyApi, LATEST_API_VERSION} from '@shopify/shopify-api';
-import {LoaderArgs} from '@shopify/remix-oxygen';
-import {defer} from '@shopify/remix-oxygen';
-import EasyPost from '@easypost/api';
+import {useState} from 'react';
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/naming-convention */
-import {ActionArgs, json} from '@shopify/remix-oxygen';
-import {type MetaFunction} from '@shopify/remix-oxygen';
-import {type SeoHandleFunction} from '@shopify/hydrogen';
-import sgMail from '@sendgrid/mail';
 import {Form, useActionData} from '@remix-run/react';
-import emailjs from '@emailjs/browser';
-import {useRef} from 'react';
+import {type SeoHandleFunction} from '@shopify/hydrogen';
+import {ActionArgs, type MetaFunction} from '@shopify/remix-oxygen';
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: 'Contact Us',
   description: 'Contact Us',

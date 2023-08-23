@@ -1,8 +1,7 @@
 import React from 'react';
 import {Link} from '../Link';
 import {motion} from 'framer-motion';
-import {Parallax} from 'swiper';
-import ParallaxText from '../HeaderMenu/ParallaxText';
+
 interface Props {
   imageUrl: string;
   title: string;

@@ -1,14 +1,14 @@
 import {useLocation, useMatches} from '@remix-run/react';
 import type {
-  MenuItem,
   Menu,
+  MenuItem,
   MoneyV2,
 } from '@shopify/hydrogen/storefront-api-types';
 
 // @ts-expect-error types not available
 import typographicBase from 'typographic-base';
 import {countries} from '~/data/countries';
-import {I18nLocale, Locale} from './type';
+import {I18nLocale} from './type';
 
 export interface EnhancedMenuItem extends MenuItem {
   to: string;

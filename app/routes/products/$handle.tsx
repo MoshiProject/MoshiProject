@@ -1,38 +1,33 @@
-import {Await, useActionData, useLoaderData} from '@remix-run/react';
-import {json} from 'react-router';
-import ProductOptions from '~/components/products/ProductOptions';
-import {Money, ShopPayButton} from '@shopify/hydrogen-react';
 import {Disclosure} from '@headlessui/react';
-import {ActionArgs, LoaderArgs, defer} from '@shopify/remix-oxygen';
-import {Option, Product, Variant} from '~/components/products/products';
 import {ChevronRightIcon} from '@heroicons/react/20/solid';
-import {motion, AnimatePresence} from 'framer-motion';
-import ProductRecommendations from '~/components/products/ProductRecommendations';
-import {PRODUCT_QUERY, RECOMMENDATIONS_QUERY} from '~/queries/product';
+import {Await, useActionData, useLoaderData} from '@remix-run/react';
+import type {SeoHandleFunction} from '@shopify/hydrogen';
+import {AnalyticsPageType} from '@shopify/hydrogen';
+import {Money, ShopPayButton} from '@shopify/hydrogen-react';
+import {ActionArgs, LoaderArgs, defer} from '@shopify/remix-oxygen';
+import {AnimatePresence} from 'framer-motion';
+import {Suspense, useEffect, useRef, useState} from 'react';
+import ReviewsSection from '~/components/Reviews/ReviewsSection';
 import AddToCartForm from '~/components/products/AddToCartForm';
+import DescriptionTab from '~/components/products/DescriptionTab';
 import ProductGallery from '~/components/products/ProductGallery';
+import ProductOptions from '~/components/products/ProductOptions';
+import ProductRecommendations from '~/components/products/ProductRecommendations';
+import ReturnInfo from '~/components/products/ReturnInfo';
+import Seperator from '~/components/products/Seperator';
+import ShippingEstimation from '~/components/products/ShippingEstimation';
+import ShippingInfo from '~/components/products/ShippingInfo';
+import SizingChart from '~/components/products/SizingChart';
+import {Option, Product, Variant} from '~/components/products/products';
 import titleFilter, {
   getProductAnime,
   getProductType,
   productAnimeHandles,
   productTypeHandles,
 } from '~/functions/titleFilter';
-import ReviewsSection from '~/components/Reviews/ReviewsSection';
-import Rand, {PRNG} from 'rand-seed';
-import {authors, highHoodieReviews, lowHoodieReviews} from '~/data/reviews';
-import ShippingEstimation from '~/components/products/ShippingEstimation';
-import Hero from '~/components/HomePage/Hero';
-import SizingChart from '~/components/products/SizingChart';
+import {PRODUCT_QUERY} from '~/queries/product';
 import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
-import {Suspense, useEffect, useRef, useState} from 'react';
-import {AnalyticsPageType} from '@shopify/hydrogen';
-import Seperator from '~/components/products/Seperator';
-import {StarIcon} from '@heroicons/react/24/solid';
-import ShippingInfo from '~/components/products/ShippingInfo';
-import DescriptionTab from '~/components/products/DescriptionTab';
 import ContactUs from '../pages/contact-us';
-import ReturnInfo from '~/components/products/ReturnInfo';
-import type {SeoHandleFunction} from '@shopify/hydrogen';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.product?.seo?.title,
@@ -810,7 +805,6 @@ const SharpStarIcon = ({className}) => {
   );
 };
 
-import React from 'react';
 import ProductPageGraphic from '~/components/products/ProductPageGraphic';
 
 const ItemIsInStock = () => {

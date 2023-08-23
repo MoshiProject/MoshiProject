@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
+import {Image} from '@shopify/hydrogen-react';
+import {useEffect, useState} from 'react';
+import {Controller} from 'swiper';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {ImageType} from '~/components/products/products';
-import {Controller} from 'swiper';
-import {Image} from '@shopify/hydrogen-react';
 
 export default function ProductGallery({
   media,

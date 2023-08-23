@@ -1,4 +1,3 @@
-import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import {
   Form,
   useActionData,
@@ -8,15 +7,16 @@ import {
 } from '@remix-run/react';
 import {flattenConnection} from '@shopify/hydrogen';
 import type {
-  MailingAddressInput,
-  CustomerAddressUpdatePayload,
-  CustomerAddressDeletePayload,
-  CustomerDefaultAddressUpdatePayload,
   CustomerAddressCreatePayload,
+  CustomerAddressDeletePayload,
+  CustomerAddressUpdatePayload,
+  CustomerDefaultAddressUpdatePayload,
+  MailingAddressInput,
 } from '@shopify/hydrogen/storefront-api-types';
+import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
-import {Text} from '~/components/Text';
 import {Button} from '~/components/Button';
+import {Text} from '~/components/Text';
 import {assertApiErrors, getInputStyleClasses} from '~/lib/utils';
 import type {AccountOutletContext} from '../edit';
 

@@ -1,9 +1,13 @@
 import {Link, useLoaderData} from '@remix-run/react';
-import {ActionArgs, json, LoaderArgs} from '@shopify/remix-oxygen';
-import {CartLineItems, CartShippingBar} from '~/components/Cart';
-import {CART_QUERY} from '~/queries/cart';
-import {CartActions, CartSummary} from '~/components/Cart';
 import {AnalyticsPageType} from '@shopify/hydrogen';
+import {ActionArgs, LoaderArgs, json} from '@shopify/remix-oxygen';
+import {
+  CartActions,
+  CartLineItems,
+  CartShippingBar,
+  CartSummary,
+} from '~/components/Cart';
+import {CART_QUERY} from '~/queries/cart';
 
 export async function loader({context}: LoaderArgs) {
   const cartId = await context.session.get('cartId');

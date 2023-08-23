@@ -1,14 +1,14 @@
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
-import {Suspense, lazy} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
-import Hero from '~/components/HomePage/Hero';
-import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import type {Metafield} from '@shopify/hydrogen/storefront-api-types';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {motion} from 'framer-motion';
+import {lazy, Suspense} from 'react';
 import {FeaturedProductGrid} from '~/components/FeaturedProductGrid';
 import ParallaxText from '~/components/HeaderMenu/ParallaxText';
-import {motion} from 'framer-motion';
-import {SMALL_COLLECTION_QUERY} from './collections/$handle';
+import Hero from '~/components/HomePage/Hero';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
+import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
+import {SMALL_COLLECTION_QUERY} from './collections/$handle';
 
 const LazyAnimeCarousel = lazy(
   () => import('~/components/HomePage/AnimeCarousel'),

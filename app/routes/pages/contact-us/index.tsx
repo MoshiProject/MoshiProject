@@ -1,11 +1,6 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/naming-convention */
-import {ActionArgs, json} from '@shopify/remix-oxygen';
-import {type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
-import {type SeoHandleFunction} from '@shopify/hydrogen';
-import sgMail from '@sendgrid/mail';
-import {Form, useActionData} from '@remix-run/react';
 import emailjs from '@emailjs/browser';
+import {type SeoHandleFunction} from '@shopify/hydrogen';
+import {json, type LoaderArgs, type MetaFunction} from '@shopify/remix-oxygen';
 import {useRef, useState} from 'react';
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: 'Contact Us',
@@ -17,8 +12,6 @@ export const handle = {
 };
 
 export async function loader({params, context, request}: LoaderArgs) {
-  sgMail.setApiKey(context.env.SENDGRID_API_KEY);
-
   const searchParams = new URL(request.url).searchParams;
   const sortParam = searchParams.get('sort');
 

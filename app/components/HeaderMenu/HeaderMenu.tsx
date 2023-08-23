@@ -1,14 +1,9 @@
 import {Fragment, useState} from 'react';
 import {Dialog, Popover, Transition} from '@headlessui/react';
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
-import {ChevronDownIcon} from '@heroicons/react/20/solid';
+import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline';
 import ParallaxText from './ParallaxText';
 import {Image} from '@shopify/hydrogen';
-import {currencies, logoURL, logoWhiteURL} from './menuSettings';
+import {logoURL, logoWhiteURL} from './menuSettings';
 import MegaMenuMobile from './MegaMenuMobile';
 import CartButton from './CartButton';
 

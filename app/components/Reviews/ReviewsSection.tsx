@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import {StarIcon} from '@heroicons/react/24/solid';
+import {Link} from '@remix-run/react';
+import {Image} from '@shopify/hydrogen';
+import React, {useEffect, useState} from 'react';
+import titleFilter, {getProductType} from '~/functions/titleFilter';
+import WriteReview from '../products/WriteReview';
 import {Product} from '../products/products';
 import ReviewsCounter from './ReviewsCounter';
-import {reviews} from '~/data/reviews';
-import WriteReview from '../products/WriteReview';
-import {StarIcon} from '@heroicons/react/24/solid';
-import titleFilter, {getProductType} from '~/functions/titleFilter';
-import {useEffect} from 'react';
-import {Image} from '@shopify/hydrogen';
-import {Link} from '@remix-run/react';
 type Props = {
   product: Product;
   judgeReviews: any[];

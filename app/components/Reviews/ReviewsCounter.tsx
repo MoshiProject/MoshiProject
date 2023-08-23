@@ -1,5 +1,5 @@
 import {StarIcon} from '@heroicons/react/24/solid';
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 interface ReviewsCounterProps {
   reviews: number[];

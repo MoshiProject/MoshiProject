@@ -1,14 +1,9 @@
-import {motion, AnimatePresence} from 'framer-motion';
-import {Dialog, Disclosure, Transition} from '@headlessui/react';
-import {Image} from '@shopify/hydrogen';
-import {ChevronDownIcon, XMarkIcon} from '@heroicons/react/24/outline';
-import {Fragment, useEffect, useRef, useState} from 'react';
-import {Button} from 'flowbite-react';
+import {Dialog, Transition} from '@headlessui/react';
+import {XMarkIcon} from '@heroicons/react/24/outline';
+import {Fragment, useEffect, useState} from 'react';
 import {Product} from '../products/products';
-import {RadioGroup} from '@headlessui/react';
 import CollectionFilter from './CollectionFilter';
 import {charactersMap} from '~/functions/titleFilter';
-import {Link} from '@remix-run/react';
 
 export type FilterType = 'anime' | 'productType' | 'character';
 

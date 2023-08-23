@@ -3,7 +3,6 @@ import {Product} from '../products/products';
 import {useEffect, useState} from 'react';
 import {charactersMap} from '~/functions/titleFilter';
 import {FilterType} from './FilterSidebar';
-import {Accordion} from '~/routes/products/$handle';
 import {AnimatePresence, motion} from 'framer-motion';
 
 function CollectionFilter({

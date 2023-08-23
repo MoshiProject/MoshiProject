@@ -17,15 +17,11 @@ import swiperBCSS from 'swiper/swiper-bundle.min.css';
 import ImageZoom from 'react-medium-image-zoom/dist/styles.css';
 import {useLocation} from '@remix-run/react';
 import {useEffect, useRef} from 'react';
-import {
-  useAnalyticsFromActions,
-  useAnalyticsFromLoaders,
-} from './functions/utils';
+
 import {
   AnalyticsEventName,
   getClientBrowserParameters,
   sendShopifyAnalytics,
-  ShopifySalesChannel,
   useShopifyCookies,
 } from '@shopify/hydrogen';
 import {usePageAnalytics} from './hooks/usePageAnalytics';

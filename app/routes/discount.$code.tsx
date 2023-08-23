@@ -1,10 +1,12 @@
-import {redirect, type LoaderArgs} from '@shopify/remix-oxygen';
-import {parse as parseCookie} from 'worktop/cookie';
 import type {
   Cart as CartType,
   UserError,
 } from '@shopify/hydrogen/storefront-api-types';
-import {type AppLoadContext} from '@shopify/remix-oxygen';
+import {
+  redirect,
+  type AppLoadContext,
+  type LoaderArgs,
+} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 import {cartCreate} from './Cart';
 

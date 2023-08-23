@@ -1,4 +1,3 @@
-import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 import type {ShopifyAddToCartPayload} from '@shopify/hydrogen';
 import {
   AnalyticsEventName,
@@ -12,11 +11,10 @@ import {useEffect} from 'react';
 import {usePageAnalytics} from '~/hooks/usePageAnalytics';
 
 export default function AddToCartForm({
-  children,
   variantId,
   textColor = 'text-white',
   backgroundColor = 'bg-black',
-  disabled,
+
   analytics,
 }: {
   children: React.ReactNode;

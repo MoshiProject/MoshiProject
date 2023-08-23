@@ -5,7 +5,6 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  useVelocity,
   wrap,
 } from 'framer-motion';
 import {useRef} from 'react';

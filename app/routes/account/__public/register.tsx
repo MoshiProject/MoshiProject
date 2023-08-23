@@ -1,16 +1,16 @@
+import {Form, useActionData} from '@remix-run/react';
+import type {CustomerCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
-  type MetaFunction,
-  redirect,
   json,
+  redirect,
   type ActionFunction,
   type LoaderArgs,
+  type MetaFunction,
 } from '@shopify/remix-oxygen';
-import {Form, useActionData} from '@remix-run/react';
 import {useState} from 'react';
-import {getInputStyleClasses} from '~/lib/utils';
 import {Link} from '~/components/Link';
+import {getInputStyleClasses} from '~/lib/utils';
 import {doLogin} from './login';
-import type {CustomerCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 
 export async function loader({context, params}: LoaderArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');

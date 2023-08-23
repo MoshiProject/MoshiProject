@@ -1,8 +1,7 @@
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import {Link} from '@remix-run/react';
-import {Product} from './products';
 import ProductCard from './ProductCard';
+import {Product} from './products';
 
 type ProductRecommendationsProps = {
   recommendations: Product[];

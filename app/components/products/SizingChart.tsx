@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Dialog, Transition, Switch} from '@headlessui/react';
-import useScrollDirection from '~/functions/useScrollDirection';
+import {Dialog, Switch, Transition} from '@headlessui/react';
 import {Image} from '@shopify/hydrogen';
+import React, {useState} from 'react';
+import useScrollDirection from '~/functions/useScrollDirection';
 
 const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
   const [isOpen, setIsOpen] = useState(false);

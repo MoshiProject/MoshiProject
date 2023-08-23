@@ -6,8 +6,10 @@ import {
   useSearchParams,
   useTransition,
 } from '@remix-run/react';
-import {useScroll, motion, AnimatePresence} from 'framer-motion';
+import {AnimatePresence, motion, useScroll} from 'framer-motion';
 import {useRef, useState} from 'react';
+import SizingChart from '~/components/products/SizingChart';
+import StickyBottomCartButton from './StickyBottomCartButton';
 const colorMap = {
   SportGrey: '#B0AFA9',
   Navy: '#234569',
@@ -20,9 +22,6 @@ const colorMap = {
   Natural: '#D6D1AA',
   HeatherNavy: '#2C3E4C',
 };
-import SizingChart from '~/components/products/SizingChart';
-import AddToCartForm from './AddToCartForm';
-import StickyBottomCartButton from './StickyBottomCartButton';
 
 export default function ProductOptions({
   options,

@@ -1,8 +1,7 @@
-import {motion, AnimatePresence} from 'framer-motion';
-import {Link} from '../Link';
+import {AnimatePresence, motion} from 'framer-motion';
 import {useState} from 'react';
-import {Options} from './ProductOptions';
 import AddToCartForm from './AddToCartForm';
+import {Options} from './ProductOptions';
 const colorMap = {
   SportGrey: '#B0AFA9',
   Navy: '#234569',

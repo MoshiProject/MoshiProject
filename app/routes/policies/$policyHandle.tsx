@@ -1,10 +1,10 @@
-import {json, type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
+import {json, type LoaderArgs, type MetaFunction} from '@shopify/remix-oxygen';
 
-import {PageHeader, Section} from '~/components/Text';
-import {Button} from '~/components/Button';
-import invariant from 'tiny-invariant';
 import {ShopPolicy} from '@shopify/hydrogen/storefront-api-types';
+import invariant from 'tiny-invariant';
+import {Button} from '~/components/Button';
+import {PageHeader, Section} from '~/components/Text';
 
 export async function loader({request, params, context}: LoaderArgs) {
   invariant(params.policyHandle, 'Missing policy handle');

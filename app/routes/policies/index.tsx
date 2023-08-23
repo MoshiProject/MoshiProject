@@ -1,10 +1,10 @@
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import type {ShopPolicy} from '@shopify/hydrogen/storefront-api-types';
+import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
-import {PageHeader, Section, Heading} from '~/components/Text';
 import {Link} from '~/components/Link';
+import {Heading, PageHeader, Section} from '~/components/Text';
 export const handle = {
   seo: {
     title: 'Policies',

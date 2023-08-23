@@ -1,12 +1,12 @@
-import {Form, useActionData} from '@remix-run/react';
-import {useState} from 'react';
 import {StarIcon, XMarkIcon} from '@heroicons/react/24/solid';
+import {Form, useActionData} from '@remix-run/react';
+import {motion} from 'framer-motion';
+import {useState} from 'react';
 import {
   authors,
-  reviews as reviewData,
   midreviews as midReviewData,
+  reviews as reviewData,
 } from '~/data/reviews';
-import {motion} from 'framer-motion';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
@@ -423,7 +423,7 @@ function WriteReview({
                 })}
               </div>
               {/* reviewsString */}
-              <div className="mb-4 flex flex-col items-center justify-center w-full md:w-3/4">
+              <div className="">
                 <input
                   className="hidden shadow appearance-none border rounded w-full py-2 px-3 focus:ring-red-500 focus:border-red-500 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="reviewsString"

@@ -4,12 +4,7 @@ import ProductCard from '../products/ProductCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FilterSidebar from './FilterSidebar';
 import CollectionSort from './CollectionSort';
-import {
-  Bars3Icon,
-  Squares2X2Icon,
-  StopIcon,
-  ArrowsUpDownIcon,
-} from '@heroicons/react/24/outline';
+import {Squares2X2Icon, StopIcon} from '@heroicons/react/24/outline';
 import {Product} from '../products/products';
 export default function ProductGrid({productsList, url}) {
   const [nextPage, setNextPage] = useState(productsList.pageInfo.hasNextPage);

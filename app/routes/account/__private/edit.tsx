@@ -1,7 +1,6 @@
-import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import {
-  useActionData,
   Form,
+  useActionData,
   useOutletContext,
   useTransition,
 } from '@remix-run/react';
@@ -10,12 +9,13 @@ import type {
   CustomerUpdateInput,
   CustomerUpdatePayload,
 } from '@shopify/hydrogen/storefront-api-types';
+import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import {Text} from '~/components/Text';
-import {Button} from '~/components/Button';
-import {getInputStyleClasses, assertApiErrors} from '~/lib/utils';
-import {getCustomer} from '../../account';
 import invariant from 'tiny-invariant';
+import {Button} from '~/components/Button';
+import {Text} from '~/components/Text';
+import {assertApiErrors, getInputStyleClasses} from '~/lib/utils';
+import {getCustomer} from '../../account';
 export interface AccountOutletContext {
   customer: Customer;
 }

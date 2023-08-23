@@ -1,7 +1,6 @@
 import React, {Suspense, useState} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
-import {Disclosure} from '@headlessui/react';
-import {Form, Link} from '@remix-run/react';
+import {Link} from '@remix-run/react';
 import {ChevronDownIcon} from '@heroicons/react/24/outline';
 import {Image} from '@shopify/hydrogen';
 import {logoWhiteURL} from '~/components/HeaderMenu/menuSettings';

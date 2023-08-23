@@ -1,13 +1,13 @@
+import {Form, useActionData} from '@remix-run/react';
+import type {CustomerActivatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
   json,
   redirect,
-  type MetaFunction,
   type ActionFunction,
+  type MetaFunction,
 } from '@shopify/remix-oxygen';
-import {Form, useActionData} from '@remix-run/react';
 import {useRef, useState} from 'react';
 import {getInputStyleClasses} from '~/lib/utils';
-import type {CustomerActivatePayload} from '@shopify/hydrogen/storefront-api-types';
 
 type ActionData = {
   formError?: string;

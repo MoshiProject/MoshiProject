@@ -1,10 +1,9 @@
 import {Link} from '@remix-run/react';
 import {Image, Money} from '@shopify/hydrogen';
-import {Product} from './products';
-import titleFilter from '~/functions/titleFilter';
-import {useRef, useEffect, useState} from 'react';
 import {useInView} from 'framer-motion';
-import {motion} from 'framer-motion';
+import {useEffect, useRef, useState} from 'react';
+import titleFilter from '~/functions/titleFilter';
+import {Product} from './products';
 type PrdouctCardType = {
   product: Product;
   row?: boolean;
