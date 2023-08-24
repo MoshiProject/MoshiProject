@@ -134,6 +134,7 @@ export default function App() {
         <Meta />
         <Links />
         <FacebookPixel />
+        <KlayivoSnippet />
       </head>
       <body>
         <Layout title={name}>
@@ -200,5 +201,15 @@ fbq('track', 'PageView');
       ></script>
       {/* End Facebook Pixel Code */}
     </>
+  );
+};
+
+const KlayivoSnippet = () => {
+  return (
+    <script
+      async
+      type="text/javascript"
+      src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ViUH6b"
+    ></script>
   );
 };
