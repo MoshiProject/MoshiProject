@@ -7,7 +7,7 @@ export default function ReviewContainer(judgeReviews: {
   ];
 }) {
   const [reviewCount, setReviewCount] = useState(5);
-  const reviews = [12, 24, 45, 79, 1124];
+  const reviews = [24, 48, 90, 158, 2248];
   const reviewQuantity = reviews.reduce((partialSum, a) => partialSum + a, 0);
   return (
     <div className="block  px-3 md:mt-12 md:w-2/3 md:mx-auto ">

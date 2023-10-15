@@ -318,109 +318,115 @@ function WriteReview({
           ) : (
             <Form method="post">
               <button
-                className="bg-neutral-950 hover:bg-neutral-950 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
+                className="bg-neutral-950 hover:bg-neutral-950 text-white focus:bg-neutral-100 focus:text-black focus:border-black focus:border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
                 type="submit"
               >
                 Submit
               </button>
               <div className="flex flex-col items-center justify-center ">
-                {reviews.map((review, index) => {
-                  console.log(review);
-                  return (
-                    <div
-                      key={review.body + index + review.rating}
-                      className="shadow-sm rounded-lg border border-neutral-200 w-1/3 h-42 p-4 mb-4"
-                    >
-                      <div>Author: {review.author}</div>
-                      <div className="mt-2" key={review.body}>
-                        Body: {review.body}
-                        <button
-                          className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
-                          onClick={() => {
-                            const originalReview = reviews[index];
-                            originalReview.body = hoodieReviews[
-                              5 - review.rating
-                            ][
-                              Math.floor(
-                                Math.random() *
-                                  hoodieReviews[5 - review.rating].length,
-                              )
-                            ].replaceAll('{productType}', productType);
-                            const newReviews = reviews;
-                            newReviews[index] = originalReview;
-                            setReviews(newReviews);
-                            forceUpdate();
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
+                {reviews
+                  .sort(
+                    (a, b) =>
+                      (b.body.length > 0 ? 1 : -1) -
+                      (a.body.length > 0 ? 1 : -1),
+                  )
+                  .map((review, index) => {
+                    console.log(review);
+                    return (
+                      <div
+                        key={review.body + index + review.rating}
+                        className="shadow-sm rounded-lg border border-neutral-200 w-1/3 h-42 p-4 mb-4"
+                      >
+                        <div>Author: {review.author}</div>
+                        <div className="mt-2" key={review.body}>
+                          Body: {review.body}
+                          <button
+                            className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
+                            onClick={() => {
+                              const originalReview = reviews[index];
+                              originalReview.body = hoodieReviews[
+                                5 - review.rating
+                              ][
+                                Math.floor(
+                                  Math.random() *
+                                    hoodieReviews[5 - review.rating].length,
+                                )
+                              ].replaceAll('{productType}', productType);
+                              const newReviews = reviews;
+                              newReviews[index] = originalReview;
+                              setReviews(newReviews);
+                              forceUpdate();
+                            }}
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
-                          onClick={() => {
-                            const originalReview = reviews[index];
-                            originalReview.body = '';
-                            const newReviews = reviews;
-                            newReviews[index] = originalReview;
-                            setReviews(newReviews);
-                            forceUpdate();
-                          }}
-                        >
-                          x
-                        </button>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
+                            onClick={() => {
+                              const originalReview = reviews[index];
+                              originalReview.body = '';
+                              const newReviews = reviews;
+                              newReviews[index] = originalReview;
+                              setReviews(newReviews);
+                              forceUpdate();
+                            }}
+                          >
+                            x
+                          </button>
+                        </div>
+                        <div className="mt-2">
+                          Rating: {review.rating}
+                          <button
+                            className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
+                            onClick={() => {
+                              const originalReview = reviews[index];
+                              originalReview.rating = Math.min(
+                                5,
+                                originalReview.rating + 1,
+                              );
+                              console.log(originalReview.rating);
+                              const newReviews = reviews;
+                              newReviews[index] = originalReview;
+                              setReviews(newReviews);
+                              forceUpdate();
+                            }}
+                          >
+                            +
+                          </button>
+                          <button
+                            className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
+                            onClick={() => {
+                              const originalReview = reviews[index];
+                              originalReview.rating = Math.max(
+                                1,
+                                originalReview.rating - 1,
+                              );
+                              console.log(originalReview.rating);
+                              const newReviews = reviews;
+                              newReviews[index] = originalReview;
+                              setReviews(newReviews);
+                              forceUpdate();
+                            }}
+                          >
+                            -
+                          </button>
+                        </div>
                       </div>
-                      <div className="mt-2">
-                        Rating: {review.rating}
-                        <button
-                          className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
-                          onClick={() => {
-                            const originalReview = reviews[index];
-                            originalReview.rating = Math.min(
-                              5,
-                              originalReview.rating + 1,
-                            );
-                            console.log(originalReview.rating);
-                            const newReviews = reviews;
-                            newReviews[index] = originalReview;
-                            setReviews(newReviews);
-                            forceUpdate();
-                          }}
-                        >
-                          +
-                        </button>
-                        <button
-                          className="bg-neutral-950 text-white rounded-md p-1 mx-2 h-8 w-8"
-                          onClick={() => {
-                            const originalReview = reviews[index];
-                            originalReview.rating = Math.max(
-                              1,
-                              originalReview.rating - 1,
-                            );
-                            console.log(originalReview.rating);
-                            const newReviews = reviews;
-                            newReviews[index] = originalReview;
-                            setReviews(newReviews);
-                            forceUpdate();
-                          }}
-                        >
-                          -
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
               {/* reviewsString */}
               <div className="">
@@ -444,6 +450,13 @@ function WriteReview({
                   value={id}
                 />
               </div>
+              <button
+                className="bg-neutral-950 hover:bg-neutral-950 text-white focus:bg-neutral-100 focus:text-black focus:border-black focus:border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
+                type="submit"
+              >
+                Submit
+              </button>
+              ;
             </Form>
           )
         ) : (

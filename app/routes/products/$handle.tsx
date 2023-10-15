@@ -51,7 +51,7 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   // set selected options from the query string
   searchParams.forEach((value, name) => {
     selectedOptions.push({name, value});
-    isAdmin = name === 'mode' && value === 'admin';
+    isAdmin = name === 'amr' && value === 'edit';
   });
   //###load product
   const {product}: {product: Product} = await context.storefront.query(
@@ -269,12 +269,14 @@ export async function action({request, context, params}: ActionArgs) {
 
     const postResult = await postResponse.json();
     console.log('result', postResult);
+    console.log('data.metafield', data.metafield);
+    return data.metafield.value;
   } catch (error) {
     console.error('Error:', error);
   }
 
   if (isAdmin) {
-    return 'admin';
+    return data;
   }
   console.log('body', userEmail, name, rating, reviewBody);
   if (userEmail === '') {
@@ -314,12 +316,23 @@ export default function ProductHandle() {
     productAnimeRecommendations,
     isAdmin,
   } = useLoaderData();
+
+  const actionData = useActionData();
   const desc = product.descriptionHtml;
+  const reviewsMetafield = product?.metafield
+    ? product.metafields.find((metafield) => {
+        return metafield.key === 'reviews';
+      }).value
+    : '';
   const [selectedImage, setSelectedImage] = useState(selectedVariant.image.url);
   const [reviewCount, setReviewCount] = useState(null);
   const [reviewAverage, setReviewAverage] = useState(null);
+  const [customReviews, setCustomReviews] = useState(
+    reviewsMetafield ? reviewStringToArray(reviewsMetafield) : [],
+  );
+  console.log('ACTION DATA', actionData ? reviewStringToArray(actionData) : []);
+  console.log('custom', customReviews);
 
-  const data = useActionData();
   const reviewsRef = useRef(null);
   const executeScroll = (event) => {
     const elmnt = reviewsRef;
@@ -339,13 +352,60 @@ export default function ProductHandle() {
   if (composition.length > 0) {
     description = description.replace(composition, '');
   }
-  // console.log('media', product.media.nodes);
-  // console.log('product image', product.selectedVariant.image.url);
-  // console.log('selectedVariant ', selectedVariant);
-  // console.log('options ', product.options);
+  const reviewCounterWidget = reviewCount ? (
+    reviewCount > 0 && (
+      <div className="md:my-2" key={reviewCount}>
+        <button className="w-full" onClick={executeScroll}>
+          <div className="flex items-center font-bold text-neutral-600 text-md w-full">
+            {[0, 1, 2, 3].map((star) => {
+              return (
+                <SharpStarIcon
+                  key={star}
+                  className={`h-5 w-5 ${'text-black'}`}
+                />
+              );
+            })}
+            <div className="relative h-5 w-5">
+              <SharpStarIcon
+                className={`h-5 w-5 fill-neutral-400  absolute left-0 top-0 `}
+              />
+              <div
+                className={`absolute left-0 top-0 overflow-hidden`}
+                style={{width: 15 * (reviewAverage - 4)}}
+              >
+                <SharpStarIcon className={`h-5 w-5 text-black `} />
+              </div>
+            </div>
+            <span className="ml-1">({reviewCount})</span>
+          </div>
+        </button>
+      </div>
+    )
+  ) : (
+    <div className="md:my-2" key={reviewCount}>
+      <button className="w-full" onClick={executeScroll}>
+        <div className="flex items-center font-bold text-neutral-600 text-md w-full">
+          {[0, 1, 2, 3, 4].map((star) => {
+            return (
+              <SharpStarIcon
+                key={star}
+                className={`h-5 w-5 ${'fill-neutral-400'}`}
+              />
+            );
+          })}
+        </div>
+      </button>
+    </div>
+  );
+
   useEffect(() => {
     setSelectedImage(selectedVariant.image.url);
   }, [selectedVariant]);
+  useEffect(() => {
+    if (actionData) {
+      setCustomReviews(actionData ? reviewStringToArray(actionData) : []);
+    }
+  }, [actionData]);
   const orderable = selectedVariant?.availableForSale || false;
   return (
     <section className="w-full  gap-2 px-2  md:gap-8 grid  mt-1 md:px-24 md:mt-0">
@@ -363,51 +423,8 @@ export default function ProductHandle() {
             {titleFilter(product.title)}
           </h1>
           {/* Reviews */}
-          {reviewCount ? (
-            reviewCount > 0 && (
-              <div className="md:my-2" key={reviewCount}>
-                <button className="w-full" onClick={executeScroll}>
-                  <div className="flex items-center font-bold text-neutral-600 text-md w-full">
-                    {[0, 1, 2, 3].map((star) => {
-                      return (
-                        <SharpStarIcon
-                          key={star}
-                          className={`h-5 w-5 ${'text-black'}`}
-                        />
-                      );
-                    })}
-                    <div className="relative h-5 w-5">
-                      <SharpStarIcon
-                        className={`h-5 w-5 fill-neutral-400  absolute left-0 top-0 `}
-                      />
-                      <div
-                        className={`absolute left-0 top-0 overflow-hidden`}
-                        style={{width: 15 * (reviewAverage - 4)}}
-                      >
-                        <SharpStarIcon className={`h-5 w-5 text-black `} />
-                      </div>
-                    </div>
-                    <span className="ml-1">({reviewCount})</span>
-                  </div>
-                </button>
-              </div>
-            )
-          ) : (
-            <div className="md:my-2" key={reviewCount}>
-              <button className="w-full" onClick={executeScroll}>
-                <div className="flex items-center font-bold text-neutral-600 text-md w-full">
-                  {[0, 1, 2, 3, 4].map((star) => {
-                    return (
-                      <SharpStarIcon
-                        key={star}
-                        className={`h-5 w-5 ${'fill-neutral-400'}`}
-                      />
-                    );
-                  })}
-                </div>
-              </button>
-            </div>
-          )}
+          {reviewCounterWidget}
+
           {/* Price */}
           <div className="flex md:justify-center">
             <div className="md:hidden flex md:justify-start md:items-start">
@@ -435,6 +452,8 @@ export default function ProductHandle() {
             <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
               {titleFilter(product.title)}
             </h1>
+            {reviewCounterWidget}
+
             <div className="grid gap-2 items-center md:justify-start md:items-start">
               <div className="hidden md:flex justify-center md:justify-start md:items-start">
                 {selectedVariant.compareAtPrice && (
@@ -507,6 +526,7 @@ export default function ProductHandle() {
             {(judgeReviews) => (
               <ReviewsSection
                 forwardRef={reviewsRef}
+                customReviews={customReviews}
                 product={product}
                 judgeReviews={judgeReviews.reviews}
                 isAdmin={isAdmin}
@@ -819,4 +839,8 @@ const ItemIsInStock = () => {
       </div>
     </div>
   );
+};
+
+const reviewStringToArray = (reviewString: string) => {
+  return JSON.parse('[' + reviewString + ']');
 };

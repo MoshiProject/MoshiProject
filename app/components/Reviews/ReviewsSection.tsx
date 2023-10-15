@@ -7,8 +7,9 @@ import WriteReview from '../products/WriteReview';
 import {Product} from '../products/products';
 import ReviewsCounter from './ReviewsCounter';
 type Props = {
-  product: Product;
+  customReviews: any[];
   judgeReviews: any[];
+  product: Product;
   isAdmin: boolean;
   forwardRef: any;
   setReviewCount: (value: number) => void;
@@ -16,6 +17,7 @@ type Props = {
 };
 
 const ReviewsSection: React.FC<Props> = ({
+  customReviews,
   product,
   judgeReviews,
   isAdmin,
@@ -25,17 +27,7 @@ const ReviewsSection: React.FC<Props> = ({
 }) => {
   judgeReviews = judgeReviews.filter((review) => !review.hidden) || [];
   const [showMoreCounter, setShowmoreCounter] = useState(5);
-  const reviewString = product?.metafield
-    ? '[' +
-      product.metafields.find((metafield) => {
-        return metafield.key === 'reviews';
-      }).value +
-      ']'
-    : [];
-  const customReviews =
-    reviewString && reviewString.length > 0 && isJsonString(reviewString)
-      ? JSON.parse(reviewString)
-      : [];
+
   let sumReviews = 0;
 
   const counterArr = [0, 0, 0, 0, 0];
@@ -60,7 +52,7 @@ const ReviewsSection: React.FC<Props> = ({
   //console.log(`Reviews`, product);
   // console.log(`Reviews`, judgeReviews);
   return noReviews ? (
-    <div ref={forwardRef}>
+    <div ref={forwardRef} key={reviewCount}>
       <WriteReview
         isAdmin={isAdmin}
         id={product.id}
@@ -68,7 +60,7 @@ const ReviewsSection: React.FC<Props> = ({
       />
     </div>
   ) : (
-    <div ref={forwardRef} className="py-6 bg-white">
+    <div ref={forwardRef} key={reviewCount} className="py-6 bg-white">
       <div className="max-w-screen-xl mx-auto sm:px-6 lg:px-8 ">
         <div className="lg:text-center">
           <h2 className="text-xl text-primary font-semibold tracking-wide uppercase text-center mb-4">
@@ -98,6 +90,7 @@ const ReviewsSection: React.FC<Props> = ({
                 (b.body.length > 0 ? 1 : -1) - (a.body.length > 0 ? 1 : -1),
             )
             .sort((a, b) => b.rating - a.rating)
+
             .map((review, index) => (
               <ReviewCard
                 className={`my-2 ${

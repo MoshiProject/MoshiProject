@@ -16,22 +16,6 @@ export const navigation: MenuItem[] = [
     title: 'SHOP BY ANIME',
     url: '',
     children: [
-      {title: 'NARUTO', url: '/collections/naruto', children: []},
-      {
-        title: 'ATTACK ON TITAN',
-        url: '/collections/attack-on-titan',
-        children: [],
-      },
-      {
-        title: 'JUJUTSU KAISEN',
-        url: '/collections/jujutsu-kaisen',
-        children: [],
-      },
-      {
-        title: 'MY HERO ACADEMIA',
-        url: '/collections/my-hero-academia',
-        children: [],
-      },
       {
         title: 'DEMON SLAYER',
         url: '/collections/kimetsu-no-yaiba',
@@ -41,7 +25,11 @@ export const navigation: MenuItem[] = [
             url: '/collections/kimetsu-no-yaiba',
             children: [],
           },
-
+          {
+            title: 'HOODIES',
+            url: '/collections/demon-slayer-hoodies',
+            children: [],
+          },
           {
             title: 'T-SHIRTS',
             url: '/collections/demon-slayer-t-shirts',
@@ -87,13 +75,29 @@ export const navigation: MenuItem[] = [
         ],
       },
       {
-        title: 'VIOLET EVERGARDEN',
-        url: '/collections/violet-evergarden',
+        title: 'JUJUTSU KAISEN',
+        url: '/collections/jujutsu-kaisen',
         children: [],
       },
       {
         title: 'NEON GENESIS EVANGELION',
         url: '/collections/neon-genesis-evangelion',
+        children: [],
+      },
+      {title: 'NARUTO', url: '/collections/naruto', children: []},
+      {
+        title: 'ATTACK ON TITAN',
+        url: '/collections/attack-on-titan',
+        children: [],
+      },
+      {
+        title: 'MY HERO ACADEMIA',
+        url: '/collections/my-hero-academia',
+        children: [],
+      },
+      {
+        title: 'VIOLET EVERGARDEN',
+        url: '/collections/violet-evergarden',
         children: [],
       },
       {
