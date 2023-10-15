@@ -42,7 +42,7 @@ export function FeaturedProductGrid({
                 inView: {opacity: 1},
                 outOfView: {opacity: 0},
               }}
-              className="snap-start w-fit mx-0.5 h-fit"
+              className="snap-start mx-0.5 h-fit"
             >
               <ProductCard product={product} />
             </motion.div>
