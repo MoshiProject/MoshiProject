@@ -165,7 +165,7 @@ export default function Homepage() {
     <>
       <div className="block md:hidden ">
         <Hero
-          title="SPRING 2023"
+          title="FALL 2023"
           subtitle="ANIME MEETS STREETWEAR"
           buttonText="Shop Now →"
           imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/3.5sec.gif?v=1681722723"
@@ -191,7 +191,7 @@ export default function Homepage() {
         >
           {' '}
           <ParallaxText baseVelocity={5}>
-            SPRING SALE IS LIVE | ALL ITEMS 50% OFF
+            FALL SALE IS LIVE | ALL ITEMS 50% OFF
           </ParallaxText>
         </motion.div>
       </div>
