@@ -382,20 +382,7 @@ export default function ProductHandle() {
       </div>
     )
   ) : (
-    <div className="md:my-2" key={reviewCount}>
-      <button className="w-full" onClick={executeScroll}>
-        <div className="flex items-center font-bold text-neutral-600 text-md w-full">
-          {[0, 1, 2, 3, 4].map((star) => {
-            return (
-              <SharpStarIcon
-                key={star}
-                className={`h-5 w-5 ${'fill-neutral-400'}`}
-              />
-            );
-          })}
-        </div>
-      </button>
-    </div>
+    <></>
   );
 
   useEffect(() => {

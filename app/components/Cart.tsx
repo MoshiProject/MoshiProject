@@ -220,6 +220,7 @@ export function CartSummary({
             )}
           </dd>
         </div>
+
         {/* <div className="flex items-center justify-between">
           <dt className="flex items-center">
             <span>Shipping estimate</span>
@@ -247,6 +248,9 @@ export function CartActions({
       >
         CHECKOUT • ${totalAmount.subtotalAmount.amount} USD
       </a>
+      <div className="text-[12px] text-center mt-4">
+        Discount Codes Can Be Applied At Checkout.
+      </div>
     </div>
   );
 }
@@ -258,11 +262,11 @@ export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
       goalMessage: 'FREE shipping.',
       goalColor: 'bg-white',
     },
-    {
-      goalAmount: 100,
-      goalMessage: '10% off your WHOLE order!',
-      goalColor: 'bg-green-500',
-    },
+    // {
+    //   goalAmount: 100,
+    //   goalMessage: '10% off your WHOLE order!',
+    //   goalColor: 'bg-green-500',
+    // },
   ];
 
   const [reachedGoals, setReachedGoals] = useState([]);

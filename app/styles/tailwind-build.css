@@ -2303,6 +2303,12 @@ input:checked + .toggle-bg {
 .rounded-xl {
   border-radius: 0.75rem;
 }
+.rounded-\[5px\] {
+  border-radius: 5px;
+}
+.rounded-\[4px\] {
+  border-radius: 4px;
+}
 .rounded-b {
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;

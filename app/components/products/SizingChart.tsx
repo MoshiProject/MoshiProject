@@ -95,7 +95,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
                                       <th
                                         key={index}
                                         scope="col"
-                                        className="px-2 py-3  text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                        className="px-2 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center"
                                       >
                                         {header}
                                       </th>
@@ -115,7 +115,7 @@ const SizingChartModal: React.FC = ({productType}: {productType: any}) => {
                                       {row.map((cell, cellIndex) => (
                                         <td
                                           key={cellIndex}
-                                          className="px-2 py-3 whitespace-nowrap text-sm text-gray-700"
+                                          className="px-2 py-3 whitespace-nowrap text-sm text-gray-700 text-center"
                                         >
                                           {unit === 'in'
                                             ? cell
