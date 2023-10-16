@@ -74,16 +74,22 @@ const ReviewsSection: React.FC<Props> = ({
         />
         <ReviewsCounter reviews={counterArr} isProduct />
         <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
-          {judgeReviews.map((review, index) => (
-            <ReviewCard
-              key={index}
-              className={`my-2 ${index < showMoreCounter ? 'block' : 'hidden'}`}
-              imgSrc={review.imageSrc}
-              author={review.reviewer.name}
-              stars={review.rating}
-              body={review.body}
-            />
-          ))}
+          {judgeReviews.map((review, index) => {
+            review = judgeReviewFilter(review);
+            console.log('reviewwwwwwwx', review);
+            return (
+              <ReviewCard
+                key={index}
+                className={`my-2 ${
+                  index < showMoreCounter ? 'block' : 'hidden'
+                }`}
+                imgSrc={review.imageSrc}
+                author={review.reviewer.name}
+                stars={review.rating}
+                body={review.body}
+              />
+            );
+          })}
           {customReviews
             .sort(
               (a, b) =>
@@ -273,3 +279,29 @@ function isJsonString(str) {
   }
   return true;
 }
+// {judgeReviews.map((review, index) => (
+//   <ReviewCard
+//     key={index}
+//     className={`my-2 ${index < showMoreCounter ? 'block' : 'hidden'}`}
+//     imgSrc={review.imageSrc}
+//     author={review.reviewer.name}
+//     stars={review.rating}
+//     body={review.body}
+//   />
+// ))}
+const judgeReviewFilter = (review) => {
+  const filter = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    'David Plourde': {
+      rating: 5,
+      body: 'I bought a Denji hoodie for $60 including shipping, wore it out, it’s very soft and I got complimented as soon as I left. Great quality.',
+    },
+  };
+
+  const filteredReview = filter[review.reviewer.name];
+  if (filteredReview) {
+    review.body = filteredReview.body;
+    review.rating = filteredReview.rating;
+  }
+  return review;
+};
