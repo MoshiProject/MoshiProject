@@ -2288,6 +2288,9 @@ input:checked + .toggle-bg {
 .rounded-3xl {
   border-radius: 1.5rem;
 }
+.rounded-\[4px\] {
+  border-radius: 4px;
+}
 .rounded-full {
   border-radius: 9999px;
 }
@@ -2302,12 +2305,6 @@ input:checked + .toggle-bg {
 }
 .rounded-xl {
   border-radius: 0.75rem;
-}
-.rounded-\[5px\] {
-  border-radius: 5px;
-}
-.rounded-\[4px\] {
-  border-radius: 4px;
 }
 .rounded-b {
   border-bottom-right-radius: 0.25rem;

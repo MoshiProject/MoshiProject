@@ -25,11 +25,11 @@ export default function HeaderMenu({cart}: any) {
       {/* infinite looping free shipping bar */}
       <div className="py-1 md:hidden">
         <ParallaxText baseVelocity={-5}>
-          FREE SHIPPING ON ORDERS ABOVE $59 | LIMITED TIME ONLY.
+          FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.
         </ParallaxText>
       </div>
       <div className="py-2 hidden md:flex justify-center scroller tracking-wider font-medium bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-bold text-lg">
-        <span>FREE SHIPPING ON ORDERS ABOVE $59 | LIMITED TIME ONLY.</span>
+        <span>FREE SHIPPING ON ALL ORDERS | LIMITED TIME ONLY.</span>
       </div>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden " onClose={setOpen}>
