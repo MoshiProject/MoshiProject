@@ -25,7 +25,7 @@ export default function HeaderMenu({cart}: any) {
       {/* Mobile menu */}
       {/* infinite looping free shipping bar */}
       <div className="py-1 md:hidden">
-        <ParallaxText baseVelocity={-5}>
+        <ParallaxText baseVelocity={-4}>
           FREE SHIPPING ON ALL ORDERS IN THE US | LIMITED TIME ONLY.
         </ParallaxText>
       </div>

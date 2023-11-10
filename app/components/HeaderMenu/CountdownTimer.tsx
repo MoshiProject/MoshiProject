@@ -37,8 +37,9 @@ const CountdownTimer = () => {
   return (
     timeLeft.total > 0 && (
       <div className="bg-neutral-950 text-white flex justify-between md:justify-center py-1 px-2">
-        <div className=" flex items-end text-lg md:mr-4">
-          Sale up to <span className="text-red-500 ml-2"> 50% off</span>!
+        <div className=" flex items-end tracking-tighter text-lg md:mr-4">
+          Black Friday up to{' '}
+          <span className="text-red-600  ml-2"> 50% OFF</span>!
         </div>
         <div className="flex">
           <TimerComponent
