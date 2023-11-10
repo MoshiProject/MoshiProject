@@ -5,12 +5,13 @@ const CollectionPageSlideshow = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/t-shirt-mockup-of-a-cool-man-posing-in-a-dark-alley-2357-el1_c6b7cfa1-32fa-439e-ac4a-0013c4835b5d.webp?v=1699561269',
-    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Mockup_of_girl_With_hand_over_head_copy_bc2df58a-1302-481f-a021-aa37468b0535.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_4_3655b351-6f33-4cf0-9de4-5d3e38ad675a.webp?v=1699561270',
+    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-1.webp?v=1699607952',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/t-shirt-mockup-of-a-punk-man-covering-his-eyes-23462.webp?v=1699561270',
-    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/00015-3138317020.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_3.webp?v=1699561270',
-    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_3_eva.webp?v=1699561270',
+    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-Eva.webp?v=1699608183',
+    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Mockup_of_girl_With_hand_over_head_copy_bc2df58a-1302-481f-a021-aa37468b0535.webp?v=1699561270',
+    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/00015-3138317020.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_5.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_18.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_29.webp?v=1699561270',
