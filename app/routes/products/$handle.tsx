@@ -439,7 +439,7 @@ export default function ProductHandle() {
             <h1 className="hidden md:block text-center tracking-widest md:text-start text-2xl md:text-[48px] md:mb-4 md:bold  font-bold leading-none whitespace-normal uppercase">
               {titleFilter(product.title)}
             </h1>
-            {reviewCounterWidget}
+            <div className="hidden md:block"> {reviewCounterWidget}</div>
 
             <div className="grid gap-2 items-center md:justify-start md:items-start">
               <div className="hidden md:flex justify-center md:justify-start md:items-start">
