@@ -1699,9 +1699,6 @@ input:checked + .toggle-bg {
 .h-screen {
   height: 100vh;
 }
-.h-\[50vh\] {
-  height: 50vh;
-}
 .max-h-60 {
   max-height: 15rem;
 }
@@ -3143,10 +3140,6 @@ input:checked + .toggle-bg {
 .stroke-1 {
   stroke-width: 1;
 }
-.object-contain {
-  -o-object-fit: contain;
-     object-fit: contain;
-}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -3422,6 +3415,9 @@ input:checked + .toggle-bg {
 .text-\[14px\] {
   font-size: 14px;
 }
+.text-\[15px\] {
+  font-size: 15px;
+}
 .text-\[40px\] {
   font-size: 40px;
 }
@@ -3494,6 +3490,9 @@ input:checked + .toggle-bg {
 .tracking-normal {
   letter-spacing: 0em;
 }
+.tracking-tighter {
+  letter-spacing: -0.05em;
+}
 .tracking-wide {
   letter-spacing: 0.025em;
 }
@@ -3502,9 +3501,6 @@ input:checked + .toggle-bg {
 }
 .tracking-widest {
   letter-spacing: 0.1em;
-}
-.tracking-tighter {
-  letter-spacing: -0.05em;
 }
 .text-black {
   --tw-text-opacity: 1;
@@ -3769,10 +3765,6 @@ input:checked + .toggle-bg {
 .text-yellow-900 {
   --tw-text-opacity: 1;
   color: rgb(99 49 18 / var(--tw-text-opacity));
-}
-.text-red-400 {
-  --tw-text-opacity: 1;
-  color: rgb(249 128 128 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
