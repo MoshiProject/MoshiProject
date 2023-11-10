@@ -10,6 +10,12 @@ type PrdouctCardType = {
   optimization?: 'sm' | 'md' | 'lg' | 'xl';
 };
 
+const productImgMap = {
+  // 'denji-shirt-chainsaw-man-12':
+  //   'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-1-SQ2.png?v=1699603816',
+  // 'eva-neon-genesis-evangelion-unisex-softstyle-t-shirt':
+  //   'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/mockup-of-a-man-wearing-a-customizable-t-shirt-and-looking-through-a-window-32835_1.jpg?v=1699604250',
+};
 export default function ProductCard({
   product,
   row = false,
@@ -39,14 +45,14 @@ export default function ProductCard({
           row ? 'justify-start' : 'flex-col justify-between'
         }   overflow-hidden h-full`}
       >
-        {isDiscounted && (
+        {/* {isDiscounted && (
           // eslint-disable-next-line jsx-a11y/label-has-associated-control
           <label className="subpixel-antialiased absolute top-0 right-0 text-right tracking-widest text-notice text-white bg-neutral-900 p-1 font-semibold text-[10px] z-10">
             Sale
           </label>
-        )}
+        )} */}
         <div
-          className={`rounded relative ${
+          className={`rounded relative overflow-hidden ${
             product.handle.toLowerCase().includes('hoodie')
               ? row
                 ? 'w-[40%] mb-0'
@@ -60,26 +66,48 @@ export default function ProductCard({
               : 'w-[120%] ml-[-10%] md:mb-8 mb-4 '
           } overflow-hidden`}
         >
-          <Image
-            width={'full'}
-            height={'full'}
-            sizes="50vw"
-            data={product.variants.nodes[0].image}
-            alt={titleFilter(product.title)}
-            className={`overflow-hidden ${
-              product.handle.toLowerCase().includes('hoodie')
-                ? row
+          {productImgMap[product.handle.toLowerCase()] ? (
+            <Image
+              width={'full'}
+              sizes="50vw"
+              src={productImgMap[product.handle.toLowerCase()]}
+              alt={titleFilter(product.title)}
+              className={`overflow-hidden ${
+                product.handle.toLowerCase().includes('hoodie')
+                  ? row
+                    ? 'w-[40%] mb-0'
+                    : 'w-[115%]  mb-0'
+                  : product.handle.toLowerCase().includes('sweatshirt')
+                  ? row
+                    ? 'w-[40%] mb-0'
+                    : 'w-[135%] mb-0'
+                  : row
                   ? 'w-[40%] mb-0'
-                  : 'w-[115%]  mb-0'
-                : product.handle.toLowerCase().includes('sweatshirt')
-                ? row
+                  : 'w-[120%] mb-0'
+              }`}
+            />
+          ) : (
+            <Image
+              width={'full'}
+              height={'full'}
+              sizes="50vw"
+              data={product.variants.nodes[0].image}
+              alt={titleFilter(product.title)}
+              className={`overflow-hidden ${
+                product.handle.toLowerCase().includes('hoodie')
+                  ? row
+                    ? 'w-[40%] mb-0'
+                    : 'w-[115%]  mb-0'
+                  : product.handle.toLowerCase().includes('sweatshirt')
+                  ? row
+                    ? 'w-[40%] mb-0'
+                    : 'w-[135%] mb-0'
+                  : row
                   ? 'w-[40%] mb-0'
-                  : 'w-[135%] mb-0'
-                : row
-                ? 'w-[40%] mb-0'
-                : 'w-[120%] mb-0'
-            }`}
-          />
+                  : 'w-[120%] mb-0'
+              }`}
+            />
+          )}
         </div>
         <div
           className={`${

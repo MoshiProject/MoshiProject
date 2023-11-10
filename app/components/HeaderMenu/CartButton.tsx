@@ -12,6 +12,7 @@ import {useEffect, useState} from 'react';
 import {TagIcon} from '@heroicons/react/24/outline';
 import {ArrowRightIcon} from '@heroicons/react/20/solid';
 import siteSettings from '~/settings';
+import LoadingSpinner from '../animations/LoadingSpinner';
 export default function CartButton(cart: any) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
@@ -29,7 +30,7 @@ export default function CartButton(cart: any) {
     if (isOpen || addToCartFetchers.length === 0) return;
     openDrawer();
   }, [addToCartFetchers]);
-
+  console.log('cartttt!');
   return (
     <div className=" flow-root lg:ml-2">
       <Suspense>
@@ -98,15 +99,15 @@ export default function CartButton(cart: any) {
                               </span>
                             </div>
                             <div className="text-xs w-1/3">
-                              {!discount.applicable
+                              {/* {!discount.applicable
                                 ? 'discount not applied. Minimum requirements not met.'
                                 : data.attributes.map((attribute) => {
                                     const value = JSON.parse(attribute.value);
                                     console.log(value);
                                     return value.discountData.data
                                       .codeDiscountNodeByCode.codeDiscount
-                                      .summary;
-                                  })}
+                                      .shortSummary;
+                                  })} */}
                             </div>
                           </div>
                         ))}
@@ -159,17 +160,22 @@ function RemoveDiscountButton() {
   return (
     <fetcher.Form action="/handleDiscount" method="post">
       <input type="hidden" name="code" value={'empty'} />
-      <button
-        className=" text-white hover:text-neutral-950 hover:bg-white rounded-md font-small text-center my-2 max-w-xl leading-none flex items-center justify-center"
-        type="submit"
-      >
-        X
-      </button>
+      {fetcher.state === 'idle' ? (
+        <button
+          className=" text-white hover:text-neutral-950 hover:bg-white rounded-md font-small text-center my-2 max-w-xl leading-none flex items-center justify-center"
+          type="submit"
+        >
+          X
+        </button>
+      ) : (
+        <LoadingSpinner />
+      )}
     </fetcher.Form>
   );
 }
 function DiscountForm() {
   const fetcher = useFetcher();
+  console.log('fetcherState: ' + fetcher.state);
   return (
     <fetcher.Form action="/handleDiscount" method="post">
       <div
@@ -178,17 +184,23 @@ function DiscountForm() {
         } `}
       >
         <input
-          className="h-10 bg-neutral-950 border-neutral-400 border-2 text-white rounded-md placeholder:text-neutral-500"
+          className="h-10 bg-neutral-950 border-neutral-400 border-2 w-full text-white rounded-md placeholder:text-neutral-500"
           type="text"
           name="code"
           placeholder="Discount Code"
         />
-        <button
-          className="bg-neutral-950 mx-2 border-neutral-400 text-white border-2 hover:text-neutral-950 hover:bg-white rounded-md font-small text-center max-w-xl leading-none w-10 h-10 flex items-center justify-center focus:border-red-600"
-          type="submit"
-        >
-          <ArrowRightIcon className="h-5 w-5" />
-        </button>
+        {fetcher.state === 'idle' ? (
+          <button
+            className="bg-neutral-950 mx-2 border-neutral-400 text-white border-2 hover:text-neutral-950 hover:bg-white rounded-md font-small text-center max-w-xl leading-none w-10 h-10 flex items-center justify-center focus:border-red-600"
+            type="submit"
+          >
+            <ArrowRightIcon className="h-5 w-5" />
+          </button>
+        ) : (
+          <div className="mx-2">
+            <LoadingSpinner />
+          </div>
+        )}
       </div>
     </fetcher.Form>
   );

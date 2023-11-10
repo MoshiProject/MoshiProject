@@ -6,6 +6,7 @@ import FilterSidebar from './FilterSidebar';
 import CollectionSort from './CollectionSort';
 import {Squares2X2Icon, StopIcon} from '@heroicons/react/24/outline';
 import {Product} from '../products/products';
+import CollectionPageSlideshow from './CollectionPageSlideshow';
 export default function ProductGrid({productsList, url}) {
   const [nextPage, setNextPage] = useState(productsList.pageInfo.hasNextPage);
 
@@ -114,6 +115,7 @@ export default function ProductGrid({productsList, url}) {
         }
         // below props only if you need pull down functionality\
       >
+        {/* <CollectionPageSlideshow /> */}
         {filteredProducts.map((product: Product) => (
           <ProductCard
             key={product.id}

@@ -2,6 +2,7 @@ import {Link, useFetcher} from '@remix-run/react';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen-react';
 import {LineItemType} from './products/products';
 import {useEffect, useState} from 'react';
+import {TrashIcon} from '@heroicons/react/24/outline';
 
 export function CartLineItems({linesObj}: any) {
   const lines = flattenConnection(linesObj);
@@ -104,15 +105,15 @@ function ItemRemoveButton({lineIds}: {lineIds: string[]}) {
   const fetcher = useFetcher();
 
   return (
-    <fetcher.Form action="/cart" method="post">
+    <fetcher.Form action="/cart" method="post" className="flex items-center">
       <input type="hidden" name="cartAction" value="REMOVE_FROM_CART" />
       <input type="hidden" name="linesIds" value={JSON.stringify(lineIds)} />
-      <div className="flex items-end h-[70%]">
+      <div className="flex items-center h-[70%]">
         <button
           className="bg-neutral-950 flex items-end text-neutral-300  ml-2 font-sm text-center  leading-none underline"
           type="submit"
         >
-          Remove
+          <TrashIcon className="h-6 w-6" />
         </button>
       </div>
     </fetcher.Form>
@@ -157,7 +158,7 @@ export function CartSummary({
   cost,
   compareCost,
 }: {
-  cost: {subtotalAmount: {amount: string}};
+  cost: {totalAmount: {amount: string}};
   compareCost: number;
 }) {
   return (
@@ -180,20 +181,20 @@ export function CartSummary({
           <dd>
             {compareCost ? (
               <span className="text-sm text-right w-full">
-                ${(compareCost - cost?.subtotalAmount.amount).toFixed(2)}
+                ${(compareCost - cost?.totalAmount.amount).toFixed(2)}
               </span>
             ) : (
               '-'
             )}
           </dd>
         </div>
-        {cost?.subtotalAmount.amount > 99.99 && (
+        {cost?.totalAmount.amount > 99.99 && (
           <div className="flex items-center justify-between">
             <dt>% Discount</dt>
             <dd>
               {compareCost ? (
                 <span className="text-sm text-right w-full">
-                  ${(cost?.subtotalAmount.amount / 10.0).toFixed(2)}
+                  ${(cost?.totalAmount.amount / 10.0).toFixed(2)}
                 </span>
               ) : (
                 '-'
@@ -204,14 +205,14 @@ export function CartSummary({
         <div className="flex items-center justify-between">
           <dt>Final Price</dt>
           <dd>
-            {cost?.subtotalAmount?.amount ? (
+            {cost?.totalAmount?.amount ? (
               <Money
                 className="text-red-600 font-medium text-lg"
                 data={{
                   __typename: 'MoneyV2',
                   currencyCode: 'USD',
-                  amount: (parseFloat(cost?.subtotalAmount.amount) * 1)
-                    // (cost?.subtotalAmount?.amount > 99 ? 0.9 : 1)
+                  amount: (parseFloat(cost?.totalAmount.amount) * 1)
+                    // (cost?.totalAmount?.amount > 99 ? 0.9 : 1)
                     .toString(),
                 }}
               />
@@ -246,7 +247,7 @@ export function CartActions({
         href={checkoutUrl}
         className="bg-white text-black px-6 py-3 w-full rounded-md text-center font-medium text-sm leading-4 tracking-wide"
       >
-        CHECKOUT • ${totalAmount.subtotalAmount.amount} USD
+        CHECKOUT • ${totalAmount.totalAmount.amount} USD
       </a>
       <div className="text-[12px] text-center mt-4">
         Discount Codes Can Be Applied At Checkout.
