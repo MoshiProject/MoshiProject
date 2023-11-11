@@ -188,7 +188,7 @@ export function CartSummary({
             )}
           </dd>
         </div>
-        {cost?.totalAmount.amount > 99.99 && (
+        {/* {cost?.totalAmount.amount > 99.99 && (
           <div className="flex items-center justify-between">
             <dt>% Discount</dt>
             <dd>
@@ -201,7 +201,7 @@ export function CartSummary({
               )}
             </dd>
           </div>
-        )}
+        )} */}
         <div className="flex items-center justify-between">
           <dt>Final Price</dt>
           <dd>
