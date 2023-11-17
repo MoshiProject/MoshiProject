@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 const CountdownTimer = () => {
   const targetDate = new Date('2023-11-17T02:00:00');
-  targetDate.setHours(0, 0, 0); // Set the time to 12:00 AM
+  targetDate.setHours(2, 0, 0); // Set the time to 12:00 AM
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
 
   useEffect(() => {
