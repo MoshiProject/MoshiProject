@@ -146,20 +146,7 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
-        <ShopifyInbox
-          button={{
-            color: 'red',
-            style: 'icon',
-            horizontalPosition: 'button_right',
-            verticalPosition: 'lowest',
-            text: 'chat_with_us',
-            icon: 'chat_bubble',
-          }}
-          shop={{
-            domain: env.PUBLIC_STORE_DOMAIN,
-            id: env.PUBLIC_SHOPIFY_INBOX_SHOP_ID,
-          }}
-        />
+        <ChatSnippet />
         <KlayivoSnippet />
       </body>
     </html>
