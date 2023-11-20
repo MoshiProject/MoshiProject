@@ -134,7 +134,6 @@ export default function App() {
         <Meta />
         <Links />
         <FacebookPixel />
-        <KlayivoSnippet />
         <InspectletSnippet />
       </head>
       <body>
@@ -143,6 +142,8 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
+        <ChatSnippet />
+        <KlayivoSnippet />
       </body>
     </html>
   );
@@ -229,6 +230,15 @@ const KlayivoSnippet = () => {
       async
       type="text/javascript"
       src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ViUH6b"
+    ></script>
+  );
+};
+const ChatSnippet = () => {
+  return (
+    <script
+      async
+      type="text/javascript"
+      src="https://cdn.shopify.com/shopifycloud/shopify_chat/storefront/shopifyChatV1.js?api_env=production&c=%23c71532&i=chat_bubble&p=bottom_right&s=icon&shop_id=OjK3Vm316bxb6PJodSAgw0CpDpmggVKv6ryxPeyQYbw&t=no_text&v=1&shop=moshiproject.myshopify.com"
     ></script>
   );
 };

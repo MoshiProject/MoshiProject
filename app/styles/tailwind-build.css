@@ -3418,6 +3418,9 @@ input:checked + .toggle-bg {
 .text-\[15px\] {
   font-size: 15px;
 }
+.text-\[17px\] {
+  font-size: 17px;
+}
 .text-\[40px\] {
   font-size: 40px;
 }
