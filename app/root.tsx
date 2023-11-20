@@ -25,6 +25,8 @@ import {
   useShopifyCookies,
 } from '@shopify/hydrogen';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
+import {getPublicEnv, useEnv} from './functions/utils';
+import {ShopifyInbox} from './components/ShopifyInbox';
 
 export const links = () => {
   return [
@@ -91,6 +93,7 @@ export async function loader({context, request}: LoaderArgs) {
   } else {
     //sets cookie with header
     return defer({
+      publicEnv: getPublicEnv(context.env),
       cart: cartId ? getCart(context, cartId) : undefined,
       layout: await context.storefront.query(LAYOUT_QUERY),
       analytics: {
@@ -102,6 +105,7 @@ export async function loader({context, request}: LoaderArgs) {
 
 export default function App() {
   const data = useLoaderData();
+  const env = useEnv();
 
   const hasUserConsent = true;
   useShopifyCookies({hasUserConsent});
@@ -142,7 +146,20 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
-        <ChatSnippet />
+        <ShopifyInbox
+          button={{
+            color: 'red',
+            style: 'icon',
+            horizontalPosition: 'button_right',
+            verticalPosition: 'lowest',
+            text: 'chat_with_us',
+            icon: 'chat_bubble',
+          }}
+          shop={{
+            domain: env.PUBLIC_STORE_DOMAIN,
+            id: env.PUBLIC_SHOPIFY_INBOX_SHOP_ID,
+          }}
+        />
         <KlayivoSnippet />
       </body>
     </html>

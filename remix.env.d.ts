@@ -27,6 +27,7 @@ declare global {
     EASY_POST_API_KEY: string;
     JUDGE_ME_PUBLIC_TOKEN: string;
     JUDGE_ME_PRIVATE_TOKEN: string;
+    PUBLIC_SHOPIFY_INBOX_SHOP_ID: string;
   }
 }
 

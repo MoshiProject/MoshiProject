@@ -2,6 +2,7 @@ import type {EntryContext} from '@shopify/remix-oxygen';
 import {RemixServer} from '@remix-run/react';
 import isbot from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
+import {createContentSecurityPolicy} from '@shopify/hydrogen';
 
 export default async function handleRequest(
   request: Request,
@@ -19,7 +20,14 @@ export default async function handleRequest(
       },
     },
   );
-
+  const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+    connectSrc: [
+      "'self'",
+      'cdn.shopify.com',
+      'monorail-edge.shopifysvc.com',
+      'shopify-chat.shopifyapps.com', // Shopify Inbox
+    ],
+  });
   if (isbot(request.headers.get('user-agent'))) {
     await body.allReady;
   }
