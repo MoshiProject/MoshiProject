@@ -9,7 +9,7 @@ import {
 import {type LoaderArgs} from '@shopify/remix-oxygen';
 import tailwind from './styles/tailwind-build.css';
 import {Layout} from './components/Layout';
-import {Seo, ShopifyPageViewPayload} from '@shopify/hydrogen';
+import {Script, Seo, ShopifyPageViewPayload} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {CART_QUERY} from '~/queries/cart';
 import styles from '~/styles/app.css';
@@ -146,7 +146,7 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
-        <ChatSnippet />
+        <ShopifyChat />
         <KlayivoSnippet />
       </body>
     </html>
@@ -237,12 +237,23 @@ const KlayivoSnippet = () => {
     ></script>
   );
 };
-const ChatSnippet = () => {
-  return (
-    <script
-      async
-      type="text/javascript"
-      src="https://cdn.shopify.com/shopifycloud/shopify_chat/storefront/shopifyChatV1.js?api_env=production&c=%23c71532&i=chat_bubble&p=bottom_right&s=icon&shop_id=OjK3Vm316bxb6PJodSAgw0CpDpmggVKv6ryxPeyQYbw&t=no_text&v=1&shop=moshiproject.myshopify.com"
-    ></script>
-  );
+const ShopifyChat = () => {
+  useEffect(() => {
+    const addScript = () => {
+      const tag = document.createElement('script');
+      tag.src =
+        'https://cdn.shopify.com/shopifycloud/shopify_chat/storefront/shopifyChatV1.js?api_env=production&c=%23c71532&i=chat_bubble&p=bottom_right&s=icon&shop_id=OjK3Vm316bxb6PJodSAgw0CpDpmggVKv6ryxPeyQYbw&t=no_text&v=1&shop=moshiproject.myshopify.com';
+      document.getElementsByTagName('head')[0].appendChild(tag);
+    };
+
+    // Delay the script insertion by 3 seconds
+    const timeoutId = setTimeout(addScript, 100);
+
+    return () => {
+      // Clean up the script and timeout when the component unmounts
+      clearTimeout(timeoutId);
+    };
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
+
+  return <></>;
 };
