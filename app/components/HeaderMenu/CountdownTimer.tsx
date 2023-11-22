@@ -2,21 +2,12 @@ import React, {useState, useEffect} from 'react';
 
 const CountdownTimer = () => {
   let targetDate = new Date('2023-11-17T02:00:00');
-  if (calculateTimeLeft(targetDate).total <= 0) {
-    targetDate = new Date('2023-11-18T02:00:00');
-    if (calculateTimeLeft(targetDate).total <= 0) {
-      targetDate = new Date('2023-11-19T02:00:00');
-      if (calculateTimeLeft(targetDate).total <= 0) {
-        targetDate = new Date('2023-11-20T02:00:00');
-        if (calculateTimeLeft(targetDate).total <= 0) {
-          targetDate = new Date('2023-11-21T02:00:00');
-          if (calculateTimeLeft(targetDate).total <= 0) {
-            targetDate = new Date('2023-11-22T02:00:00');
-          }
-        }
-      }
-    }
+  let counter = 1;
+  while (calculateTimeLeft(targetDate).total <= 0) {
+    targetDate = new Date('2023-11-' + (17 + counter).toString() + 'T02:00:00');
+    counter++;
   }
+
   targetDate.setHours(2, 0, 0); // Set the time to 12:00 AM
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
 

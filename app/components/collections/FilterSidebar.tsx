@@ -11,17 +11,22 @@ type FilterSidebarProps = {
   products: Product[];
   setProducts: (products: Product[]) => void;
   filteredProducts: Product[];
+  filteredProductTypeDefault: [];
 };
 
 function FilterSidebar({
   products,
   setProducts,
   filteredProducts,
+  filteredProductTypeDefault = [],
 }: FilterSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [filteredAnime, setFilteredAnime] = useState([]);
-  const [filteredProductType, setFilteredProductType] = useState([]);
+  const [filteredProductType, setFilteredProductType] = useState(
+    filteredProductTypeDefault,
+  );
+  console.log('filteredProductType', filteredProductType);
   //   Handle Character Filtering
   useEffect(() => {
     if (filteredCharacters.length > 0) {

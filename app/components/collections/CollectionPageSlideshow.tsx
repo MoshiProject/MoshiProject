@@ -32,13 +32,13 @@ const CollectionPageSlideshow = () => {
   }, [currentImageIndex, images.length]);
 
   return (
-    <div className="h-fit">
-      <div className="relative w-full ">
-        <div className="absolute inset-0 bg-black">
+    <div className="h-full rounded-md">
+      <div className="relative w-full h-full">
+        <div className="absolute inset-0 bg-black h-full rounded-md">
           <img
             src={images[currentImageIndex]}
             alt="Hero Image of Best Sellers"
-            className="w-full  object-cover brightness-75"
+            className="w-full  object-cover h-full rounded-md"
           />
           {/* <motion.img
             src={imageUrl}
@@ -49,9 +49,11 @@ const CollectionPageSlideshow = () => {
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div
               key="hero container"
-              className="flex flex-col justify-center items-center text-center tracking-widest text-white list-none p-0 m-0"
+              className="flex flex-col justify-center items-center text-center text-2xl font-bold tracking-widest text-white list-none p-0 m-0"
             >
-              Black Friday Sale
+              BLACK FRIDAY SALE
+              <br />
+              <span className=" text-base">UP TO 50% OFF!</span>
             </div>
           </div>
         </div>

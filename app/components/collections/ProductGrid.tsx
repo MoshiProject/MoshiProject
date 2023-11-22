@@ -7,7 +7,11 @@ import CollectionSort from './CollectionSort';
 import {Squares2X2Icon, StopIcon} from '@heroicons/react/24/outline';
 import {Product} from '../products/products';
 import CollectionPageSlideshow from './CollectionPageSlideshow';
-export default function ProductGrid({productsList, url}) {
+export default function ProductGrid({
+  productsList,
+  url,
+  filteredProductTypeDefault = [],
+}) {
   const [nextPage, setNextPage] = useState(productsList.pageInfo.hasNextPage);
 
   const [endCursor, setEndCursor] = useState(productsList.pageInfo.endCursor);
@@ -42,12 +46,13 @@ export default function ProductGrid({productsList, url}) {
 
   return (
     <div className="mx-1">
-      <div className="flex h-10 mx-2 border-b border-neutral-200 items-center justify-between pb-2">
+      <div className="flex h-10 mx-2 border-b border-t py-[22px] border-neutral-200 items-center justify-between ">
         {' '}
         <FilterSidebar
           products={products}
           setProducts={setFilteredProducts}
           filteredProducts={filteredProducts}
+          filteredProductTypeDefault={filteredProductTypeDefault}
         />
         <div className="flex">
           <CollectionSort />
@@ -83,7 +88,7 @@ export default function ProductGrid({productsList, url}) {
             : gridType === 'row'
             ? ' mr-4 grid-cols-1'
             : ' grid-cols-1'
-        } md:grid-cols-3 lg:grid-cols-4 my-4 py-4 h-fit`}
+        } md:grid-cols-3 lg:grid-cols-4 mb-4 pb-4 h-fit`}
         dataLength={products.length} //This is important field to render the next data
         next={fetchMoreProducts}
         hasMore={nextPage}
@@ -115,7 +120,7 @@ export default function ProductGrid({productsList, url}) {
         }
         // below props only if you need pull down functionality\
       >
-        {/* <CollectionPageSlideshow /> */}
+        <CollectionPageSlideshow />
         {filteredProducts.map((product: Product) => (
           <ProductCard
             key={product.id}
