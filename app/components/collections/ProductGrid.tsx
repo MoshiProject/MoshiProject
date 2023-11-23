@@ -149,7 +149,7 @@ export default function ProductGrid({
             />
           ))}
       </InfiniteScroll>
-      <div className="w-fit gap-2 grid grid-flow-col mx-auto">
+      <div className="w-fit gap-1 grid grid-flow-col mx-auto overflow-hidden">
         <button
           disabled={currentPage === 1}
           className={`disabled:text-neutral-400`}
