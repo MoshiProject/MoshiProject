@@ -1,7 +1,7 @@
 import DescriptionTab from './DescriptionTab';
 function ShippingInfo() {
   return (
-    <DescriptionTab title={'Tracking and Shipping'} height="192px">
+    <DescriptionTab title={'Tracking and Shipping'} height="236px">
       <>
         {' '}
         <div className="p-1 mr-8">

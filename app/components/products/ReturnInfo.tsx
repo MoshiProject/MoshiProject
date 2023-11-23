@@ -1,7 +1,7 @@
 import DescriptionTab from './DescriptionTab';
 function ReturnInfo() {
   return (
-    <DescriptionTab title={'Returns and Cancellations'} height="192px">
+    <DescriptionTab title={'Returns and Cancellations'} height="236px">
       <>
         {' '}
         <div className="p-1 mr-8">
@@ -22,7 +22,7 @@ function ReturnInfo() {
           </div>
 
           <h2 className="mb-2 text-lg">Can I return my items?</h2>
-          <p className=" w-72 whitespace-normal text-xs tracking-wide h-40">
+          <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
             Yes. We offer hassle free full refunds/replacements for damaged or
             incorrect items. If you don't like your purchase, no worries – we
             offer a straightforward 30-day refund policy for all clothing.
@@ -31,7 +31,7 @@ function ReturnInfo() {
         </div>
         <div className="p-1 mr-8 mt-8">
           <h2 className="mb-2 text-lg">Change of mind</h2>
-          <p className=" w-72 whitespace-normal text-xs tracking-wide h-40">
+          <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
             Order changes or cancellation requests can be within 24 hours of
             your order being made for any reason. If you don't like your
             purchase, no worries – we offer a straightforward 30-day refund
@@ -41,7 +41,7 @@ function ReturnInfo() {
         </div>
         <div className="p-1 mr-8 mt-8">
           <h2 className="mb-2 text-lg">Return Procedure</h2>
-          <p className=" w-72 whitespace-normal text-xs tracking-wide h-40">
+          <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
             On the rare occasion that you receive the wrong size/color, a refund
             can be opted for. Please email info@moshiproject.com as soon as you
             are made aware of the issue. Include your order number, photos and
