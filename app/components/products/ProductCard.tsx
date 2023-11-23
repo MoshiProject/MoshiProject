@@ -11,10 +11,10 @@ type PrdouctCardType = {
 };
 
 const productImgMap = {
-  'denji-shirt-chainsaw-man-12':
-    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-1-SQ2.png?v=1699603816',
-  'eva-neon-genesis-evangelion-unisex-softstyle-t-shirt':
-    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/mockup-of-a-man-wearing-a-customizable-t-shirt-and-looking-through-a-window-32835_1.jpg?v=1699604250',
+  // 'denji-shirt-chainsaw-man-12':
+  //   'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-1-SQ2.png?v=1699603816',
+  // 'eva-neon-genesis-evangelion-unisex-softstyle-t-shirt':
+  //   'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/mockup-of-a-man-wearing-a-customizable-t-shirt-and-looking-through-a-window-32835_1.jpg?v=1699604250',
 };
 export default function ProductCard({
   product,
@@ -41,7 +41,7 @@ export default function ProductCard({
           outOfView: {opacity: 0.42, y: 15},
         }}
         animate={viewed ? 'inView' : 'outOfView'}
-        className={`flex ${
+        className={`flex rounded-md ${
           row ? 'justify-start' : 'flex-col justify-between'
         }   overflow-hidden h-full`}
       >
@@ -124,6 +124,7 @@ export default function ProductCard({
             }`}
           >
             {titleFilter(product.title)}
+            {/* {console.log(product)} */}
           </h3>
           <div className="flex gap-2 justify-center mb-3 h-fit">
             <span className="max-w-prose whitespace-pre-wrap inherit text-copy tracking-widest flex gap-1 text-center font-semibold text-xs md:text-base h-fit">

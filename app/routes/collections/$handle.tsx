@@ -278,6 +278,19 @@ export const COLLECTION_QUERY = `#graphql
           title
           publishedAt
           handle
+          metafield(key: "collectionPage", namespace: "img") {
+            namespace
+            key
+            value
+          }
+          metafields(identifiers:[{key: "custom", namespace: "collectionPageImg"},{key: "collectionPage", namespace: "img"},{key: "reviews", namespace: "hydrogen"}]) {
+        namespace
+        key
+        value
+
+     
+      }
+
           variants(first: 1) {
             nodes {
               id

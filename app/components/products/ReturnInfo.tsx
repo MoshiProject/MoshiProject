@@ -24,16 +24,19 @@ function ReturnInfo() {
           <h2 className="mb-2 text-lg">Can I return my items?</h2>
           <p className=" w-72 whitespace-normal text-xs tracking-wide h-40">
             Yes. We offer hassle free full refunds/replacements for damaged or
-            incorrect items. Returns or exchanges will only be accepted if you
-            received the wrong items or defective/damaged items.
+            incorrect items. If you don't like your purchase, no worries – we
+            offer a straightforward 30-day refund policy for all clothing.
+            Simply contact us at the portal below or at info@moshiproject.com.
           </p>
         </div>
         <div className="p-1 mr-8 mt-8">
           <h2 className="mb-2 text-lg">Change of mind</h2>
           <p className=" w-72 whitespace-normal text-xs tracking-wide h-40">
             Order changes or cancellation requests can be within 24 hours of
-            your order being made for any reason. We do not offer any sort of
-            exchanges or refund for change of mind items after this time.
+            your order being made for any reason. If you don't like your
+            purchase, no worries – we offer a straightforward 30-day refund
+            policy for all clothing. Simply contact us at the portal below or at
+            info@moshiproject.com.
           </p>
         </div>
         <div className="p-1 mr-8 mt-8">
