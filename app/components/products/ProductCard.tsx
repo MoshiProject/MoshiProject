@@ -41,7 +41,7 @@ export default function ProductCard({
           outOfView: {opacity: 0.42, y: 15},
         }}
         animate={viewed ? 'inView' : 'outOfView'}
-        className={`flex rounded-md ${
+        className={`flex ${
           row ? 'justify-start' : 'flex-col justify-between'
         }   overflow-hidden h-full`}
       >
@@ -52,62 +52,70 @@ export default function ProductCard({
           </label>
         )} */}
         <div
-          className={`rounded relative overflow-hidden ${
-            product.handle.toLowerCase().includes('hoodie')
-              ? row
-                ? 'w-[40%] mb-0'
-                : 'w-[120%] ml-[-10%] md:mb-8 mb-4'
-              : product.handle.toLowerCase().includes('sweatshirt')
-              ? row
-                ? 'w-[40%] mb-0'
-                : 'w-[130%] ml-[-15%] mb-0'
-              : row
-              ? 'w-[40%] mb-0'
-              : 'w-[120%] ml-[-10%] md:mb-8 mb-4 '
-          } overflow-hidden`}
+          className={`overflow-hidden ${
+            product.handle.toLowerCase().includes('sweatshirt')
+              ? 'mb-0 rounded-lg'
+              : 'mb-4 rounded-lg'
+          }`}
         >
-          {productImgMap[product.handle.toLowerCase()] ? (
-            <Image
-              width={'full'}
-              sizes="50vw"
-              src={productImgMap[product.handle.toLowerCase()]}
-              alt={titleFilter(product.title)}
-              className={`overflow-hidden ${
-                product.handle.toLowerCase().includes('hoodie')
-                  ? row
-                    ? 'w-[40%] mb-0'
-                    : 'w-[115%]  mb-0'
-                  : product.handle.toLowerCase().includes('sweatshirt')
-                  ? row
-                    ? 'w-[40%] mb-0'
-                    : 'w-[135%] mb-0'
-                  : row
+          <div
+            className={`relative overflow-hidden ${
+              product.handle.toLowerCase().includes('hoodie')
+                ? row
                   ? 'w-[40%] mb-0'
-                  : 'w-[120%] mb-0'
-              }`}
-            />
-          ) : (
-            <Image
-              width={'full'}
-              height={'full'}
-              sizes="50vw"
-              data={product.variants.nodes[0].image}
-              alt={titleFilter(product.title)}
-              className={`overflow-hidden ${
-                product.handle.toLowerCase().includes('hoodie')
-                  ? row
-                    ? 'w-[40%] mb-0'
-                    : 'w-[115%]  mb-0'
-                  : product.handle.toLowerCase().includes('sweatshirt')
-                  ? row
-                    ? 'w-[40%] mb-0'
-                    : 'w-[135%] mb-0'
-                  : row
+                  : 'w-[120%] ml-[-10%] md:mb-8 '
+                : product.handle.toLowerCase().includes('sweatshirt')
+                ? row
                   ? 'w-[40%] mb-0'
-                  : 'w-[120%] mb-0'
-              }`}
-            />
-          )}
+                  : 'w-[130%] ml-[-15%] '
+                : row
+                ? 'w-[40%] mb-0'
+                : 'w-[120%] ml-[-10%] md:mb-8  '
+            } overflow-hidden`}
+          >
+            {productImgMap[product.handle.toLowerCase()] ? (
+              <Image
+                width={'full'}
+                sizes="50vw"
+                src={productImgMap[product.handle.toLowerCase()]}
+                alt={titleFilter(product.title)}
+                className={`overflow-hidden  ${
+                  product.handle.toLowerCase().includes('hoodie')
+                    ? row
+                      ? 'w-[40%] mb-0'
+                      : 'w-[115%]  mb-0'
+                    : product.handle.toLowerCase().includes('sweatshirt')
+                    ? row
+                      ? 'w-[40%] mb-0'
+                      : 'w-[135%] mb-0'
+                    : row
+                    ? 'w-[40%] mb-0'
+                    : 'w-[120%] mb-0'
+                }`}
+              />
+            ) : (
+              <Image
+                width={'full'}
+                height={'full'}
+                sizes="50vw"
+                data={product.variants.nodes[0].image}
+                alt={titleFilter(product.title)}
+                className={`overflow-hidden ${
+                  product.handle.toLowerCase().includes('hoodie')
+                    ? row
+                      ? 'w-[40%] mb-0'
+                      : 'w-[115%]  mb-0'
+                    : product.handle.toLowerCase().includes('sweatshirt')
+                    ? row
+                      ? 'w-[40%] mb-0'
+                      : 'w-[135%] mb-0'
+                    : row
+                    ? 'w-[40%] mb-0'
+                    : 'w-[120%] mb-0'
+                }`}
+              />
+            )}
+          </div>
         </div>
         <div
           className={`${

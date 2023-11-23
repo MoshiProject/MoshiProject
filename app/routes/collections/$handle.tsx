@@ -33,6 +33,45 @@ export async function loader({params, context, request}: LoaderArgs) {
     oldest: {sort: 'CREATED', rev: false},
     featured: {sort: null, rev: false},
   };
+
+  // try {
+  //   const response = await fetch(
+  //     'https://moshiproject.myshopify.com/admin/api/2023-04/graphql.json',
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'X-Shopify-Access-Token': context.env.ADMIN_API_ACCESS_TOKEN,
+  //       },
+  //       body: JSON.stringify({
+  //         query: `mutation {
+  //           metafieldStorefrontVisibilityCreate(
+  //             input: {
+  //               namespace: "collectionPage"
+  //               key: "img"
+  //               ownerType: PRODUCT
+  //             }
+  //           ) {
+  //             metafieldStorefrontVisibility {
+  //               id
+  //             }
+  //             userErrors {
+  //               field
+  //               message
+  //             }
+  //           }
+  //         }
+  //         `,
+  //       }),
+  //     },
+  //   );
+
+  //   const data = await response.json();
+  //   console.log('dataaaaaaa', data);
+  // } catch (error) {
+  //   console.error(error);
+  // }
+
   const sort = sortDict[
     sortParam !== null && sortParam ? sortParam : 'featured'
   ]

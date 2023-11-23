@@ -1238,6 +1238,9 @@ input:checked + .toggle-bg {
 .left-1\/2 {
   left: 50%;
 }
+.left-2 {
+  left: 0.5rem;
+}
 .left-6 {
   left: 1.5rem;
 }
@@ -1309,6 +1312,9 @@ input:checked + .toggle-bg {
 }
 .z-50 {
   z-index: 50;
+}
+.z-\[10000000000000000000\] {
+  z-index: 10000000000000000000;
 }
 .z-\[100000\] {
   z-index: 100000;
@@ -2170,6 +2176,9 @@ input:checked + .toggle-bg {
 .gap-\[\.45rem\] {
   gap: .45rem;
 }
+.gap-\[6px\] {
+  gap: 6px;
+}
 .gap-x-24 {
   -moz-column-gap: 6rem;
        column-gap: 6rem;
@@ -2461,6 +2470,10 @@ input:checked + .toggle-bg {
 .border-none {
   border-style: none;
 }
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
 .border-blue-300 {
   --tw-border-opacity: 1;
   border-color: rgb(164 202 254 / var(--tw-border-opacity));
@@ -2666,6 +2679,10 @@ input:checked + .toggle-bg {
   --tw-border-opacity: 1;
   border-top-color: rgb(23 23 23 / var(--tw-border-opacity));
 }
+.\!bg-neutral-950 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(10 10 10 / var(--tw-bg-opacity)) !important;
+}
 .\!bg-transparent {
   background-color: transparent !important;
 }
@@ -2795,6 +2812,10 @@ input:checked + .toggle-bg {
 .bg-neutral-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
+}
+.bg-neutral-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
 }
 .bg-neutral-700 {
   --tw-bg-opacity: 1;
@@ -3564,6 +3585,10 @@ input:checked + .toggle-bg {
 .tracking-widest {
   letter-spacing: 0.1em;
 }
+.\!text-white {
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -4251,6 +4276,11 @@ input:checked + .toggle-bg {
   background-color: rgb(217 249 157 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-neutral-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-neutral-950:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(10 10 10 / var(--tw-bg-opacity));
@@ -4685,6 +4715,11 @@ input:checked + .toggle-bg {
 .disabled\:text-gray-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.disabled\:text-neutral-400:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(163 163 163 / var(--tw-text-opacity));
 }
 
 .disabled\:opacity-50:disabled {
