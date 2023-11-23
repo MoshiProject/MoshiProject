@@ -29,8 +29,8 @@ export default function ProductGrid({
   const [filteredProducts, setFilteredProducts] = useState(
     products.nodes || [],
   );
-  const totalProducts = nextPage ? 9999999 : (productsList.nodes || []).length;
-
+  const totalProducts = nextPage ? 9999999 : (products || []).length;
+  console.log('total products: ' + totalProducts, 'next page: ' + nextPage);
   // For making client-side requests
   // https://remix.run/docs/en/v1/hooks/use-fetcher
   const fetcher = useFetcher();
@@ -167,7 +167,24 @@ export default function ProductGrid({
           <ChevronLeftIcon className="h-8 w-8" />
         </button>
         {currentPage > 2 && (
-          <span className={`${pageBtnStyling} text-center`}>···</span>
+          <>
+            <button
+              className={`${pageBtnStyling}`}
+              onClick={() => {
+                setTimeout(() => setCurrentPage(1), 1000);
+                const scrollToTop = () => {
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                  });
+                };
+                scrollToTop();
+              }}
+            >
+              {1}
+            </button>
+            <span className={`${pageBtnStyling} text-center`}>···</span>
+          </>
         )}
         {currentPage > 1 && (
           <>
