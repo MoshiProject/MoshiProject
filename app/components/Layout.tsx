@@ -7,6 +7,7 @@ type LayoutProps = {
 import {useMatches} from '@remix-run/react';
 import {useDrawer} from './Drawer';
 import FooterMenu from './FooterMenu/FooterMenu';
+import ReviewPopupBtn from './ReviewPopupBtn';
 
 export function Layout({children, title}: LayoutProps) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
@@ -19,12 +20,13 @@ export function Layout({children, title}: LayoutProps) {
       <header>
         <HeaderMenu cart={cart}></HeaderMenu>
       </header>
-
       <main
         role="main"
         id="mainContent"
         className="flex-grow mt-0 mb-4 md:p-8 lg:p-12"
       >
+        <ReviewPopupBtn />
+
         <div
           className={` ${
             siteSettings.header.displayCountdown ? 'h-32' : 'h-24'

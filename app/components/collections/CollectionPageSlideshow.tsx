@@ -23,7 +23,7 @@ const CollectionPageSlideshow = () => {
     const intervalId = setInterval(() => {
       // Increment the index to display the next image
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000); // Change the interval duration as needed (4 seconds in this case)
+    }, 1250); // Change the interval duration as needed (4 seconds in this case)
 
     return () => {
       // Cleanup the interval when the component unmounts
@@ -53,7 +53,7 @@ const CollectionPageSlideshow = () => {
             >
               BLACK FRIDAY SALE
               <br />
-              <span className=" text-base">UP TO 50% OFF!</span>
+              <span className=" text-base">UP TO 70% OFF!</span>
             </div>
           </div>
         </div>

@@ -189,7 +189,7 @@ export default function Collection() {
           return (
             <div className="flex flex-col" key={obj.type}>
               <button
-                className={`h-24 w-24 mx-0.5 bg-neutral-100 relative p-2 rounded-md ${
+                className={`h-[72px] w-[72px] mx-1 bg-neutral-100 relative p-2 rounded-md ${
                   filteredProductTypeDefault[0] === obj.type
                     ? 'border-2 border-red-500'
                     : ''
@@ -208,7 +208,7 @@ export default function Collection() {
             </div> */}
               </button>
               <div className=" flex justify-center items-center w-full h-fit  text-center text-black text-sm">
-                {obj.type}s
+                {obj.type === 'Sweatshirt' ? 'Sweater' : obj.type}s
               </div>
             </div>
           );
@@ -222,9 +222,15 @@ export default function Collection() {
   return (
     <div key={sortParam} className="md:mx-[-48px]">
       <header className="grid w-full gap-2 py-6 pb-0 pl-2 justify-items-start">
-        <h1 className=" text-2xl md:text-4xl whitespace-pre-wrap font-semibold inline-block uppercase tracking-widest">
-          {collection.title}
-        </h1>
+        <div
+          className={`border-b border-neutral-200 w-[97%] mr-2 ${
+            pageHeaderType === 'anime' && 'mb-2'
+          }`}
+        >
+          <h1 className=" text-lg md:text-4xl whitespace-pre-wrap font-semibold inline-block uppercase tracking-widest">
+            {collection.title}
+          </h1>
+        </div>
 
         {collection.description && (
           <div className="flex items-baseline justify-between w-full">

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 const CountdownTimer = () => {
-  let targetDate = new Date('2023-11-17T02:00:00');
+  let targetDate = new Date('2023-11-25T02:00:00');
   let counter = 1;
   while (calculateTimeLeft(targetDate).total <= 0) {
     targetDate = new Date('2023-11-' + (17 + counter).toString() + 'T02:00:00');
@@ -45,7 +45,7 @@ const CountdownTimer = () => {
       <div className="bg-neutral-950 text-white flex justify-between md:justify-center py-1 px-2">
         <div className=" flex items-center tracking-tighter text-[15px] md:mr-4">
           BLACK FRIDAY UP TO{' '}
-          <span className="text-red-600  ml-2 text-[17px]"> 50% OFF</span>!
+          <span className="text-red-600  ml-2 text-[17px]"> 70% OFF</span>!
         </div>
         <div className="flex">
           <TimerComponent

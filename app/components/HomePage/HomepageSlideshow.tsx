@@ -72,7 +72,7 @@ const HomepageSlideshow = () => {
                   className="text-5xl font-semibold md:text-8xl tracking-wide leading-[48px] mt-8 px-4"
                 >
                   ALL ITEMS UP TO{' '}
-                  <span className="text-red-600 font-black text-6xl">50%</span>{' '}
+                  <span className="text-red-600 font-black text-6xl">70%</span>{' '}
                   OFF!
                 </motion.div>
               </motion.li>

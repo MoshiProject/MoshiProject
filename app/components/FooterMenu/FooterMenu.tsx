@@ -1,7 +1,12 @@
 import React, {Suspense, useState} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import {Link} from '@remix-run/react';
-import {ChevronDownIcon} from '@heroicons/react/24/outline';
+import {
+  ArrowPathIcon,
+  ChevronDownIcon,
+  TruckIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
 import {Image} from '@shopify/hydrogen';
 import {logoWhiteURL} from '~/components/HeaderMenu/menuSettings';
 import SocialMediaIcons from './SocialMediaIcons';
@@ -289,20 +294,72 @@ const CustomForm = () => {
 
   return (
     <div className="flex flex-col md:w-1/3 md:mr-20">
+      <div>
+        <div className="grid grid-cols-2 grid-rows-2 h-72 w-full gap-2">
+          {[
+            {
+              icon: <TruckIcon className="h-8 w-8" />,
+              text: 'Free Shipping On All Orders In the US',
+            },
+            {
+              icon: <UserIcon className="h-8 w-8" />,
+              text: 'Over 30,000 Customers',
+            },
+            {
+              icon: (
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  role="presentation"
+                  className="text-white h-8 w-8 fill-none stroke-white stroke-2"
+                  style={{strokeWidth: '5px'}}
+                  viewBox="0 0 82 82"
+                >
+                  <path d="M65.108 47.938c-5.807-.75-10.205-.046-13.552 1.444-.04-3.044-1.16-10.613-10.556-16.2-9.396 5.587-10.516 13.155-10.556 16.2-3.347-1.489-7.745-2.194-13.552-1.444 0 12.239 7.496 24.634 24.107 24.634L41.006 80v-7.428c16.607-.003 24.102-12.396 24.102-24.634Z"></path>
+                  <path d="M60.68 63.126C71.442 62.581 80 53.682 80 42.784c0-10.849-8.488-19.691-19.182-20.309.008-.21.029-.417.029-.629C60.846 10.886 51.961 2 41 2c-10.961 0-19.847 8.885-19.847 19.846 0 .212.02.419.028.629C10.488 23.093 2 31.935 2 42.784c0 10.879 8.529 19.766 19.265 20.339"></path>
+                </svg>
+              ),
+              text: (
+                <span>
+                  High Quality <br /> 100% cotton t-shirts
+                </span>
+              ),
+            },
+            {
+              icon: <ArrowPathIcon className="h-8 w-8" />,
+              text: '28-Day Hassle-Free Returns',
+            },
+          ].map((box) => {
+            return (
+              <div
+                key={box.text}
+                className="flex flex-col items-center justify-center text-white text-center font-semibold text-md"
+              >
+                <span className="mb-2 h-1/2 flex justify-end items-end">
+                  {box.icon}
+                </span>
+                <span className="h-1/2">{box.text}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       {fetcher.type === 'done' && fetcher.data.status === 200 ? (
-        <div className="text-white ">
+        <div className="text-white mb-4 ">
           Successfully Submitted! Please check your inbox for a confirmation
-          email.
+          email. Use code{' '}
+          <span className="text-md text-red-600 font-semibold">NEW10</span> for
+          10% off your first order!
         </div>
       ) : (
-        <div className="my-4 ">
-          <div className="tracking-widest md:text-sm text-white md:mb-4 text-center text-xs mb-2 md:text-left">
-            SIGN UP AND SAVE
+        <div className="my-4 border-y border-neutral-800 py-8 ">
+          <div className=" md:text-sm text-white md:mb-4 text-center text-2xl font-bold mb-2 md:text-left">
+            Sign Up and Save
           </div>
-          <div className="text-center text-xs w-full text-white mb-6 px-8 md:text-left md:px-0">
+          <div className="text-center text-md w-full text-white mb-6  md:text-left md:px-0 tracking-tight">
             {' '}
-            Subscribe to get special offers, free giveaways, and
-            once-in-a-lifetime deals.
+            Get 10% off your first order! Subscribe to get special offers, free
+            giveaways, flash sales.
           </div>
           <div className="w-full flex justify-center md:justify-start">
             {' '}
@@ -311,17 +368,21 @@ const CustomForm = () => {
                 Invalid email or already subscribed
               </div>
             )}
-            <fetcher.Form className="md:w-3/4" action="subscribe" method="post">
+            <fetcher.Form
+              className="md:w-3/4 w-full "
+              action="subscribe"
+              method="post"
+            >
               <input
-                className="bg-neutral-950 text-sm border-0 border-b placeholder:text-neutral-50 text-white border-white md:w-3/5"
+                className="bg-white text-sm  border placeholder:text-neutral-400 text-neutral-850 rounded-md border-white w-full md:w-3/5 mb-2"
                 type="text"
                 name="email"
                 id="email"
-                placeholder="Enter Your Email"
+                placeholder="Email Address"
                 defaultValue=""
               />
-              <button className="text-left text-primary/50 ml-6 text-sm bg-neutral-950 text-white border-white border rounded-md p-4 py-3">
-                Subscribe
+              <button className="text-primary/50 text-base bg-red-700 text-white text-center rounded-md  py-3 w-full">
+                SUBSCRIBE
               </button>
             </fetcher.Form>
           </div>

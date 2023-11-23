@@ -30,7 +30,7 @@ export function FeaturedProductGrid({
         className={'flex justify-center  mb-4'}
       >
         <div className="text-white text-center  tracking-widest mt-3 w-3/5 md:w-1/4 md:mb-4 text-md font-medium bg-red-600 px-4 py-3 rounded-sm">
-          Shop Best Sellers →
+          Best Sellers →
         </div>
       </Link>
       <motion.div className="grid grid-cols-2 px-0.5 mt-2 md:grid-cols-4 lg:grid-cols-4 hiddenScroll md:pb-8 md:scroll-px-8 lg:scroll-px-4 md:px-8 lg:px-4 lg:mt-4">

@@ -11,10 +11,10 @@ type PrdouctCardType = {
 };
 
 const productImgMap = {
-  // 'denji-shirt-chainsaw-man-12':
-  //   'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-1-SQ2.png?v=1699603816',
-  // 'eva-neon-genesis-evangelion-unisex-softstyle-t-shirt':
-  //   'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/mockup-of-a-man-wearing-a-customizable-t-shirt-and-looking-through-a-window-32835_1.jpg?v=1699604250',
+  'denji-shirt-chainsaw-man-12':
+    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Homie-1-SQ2.png?v=1699603816',
+  'eva-neon-genesis-evangelion-unisex-softstyle-t-shirt':
+    'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/mockup-of-a-man-wearing-a-customizable-t-shirt-and-looking-through-a-window-32835_1.jpg?v=1699604250',
 };
 export default function ProductCard({
   product,

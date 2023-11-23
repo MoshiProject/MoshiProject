@@ -158,7 +158,7 @@ function RemoveDiscountButton() {
   const fetcher = useFetcher();
 
   return (
-    <fetcher.Form action="/handleDiscount" method="post">
+    <fetcher.Form action="/handleDiscount" method="get">
       <input type="hidden" name="code" value={'empty'} />
       {fetcher.state === 'idle' ? (
         <button
