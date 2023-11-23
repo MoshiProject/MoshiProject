@@ -135,8 +135,8 @@ export default function Cart() {
     return (
       <div className="w-full max-w-6xl mx-auto pb-12 grid md:grid-cols-2 md:items-start gap-8 md:gap-8 lg:gap-12">
         <div className="flex-grow md:translate-y-4">
-          <div className="hidden">
-            <CartShippingBar />
+          <div>
+            <CartShippingBar currentTotal={cart.cost} />
           </div>
           <CartLineItems linesObj={cart.lines} />
         </div>

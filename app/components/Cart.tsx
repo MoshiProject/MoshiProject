@@ -258,16 +258,23 @@ export function CartActions({
 
 export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
   const goals = [
-    {
-      goalAmount: 59,
-      goalMessage: 'FREE shipping.',
-      goalColor: 'bg-white',
-    },
     // {
-    //   goalAmount: 100,
-    //   goalMessage: '10% off your WHOLE order!',
-    //   goalColor: 'bg-green-500',
+    //   goalAmount: 99,
+    //   goalMessage: 'FREE shipping.',
+    //   goalColor: 'bg-white',
     // },
+    {
+      goalAmount: 99,
+      goalMessage: (
+        <span>
+          an extra{' '}
+          <span className="text-red-600 text-lg font-bold">10% OFF</span> your
+          WHOLE order with code{' '}
+          <span className="text-red-600 text-lg font-bold">BF10</span>!
+        </span>
+      ),
+      goalColor: 'bg-green-500',
+    },
   ];
 
   const [reachedGoals, setReachedGoals] = useState([]);
@@ -301,9 +308,8 @@ export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
           `Congratulations! Your order qualifies for ${reachedGoals
             .map((goal) => goal.goalMessage.slice(0, -1))
             .join(' + ')}! `}
-        {`Spend $${difference.toFixed(2)} USD more for ${
-          closestGoal.goalMessage
-        }`}
+        {`Spend $${difference.toFixed(2)} USD more for `}
+        {closestGoal.goalMessage}
       </div>
       <div className="relative w-11/12 h-6 mx-4 mt-3">
         <div

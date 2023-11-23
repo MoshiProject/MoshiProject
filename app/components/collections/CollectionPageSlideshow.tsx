@@ -38,7 +38,7 @@ const CollectionPageSlideshow = () => {
           <img
             src={images[currentImageIndex]}
             alt="Hero Image of Best Sellers"
-            className="w-full  object-cover h-full rounded-md"
+            className="w-full  object-cover h-full rounded-md opacity-70"
           />
           {/* <motion.img
             src={imageUrl}
@@ -53,7 +53,11 @@ const CollectionPageSlideshow = () => {
             >
               BLACK FRIDAY SALE
               <br />
-              <span className=" text-base">UP TO 70% OFF!</span>
+              <span className=" text-base">
+                ORDERS ABOVE <span className="text-xl">$99 </span> USE CODE{' '}
+                <span className="text-red-600 text-2xl font-bold">BF10</span>{' '}
+                FOR AN EXTRA <span className="text-xl">10% OFF</span>!
+              </span>
             </div>
           </div>
         </div>

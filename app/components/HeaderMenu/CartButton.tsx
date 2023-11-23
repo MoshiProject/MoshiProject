@@ -69,7 +69,7 @@ export default function CartButton(cart: any) {
                   <>
                     {setQuantity(data?.totalQuantity)}
                     <div className="flex-1 overflow-y-auto">
-                      <div className="hidden">
+                      <div>
                         <CartShippingBar currentTotal={data.cost} />{' '}
                       </div>
                       <div className="flex flex-col space-y-7 justify-between items-center md:py-8 md:px-12 pl-1 pr-4 py-6 pt-2">
