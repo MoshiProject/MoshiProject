@@ -306,7 +306,7 @@ export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
       <div className="text-xs mx-4 tracking-normal">
         {reachedGoals.length > 0 &&
           `Congratulations! Your order qualifies for ${reachedGoals
-            .map((goal) => goal.goalMessage.slice(0, -1))
+            .map((goal) => goal.goalMessage)
             .join(' + ')}! `}
         {`Spend $${difference.toFixed(2)} USD more for `}
         {closestGoal.goalMessage}
@@ -333,7 +333,7 @@ export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
     <div className="">
       <div className="text-xs mx-4 tracking-normal">
         Congratulations! Your order qualifies for{' '}
-        {goals.map((goal) => goal.goalMessage.slice(0, -1)).join(' + ')}!
+        {goals.map((goal) => goal.goalMessage)}
       </div>
       <div className="relative w-11/12 h-12 mx-4 mt-4">
         <div
