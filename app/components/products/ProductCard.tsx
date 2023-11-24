@@ -45,12 +45,12 @@ export default function ProductCard({
           row ? 'justify-start' : 'flex-col justify-between'
         }   overflow-hidden h-full`}
       >
-        {/* {isDiscounted && (
+        {isDiscounted && (
           // eslint-disable-next-line jsx-a11y/label-has-associated-control
-          <label className="subpixel-antialiased absolute top-0 right-0 text-right tracking-widest text-notice text-white bg-neutral-900 p-1 font-semibold text-[10px] z-10">
+          <label className="subpixel-antialiased absolute top-0 right-0 text-right tracking-widest text-notice text-white bg-red-700 p-1 font-semibold text-[10px] z-10">
             Sale
           </label>
-        )} */}
+        )}
         <div
           className={`overflow-hidden ${
             product.handle.toLowerCase().includes('sweatshirt')

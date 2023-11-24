@@ -54,9 +54,9 @@ const CollectionPageSlideshow = () => {
               BLACK FRIDAY SALE
               <br />
               <span className=" text-base">
-                ORDERS ABOVE <span className="text-xl">$99 </span> USE CODE{' '}
+                ORDERS <span className="text-xl">$99+ </span> USE CODE{' '}
                 <span className="text-red-600 text-2xl font-bold">BF10</span>{' '}
-                FOR AN EXTRA <span className="text-xl">10% OFF</span>!
+                FOR EXTRA <span className="text-xl">10% OFF</span>!
               </span>
             </div>
           </div>

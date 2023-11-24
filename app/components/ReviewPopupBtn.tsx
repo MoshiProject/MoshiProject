@@ -33,7 +33,7 @@ function ReviewPopupBtn() {
         <button
           onClick={handleClick}
           type="submit"
-          className="poop fixed z-10 right-0 top-2/3 h-28 w-8 text-neutral-100 font-semibold bg-neutral-950 text-center items-center flex justify-center leading-4"
+          className="poop fixed z-20 right-0 top-2/3 h-28 w-8 text-neutral-100 font-semibold bg-neutral-950 text-center items-center flex justify-center leading-4"
         >
           <div style={{writingMode: 'vertical-rl'}}> ★ Reviews</div>
         </button>
