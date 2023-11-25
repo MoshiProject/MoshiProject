@@ -140,6 +140,7 @@ export default function App() {
         <FacebookPixel />
         <InspectletSnippet />
         <MSClaritySnippet />
+        <GAnalyticsSnippet />
       </head>
       <body>
         <Layout title={name}>
@@ -211,6 +212,23 @@ fbq('track', 'PageView');
   );
 };
 
+const GAnalyticsSnippet = () => {
+  return (
+    <script
+      src="https://www.googletagmanager.com/gtag/js?id=G-TDVVV3C28L"
+      dangerouslySetInnerHTML={{
+        __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'G-TDVVV3C28L');
+`,
+      }}
+    ></script>
+  );
+};
+
 const InspectletSnippet = () => {
   return (
     <script
@@ -228,6 +246,7 @@ const InspectletSnippet = () => {
     ></script>
   );
 };
+
 const MSClaritySnippet = () => {
   return (
     <script
