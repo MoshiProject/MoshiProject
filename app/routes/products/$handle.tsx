@@ -621,173 +621,279 @@ function DescriptionBlock({product}) {
       />
     </Accordion> */}
 
-        <DescriptionTab title="Description" height="420px">
-          <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal">
-            <div
-              initial={{opacity: 0, x: -200}}
-              viewport={{once: true}}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-                transition: {delay: 0, duration: 0.4},
-              }}
-              className="px-2"
-            >
-              <h3 className="text-2xl font-bold tracking-widest mb-1">
-                SUPERIOR COMFORT
-              </h3>
-              <p className="text-sm ">
-                Experience a level of comfort that simply cannot be matched with
-                our incredibly soft and cozy{' '}
-                <span className="lowercase">
-                  {getProductType(product.title)}
-                </span>
-                s.
-              </p>
+        {getProductType(product.title)?.toLowerCase() === 't-shirt' && (
+          <DescriptionTab title="Product Details" height="fit-content">
+            <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal">
+              <div
+                initial={{opacity: 0, x: -200}}
+                viewport={{once: true}}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {delay: 0, duration: 0.4},
+                }}
+                className="px-2"
+              >
+                <h3 className="text-2xl font-bold tracking-widest mb-1">
+                  Premium Quality Tee
+                </h3>
+                <ul className="list-disc pl-8 space-y-2 text-sm">
+                  <li>100% Cotton</li>
+                  <li>Pre-Shrunk</li>
+                  <li>US/EU men’s size</li>
+                  <li>Unisex fit</li>
+                  <li>Medium-Light thickness</li>
+                  <li>Soft and Smooth feel</li>
+                  <li>Side seams for lasting quality and durability</li>
+                  <li>
+                    Ethically produced - Using 7x less water than industry
+                    average
+                  </li>
+                  <li>Light fabric (4.5 oz/yd² (153 g/m²))</li>
+                </ul>
+              </div>
+              <div
+                initial={{opacity: 0, x: -200}}
+                viewport={{once: true}}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {delay: 0, duration: 0.4},
+                }}
+                className="mt-12 px-2"
+              >
+                <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
+                  Your Unique Experience
+                </h3>
+                <p className="text-sm">
+                  The unisex soft-style t-shirt puts a new spin on casual
+                  comfort. Made from very soft materials, this tee is 100%
+                  cotton for solid colors. Heather colors and sports grey
+                  include polyester. The shoulders have twill tape for improved
+                  durability. There are no side seams. The collar is made with
+                  ribbed knitting to prevent curling damage.
+                </p>
+                <p className="text-sm mt-3">
+                  Tracking numbers are available once the item finishes being
+                  made and ships.
+                </p>
+                <p className="text-sm mt-3">
+                  All our items are standard men's US/EU sizes. They are not
+                  Asian sizes, they are not drop-shipped.
+                </p>
+              </div>
             </div>
-            <div
-              initial={{opacity: 0, x: -200}}
-              viewport={{once: true}}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-                transition: {delay: 0, duration: 0.4},
-              }}
-              className="mt-12 px-2"
-            >
-              <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
-                PREMIUM QUALITY
-              </h3>
-              <p className="text-sm">
-                Experience the superior quality of our{' '}
-                <span className="font-bold">100% ring-spun cotton</span>{' '}
-                <span className="lowercase">
-                  {getProductType(product.title)}
-                </span>
-                s and embrace the comfort that will keep you coming back for
-                more with our ing-spun cotton.
-              </p>
-            </div>
-            <div
-              initial={{opacity: 0, x: -200}}
-              viewport={{once: true}}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-                transition: {delay: 0, duration: 0.4},
-              }}
-              className="mt-12 px-2"
-            >
-              <h3 className="text-2xl font-bold tracking-widest mb-3 mt-3">
-                UNMATCHED DESIGNS
-              </h3>
-              <p className="text-sm">
-                Elevate your style with our unmatched prints, boasting vibrant
-                colors and impeccable clarity. Experience t-shirt artistry like
-                never before, designed to make you stand out from the crowd.
-                {/* <ul className="list-disc pl-8 space-y-2">
-                <li>Side seams for lasting quality and durability.</li>
-                <li>
-                  100% cotton for superior comfort, warmth, and durability.
-                </li>
+          </DescriptionTab>
+        )}
 
-                <li>
-                  It feels soft and lightweight, with the right amount of
-                  stretch.
-                </li>
-              </ul> */}
-              </p>
+        {getProductType(product.title)?.toLowerCase() === 'hoodie' && (
+          <DescriptionTab title="Product Details" height="fit-content">
+            <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal">
+              <div
+                initial={{opacity: 0, x: -200}}
+                viewport={{once: true}}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {delay: 0, duration: 0.4},
+                }}
+                className="px-2"
+              >
+                <h3 className="text-2xl font-bold tracking-widest mb-1">
+                  Premium Quality Hoodie
+                </h3>
+                <ul className="list-disc pl-8 space-y-2 text-sm">
+                  <li>50% Cotton 50% Polyester</li>
+                  <li>Medium-heavy fabric (8.0 oz/yd² (271.25 g/m²))</li>
+                  <li>Classic fit</li>
+                  <li>Tear away label</li>
+                  <li>Runs true to size</li>
+                </ul>
+              </div>
+              <div
+                initial={{opacity: 0, x: -200}}
+                viewport={{once: true}}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {delay: 0, duration: 0.4},
+                }}
+                className="mt-12 px-2"
+              >
+                <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
+                  Cozy Comfort and Stylish Design
+                </h3>
+                <p className="text-sm">
+                  This Japanese anime unisex heavy blend hooded sweatshirt is
+                  relaxation itself. The material is a thick blend of cotton and
+                  polyester, offering a plush, soft feel alongside warmth. There
+                  are no side seams, and a spacious kangaroo pocket hangs in
+                  front. The hood's drawstring is the same color as the base
+                  sweater.
+                </p>{' '}
+                <p className="text-sm mt-3">
+                  Tracking numbers are available once the item finishes being
+                  made and ships.
+                </p>
+                <p className="text-sm mt-3">
+                  All our items are standard men's US/EU sizes. They are not
+                  Asian sizes, they are not drop-shipped.
+                </p>
+              </div>
             </div>
+          </DescriptionTab>
+        )}
+        {getProductType(product.title)?.toLowerCase() === 'sweatshirt' && (
+          <DescriptionTab title="Product Details" height="fit-content">
+            <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal">
+              <div
+                initial={{opacity: 0, x: -200}}
+                viewport={{once: true}}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {delay: 0, duration: 0.4},
+                }}
+                className="px-2"
+              >
+                <h3 className="text-2xl font-bold tracking-widest mb-1">
+                  Premium Quality Sweatshirt
+                </h3>
+                <ul className="list-disc pl-8 space-y-2 text-sm">
+                  <li>50% Cotton 50% Polyester</li>
+                  <li>Medium-heavy fabric (8.0 oz/yd² (271.25 g/m²))</li>
+                  <li>Loose fit</li>
+                  <li>Sewn-in label</li>
+                  <li>Runs true to size</li>
+                </ul>
+              </div>
+              <div
+                initial={{opacity: 0, x: -200}}
+                viewport={{once: true}}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {delay: 0, duration: 0.4},
+                }}
+                className="mt-12 px-2"
+              >
+                <h3 className="text-2xl font-bold tracking-widest mb-1 mt-3">
+                  Pure Comfort for Any Occasion
+                </h3>
+                <p className="text-sm">
+                  Ideal for any situation, a unisex heavy blend crewneck
+                  sweatshirt is pure comfort. These garments are made from
+                  polyester and cotton, allowing designs to come out looking
+                  fresh and beautiful. The collar is ribbed knit, so it retains
+                  its shape even after washing. There are no itchy side seams on
+                  these sweaters.
+                </p>{' '}
+                <p className="text-sm mt-3">
+                  Tracking numbers are available once the item finishes being
+                  made and ships.
+                </p>
+                <p className="text-sm mt-3">
+                  All our items are standard men's US/EU sizes. They are not
+                  Asian sizes, they are not drop-shipped.
+                </p>
+              </div>
+            </div>
+          </DescriptionTab>
+        )}
+
+        {/* {composition && (
+          <Accordion title={'Composition'} animations>
+            <div
+              className="prose border-t border-gray-200 pt-6 text-black text-md list-disc	"
+              dangerouslySetInnerHTML={{
+                __html: composition.replaceAll('.:', '•'),
+              }}
+            />
+          </Accordion>
+        )} */}
+        {/* <Accordion title="Shipping" animations>
+          <div className="">
+            <p>
+              <strong>SHIPPING TIMES</strong>&nbsp;
+            </p>
+            <p>
+              We custom make every order in-house. Please allow 2 to 4 business
+              days for all items to be made before shipment. After your item(s)
+              have been processed, you will receive a tracking code in your
+              email. Deliveries typically take{' '}
+              {['sweatshirt', 'shirt', 'hoodie'].includes(
+                getProductType(product.title)?.toLowerCase(),
+              )
+                ? '3-5 business days'
+                : '2-4 weeks'}
+              after fulfillment. Tracking numbers are always provided. We are
+              not responsible for delays caused by individual carriers, but we
+              will always do everything we can to make sure you receive your
+              order as fast as possible.&nbsp;
+            </p>
+            <br />
+            <p>
+              <strong>TRACKING NUMBERS</strong>
+            </p>
+            <p>
+              Tracking numbers are always provided for every order. If your
+              order is shipped in&nbsp;multiple packages, you will get a
+              tracking number for each.
+            </p>
+            <br />
+            <p>
+              <strong>CANCELLATIONS</strong>
+            </p>
+
+            <p>
+              Order changes or cancellation requests can be within 24 hours of
+              your order being made. We do not offer any sort of exchanges or
+              refund for change of mind items after this time. This also
+              includes exchanges or refunds for size changes so please double
+              check sizing charts prior to making your purchase. A 3%
+              transaction fee will be removed from the refunded amount.
+            </p>
+            <br />
+            <p>
+              Returns or exchanges will only be accepted if you received the
+              wrong items or defective/damaged items. To be eligible for a
+              return, your item must be unused and in the same condition that
+              you received it. We reserve the right to deny any item that does
+              not meet these requirements.
+            </p>
+          </div>
+        </Accordion> */}
+      </div>
+      {console.log(getProductType(product.title))}
+      {['sweatshirt', 't-shirt', 'hoodie'].includes(
+        getProductType(product.title)?.toLowerCase(),
+      ) && (
+        <DescriptionTab title={'Care Instructions'} height="fit-content">
+          <div className="md:max-w-[502px] max-w-[100vw] whitespace-normal px-1 mt-3">
+            <p className="text-sm mb-4 md:max-w-[502px] max-w-[100vw]">
+              To ensure that your DTG-printed garments remain in good condition
+              for as long as possible, it's important to follow the care
+              instructions carefully. The following steps are recommended:
+            </p>
+            <ol className=" mb-4 md:max-w-[502px] max-w-[100vw] list-disc pl-8 space-y-2 text-sm">
+              <li>
+                Machine-wash your DTG-printed garments cold and inside-out on a
+                gentle cycle using a mild detergent and similar colors.
+              </li>{' '}
+              <li>
+                Use non-chlorine bleach only when necessary. While DTG-printed
+                apparel can be tumble-dried on a low cycle, it's recommended to
+                hang-dry them instead.
+              </li>{' '}
+              <li>
+                Do not dry clean your DTG-printed garments. Dry cleaning can
+                damage the fibers of the garment and cause the print to fade or
+                bleed.
+              </li>
+            </ol>
           </div>
         </DescriptionTab>
-
-        {/* {['sweatshirt', 'shirt', 'hoodie'].includes(
-      getProductType(product.title)?.toLowerCase(),
-    ) && (
-      <Accordion title={'Care Instructions'} animations>
-        <div className="bg-white">
-          <p className="text-sm mb-4">
-            To ensure that your DTG-printed garments remain in good
-            condition for as long as possible, it's important to follow
-            the care instructions carefully. The following steps are
-            recommended:
-          </p>
-          <p className="text-sm mb-4">
-            Machine-wash your DTG-printed garments cold and inside-out
-            on a gentle cycle using a mild detergent and similar colors.
-            Use non-chlorine bleach only when necessary. While
-            DTG-printed apparel can be tumble-dried on a low cycle, it's
-            recommended to hang-dry them instead. Do not dry clean your
-            DTG-printed garments. Dry cleaning can damage the fibers of
-            the garment and cause the print to fade or bleed.
-          </p>
-        </div>
-      </Accordion>
-    )}
-    {composition && (
-      <Accordion title={'Composition'} animations>
-        <div
-          className="prose border-t border-gray-200 pt-6 text-black text-md list-disc	"
-          dangerouslySetInnerHTML={{
-            __html: composition.replaceAll('.:', '•'),
-          }}
-        />
-      </Accordion>
-    )}
-    <Accordion title="Shipping" animations>
-      <div className="">
-        <p>
-          <strong>SHIPPING TIMES</strong>&nbsp;
-        </p>
-        <p>
-          We custom make every order in-house. Please allow 2 to 4
-          business days for all items to be made before shipment. After
-          your item(s) have been processed, you will receive a tracking
-          code in your email. Deliveries typically take{' '}
-          {['sweatshirt', 'shirt', 'hoodie'].includes(
-            getProductType(product.title)?.toLowerCase(),
-          )
-            ? '3-5 business days'
-            : '2-4 weeks'}
-          after fulfillment. Tracking numbers are always provided. We
-          are not responsible for delays caused by individual carriers,
-          but we will always do everything we can to make sure you
-          receive your order as fast as possible.&nbsp;
-        </p>
-        <br />
-        <p>
-          <strong>TRACKING NUMBERS</strong>
-        </p>
-        <p>
-          Tracking numbers are always provided for every order. If your
-          order is shipped in&nbsp;multiple packages, you will get a
-          tracking number for each.
-        </p>
-        <br />
-        <p>
-          <strong>CANCELLATIONS</strong>
-        </p>
-
-        <p>
-          Order changes or cancellation requests can be within 24 hours
-          of your order being made. We do not offer any sort of
-          exchanges or refund for change of mind items after this time.
-          This also includes exchanges or refunds for size changes so
-          please double check sizing charts prior to making your
-          purchase. A 3% transaction fee will be removed from the
-          refunded amount.
-        </p>
-        <br />
-        <p>
-          Returns or exchanges will only be accepted if you received the
-          wrong items or defective/damaged items. To be eligible for a
-          return, your item must be unused and in the same condition
-          that you received it. We reserve the right to deny any item
-          that does not meet these requirements.
-        </p>
-      </div>
-    </Accordion> */}
-      </div>
+      )}
       <div className="mb-[-8px] border-b border-neutral-200">
         <ShippingInfo />
         <ReturnInfo />
