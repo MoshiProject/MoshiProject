@@ -290,3 +290,16 @@ const ShopifyChat = () => {
 
   return <></>;
 };
+export const clarityEvent = (tag: string) => {
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          clarity("set", "event", "${tag}");
+`,
+        }}
+      ></script>
+    </>
+  );
+};

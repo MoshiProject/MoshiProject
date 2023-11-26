@@ -9,6 +9,7 @@ import type {FetcherWithComponents} from '@remix-run/react';
 import {useEffect} from 'react';
 
 import {usePageAnalytics} from '~/hooks/usePageAnalytics';
+import {ClarityEvent, clarityEvent} from '~/root';
 
 export default function AddToCartForm({
   variantId,
@@ -37,6 +38,9 @@ export default function AddToCartForm({
             <input type="hidden" name="countryCode" value={'US'} />
             <input type="hidden" name="lines" value={JSON.stringify(lines)} />
             <button
+              onClick={() => {
+                clarityEvent('AddToCart');
+              }}
               className={`${backgroundColor} ${textColor} px-6 py-3 w-full text-center tracking-widest font-semibold text-base rounded-[4px] uppercase`}
             >
               Add to Cart
