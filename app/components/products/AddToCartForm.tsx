@@ -9,13 +9,15 @@ import type {FetcherWithComponents} from '@remix-run/react';
 import {useEffect} from 'react';
 
 import {usePageAnalytics} from '~/hooks/usePageAnalytics';
-import {ClarityEvent, clarityEvent} from '~/root';
+import {clarityEvent} from '~/root';
+import ReactGA from 'react-ga4';
 
 export default function AddToCartForm({
   variantId,
   textColor = 'text-white',
   backgroundColor = 'bg-black',
-
+  value = '0',
+  productTitle = '',
   analytics,
 }: {
   children: React.ReactNode;
@@ -40,6 +42,11 @@ export default function AddToCartForm({
             <button
               onClick={() => {
                 clarityEvent('AddToCart');
+                ReactGA.event('add_to_cart', {
+                  currency: 'USD',
+                  value,
+                  items: productTitle,
+                });
               }}
               className={`${backgroundColor} ${textColor} px-6 py-3 w-full text-center tracking-widest font-semibold text-base rounded-[4px] uppercase`}
             >

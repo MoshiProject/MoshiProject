@@ -456,7 +456,11 @@ export default function ProductHandle() {
               <div className="hidden">
                 <ShippingEstimation />
               </div>
-              <AddToCartForm variantId={selectedVariant?.id} />
+              <AddToCartForm
+                variantId={selectedVariant?.id}
+                value={selectedVariant?.price?.amount}
+                productTitle={product.title}
+              />
               <ShopPayButton
                 storeDomain={storeDomain}
                 variantIds={[selectedVariant?.id]}

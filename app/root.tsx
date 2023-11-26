@@ -26,7 +26,7 @@ import {
 } from '@shopify/hydrogen';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
 import {getPublicEnv, useEnv} from './functions/utils';
-import {ShopifyInbox} from './components/ShopifyInbox';
+import ReactGA from 'react-ga4';
 
 export const links = () => {
   return [
@@ -109,6 +109,8 @@ export default function App() {
   const hasUserConsent = true;
   useShopifyCookies({hasUserConsent});
 
+  ReactGA.initialize('G-TDVVV3C28L');
+
   const location = useLocation();
   const lastLocationKey = useRef<string>('');
   const pageAnalytics = usePageAnalytics({hasUserConsent});
@@ -126,6 +128,15 @@ export default function App() {
     sendShopifyAnalytics({
       eventName: AnalyticsEventName.PAGE_VIEW,
       payload,
+    });
+    ReactGA.send({
+      hitType: 'pageview',
+      page: payload.url,
+      title: payload.products
+        ? payload.products[0].title
+          ? payload.products[0].title
+          : payload.title
+        : payload.title,
     });
   }, [location, pageAnalytics]);
   const {name} = data.layout.shop;

@@ -4,7 +4,7 @@ import {LineItemType} from './products/products';
 import {useEffect, useState} from 'react';
 import {TrashIcon} from '@heroicons/react/24/outline';
 import {clarityEvent} from '~/root';
-
+import ReactGA from 'react-ga4';
 export function CartLineItems({linesObj}: any) {
   const lines = flattenConnection(linesObj);
   return (
@@ -245,7 +245,11 @@ export function CartActions({
     <div className="flex flex-col mt-2">
       <a
         onClick={() => {
-          clarityEvent('AddToCart');
+          clarityEvent('InitiateCheckout');
+          ReactGA.event('begin_checkout', {
+            currency: 'USD',
+            value: totalAmount.totalAmount.amount,
+          });
         }}
         href={checkoutUrl}
         className="bg-white text-black px-6 py-3 w-full rounded-md text-center font-medium text-sm leading-4 tracking-wide"
