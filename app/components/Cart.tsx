@@ -87,12 +87,14 @@ function LineItem({lineItem}: {lineItem: LineItemType}) {
         </div>
       </div>
       <div className="flex flex-col items-end">
-        <span className="line-through	text-sm text-right w-full">
-          $
-          {(
-            lineItem.cost.compareAtAmountPerQuantity.amount * lineItem.quantity
-          ).toFixed(2)}
-        </span>
+        {lineItem.cost.compareAtAmountPerQuantity && (
+          <span className="line-through	text-sm text-right w-full">
+            $
+            {parseFloat(
+              lineItem.cost.compareAtAmountPerQuantity.amount,
+            ).toFixed(2)}
+          </span>
+        )}
         <Money
           className="text-red-600 font-sm mt-2"
           data={lineItem.cost.totalAmount}
@@ -161,15 +163,16 @@ export function CartSummary({
   cost: {totalAmount: {amount: string}};
   compareCost: number;
 }) {
+  console.log('comparecost', compareCost);
   return (
     <>
       <dl className="space-y-1 mt-1 text-sm">
         <div className="flex items-center justify-between">
           <dt>Original Price</dt>
           <dd>
-            {compareCost ? (
+            {parseFloat(compareCost) ? (
               <span className="line-through	text-sm text-right w-full">
-                ${compareCost.toFixed(2)}
+                ${parseFloat(compareCost).toFixed(2)}
               </span>
             ) : (
               '-'
@@ -181,7 +184,10 @@ export function CartSummary({
           <dd>
             {compareCost ? (
               <span className="text-sm text-right w-full">
-                ${(compareCost - cost?.totalAmount.amount).toFixed(2)}
+                $
+                {(parseFloat(compareCost) - cost?.totalAmount.amount).toFixed(
+                  2,
+                )}
               </span>
             ) : (
               '-'

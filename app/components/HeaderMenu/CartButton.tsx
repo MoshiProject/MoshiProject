@@ -120,8 +120,12 @@ export default function CartButton(cart: any) {
                         cost={data.cost}
                         compareCost={data.lines.edges
                           .map((line) => {
+                            console.log('line: ' + JSON.stringify(line));
                             return (
-                              line.node.cost.compareAtAmountPerQuantity.amount *
+                              (line.node.cost.compareAtAmountPerQuantity
+                                ? line.node.cost.compareAtAmountPerQuantity
+                                    .amount
+                                : line.node.cost.amountPerQuantity.amount) *
                               line.node.quantity
                             );
                           })
