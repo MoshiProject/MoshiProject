@@ -30,7 +30,6 @@ export default function CartButton(cart: any) {
     if (isOpen || addToCartFetchers.length === 0) return;
     openDrawer();
   }, [addToCartFetchers]);
-  console.log('cartttt!');
   return (
     <div className=" flow-root lg:ml-2">
       <Suspense>
@@ -74,7 +73,6 @@ export default function CartButton(cart: any) {
                       </div>
                       <div className="flex flex-col space-y-7 justify-between items-center md:py-8 md:px-12 pl-1 pr-4 py-6 pt-2">
                         <CartLineItems linesObj={data.lines} />
-                        {console.log('data', data)}
                       </div>
                     </div>
                     <div className="w-full md:px-12 px-4 py-6 space-y-3 border-t border-neutral-800 pt-1">
@@ -86,28 +84,33 @@ export default function CartButton(cart: any) {
                           >
                             <div>
                               {' '}
-                              <span
-                                className={`flex items-center border-2 ${
-                                  discount.applicable
-                                    ? 'border-green-500'
-                                    : 'border-red-600'
-                                } bg-neutral-700 bg-opacity-50 p-1 text-sm w-fit rounded-md px-4`}
-                              >
-                                <TagIcon className="h-5 w-5 rotate-90 mr-1" />{' '}
-                                <span className="mx-2">{discount.code}</span>
-                                <RemoveDiscountButton></RemoveDiscountButton>
-                              </span>
-                            </div>
-                            <div className="text-xs w-1/3">
-                              {/* {!discount.applicable
-                                ? 'discount not applied. Minimum requirements not met.'
-                                : data.attributes.map((attribute) => {
-                                    const value = JSON.parse(attribute.value);
-                                    console.log(value);
-                                    return value.discountData.data
-                                      .codeDiscountNodeByCode.codeDiscount
-                                      .shortSummary;
-                                  })} */}
+                              {discount.applicable ? (
+                                <span
+                                  className={`flex items-center border-2 ${
+                                    discount.applicable
+                                      ? 'border-green-500'
+                                      : 'border-red-600'
+                                  } bg-neutral-700 bg-opacity-50 p-1 text-sm w-fit rounded-md px-4`}
+                                >
+                                  <TagIcon className="h-5 w-5 rotate-90 mr-1" />{' '}
+                                  <span className="mx-2">{discount.code}</span>
+                                  <RemoveDiscountButton></RemoveDiscountButton>
+                                </span>
+                              ) : (
+                                <>
+                                  {' '}
+                                  <div className="text-xs p-2 border-red-600 border rounded-lg flex">
+                                    <span>
+                                      Minimum requirements for discount not met!
+                                      Spend $
+                                      {(
+                                        99 - data.cost.totalAmount.amount
+                                      ).toFixed(2)}{' '}
+                                      more to use the code!{' '}
+                                    </span>
+                                  </div>{' '}
+                                </>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -175,7 +178,6 @@ function RemoveDiscountButton() {
 }
 function DiscountForm() {
   const fetcher = useFetcher();
-  console.log('fetcherState: ' + fetcher.state);
   return (
     <fetcher.Form action="/handleDiscount" method="post">
       <div

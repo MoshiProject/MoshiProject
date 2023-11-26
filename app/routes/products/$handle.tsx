@@ -171,8 +171,6 @@ async function getJudgeMeReviews(id: string, context) {
       },
     );
     judgeReviews = response.json();
-
-    //console.log('data', judgeReviews);
   } catch (error) {
     console.error(error);
   }
@@ -209,7 +207,6 @@ export async function action({request, context, params}: ActionArgs) {
     throw new Response(null, {status: 404});
   }
   const id = product.id.substr(product.id.lastIndexOf('/') + 1);
-  console.log('isAdmin: ' + isAdmin);
 
   const url = `https://${context.env.PUBLIC_STORE_DOMAIN}/admin/api/2023-07/products/${id}/metafields.json`;
 
@@ -219,7 +216,6 @@ export async function action({request, context, params}: ActionArgs) {
     'X-Shopify-Access-Token': accessToken,
     'Content-Type': 'application/json',
   };
-  console.log(headers);
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -227,7 +223,6 @@ export async function action({request, context, params}: ActionArgs) {
     });
 
     const result = await response.json();
-    console.log('result', result);
 
     let oldReviews = '';
     if (result.metafields) {
@@ -241,9 +236,6 @@ export async function action({request, context, params}: ActionArgs) {
     if (!oldReviews) {
       oldReviews = '';
     }
-
-    console.log('oldReviews.value', oldReviews.value);
-    console.log('oldReviews', oldReviews);
 
     let newReviews = '';
     newReviews += reviews?.toString();
@@ -259,8 +251,6 @@ export async function action({request, context, params}: ActionArgs) {
       },
     };
 
-    console.log('newReviews', JSON.stringify(data));
-
     const postResponse = await fetch(url, {
       method: 'POST',
       headers,
@@ -268,8 +258,7 @@ export async function action({request, context, params}: ActionArgs) {
     });
 
     const postResult = await postResponse.json();
-    console.log('result', postResult);
-    console.log('data.metafield', data.metafield);
+
     return data.metafield.value;
   } catch (error) {
     console.error('Error:', error);
@@ -278,7 +267,6 @@ export async function action({request, context, params}: ActionArgs) {
   if (isAdmin) {
     return data;
   }
-  console.log('body', userEmail, name, rating, reviewBody);
   if (userEmail === '') {
     return 'noEmail';
   } else if (name === '') {
@@ -299,7 +287,6 @@ export async function action({request, context, params}: ActionArgs) {
         },
       },
     );
-    console.log('response', response);
   } catch (error) {
     console.error(error);
   }
@@ -330,8 +317,6 @@ export default function ProductHandle() {
   const [customReviews, setCustomReviews] = useState(
     reviewsMetafield ? reviewStringToArray(reviewsMetafield) : [],
   );
-  console.log('ACTION DATA', actionData ? reviewStringToArray(actionData) : []);
-  console.log('custom', customReviews);
 
   const reviewsRef = useRef(null);
   const executeScroll = (event) => {
@@ -864,7 +849,6 @@ function DescriptionBlock({product}) {
           </div>
         </Accordion> */}
       </div>
-      {console.log(getProductType(product.title))}
       {['sweatshirt', 't-shirt', 'hoodie'].includes(
         getProductType(product.title)?.toLowerCase(),
       ) && (

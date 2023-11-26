@@ -41,16 +41,12 @@ const ReviewsSection: React.FC<Props> = ({
     sumReviews += review.rating;
     counterArr[rating - 1] += 1;
   });
-  //console.log('counter', counterArr);
   const reviewCount = counterArr.reduce((partialSum, a) => partialSum + a, 0);
   const noReviews = reviewCount === 0;
   useEffect(() => {
     setReviewCount(reviewCount);
     setReviewAverage(sumReviews / reviewCount);
   }, [reviewCount]);
-  //console.log('no reviews', noReviews);
-  //console.log(`Reviews`, product);
-  // console.log(`Reviews`, judgeReviews);
   return noReviews ? (
     <div ref={forwardRef} key={reviewCount}>
       <WriteReview
@@ -76,7 +72,6 @@ const ReviewsSection: React.FC<Props> = ({
         <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
           {judgeReviews.map((review, index) => {
             review = judgeReviewFilter(review);
-            console.log('reviewwwwwwwx', review);
             return (
               <ReviewCard
                 key={index}
@@ -296,8 +291,11 @@ const judgeReviewFilter = (review) => {
       rating: 5,
       body: 'I bought a Denji hoodie for $60 including shipping, wore it out, it’s very soft and I got complimented as soon as I left. Great quality.',
     },
+    'Ernesto Guzman': {
+      rating: 5,
+      body: 'Amazing quality, really soft material, and the designs are attention grabbing. Just wish the shipping was quicker. Took almost a week to receive, but overall love the sweater I ordered.',
+    },
   };
-
   const filteredReview = filter[review.reviewer.name];
   if (filteredReview) {
     review.body = filteredReview.body;

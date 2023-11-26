@@ -51,7 +51,6 @@ export async function loader({params, context, request}: LoaderArgs) {
       sort,
     },
   });
-  // console.log(collection.products.nodes);
   //filtering tags setup
   products.nodes = products.nodes.map((product: Product) => {
     //prep

@@ -18,7 +18,6 @@ function ReviewPopupBtn() {
     // Update the state with the retrieved judgeReviews
     setModalOpen(true);
   };
-  console.log('fetcher.data', fetcher.data);
 
   return (
     <>

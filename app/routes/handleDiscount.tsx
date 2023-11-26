@@ -4,7 +4,6 @@ import {cartAttributeUpdate, cartDiscountCodesUpdate} from './discount.$code';
 
 export async function action({request, context, params}: ActionArgs) {
   const body = await request.formData();
-  console.log('code', body.get('code'));
   let discounts = [];
   if (body.get('code') === 'empty' || !body.get('code')) discounts = [];
   else {
@@ -114,14 +113,9 @@ export async function action({request, context, params}: ActionArgs) {
       );
 
       data = await response.json();
-      console.log('test', data);
       if (data.data.codeDiscountNodeByCode === null) {
-        console.log('invalid');
         return {status: '400', code: 'invalid discount code'};
       }
-      console.log(
-        JSON.stringify(data.data.codeDiscountNodeByCode.codeDiscount),
-      );
     } catch (error) {
       console.error(error);
     }

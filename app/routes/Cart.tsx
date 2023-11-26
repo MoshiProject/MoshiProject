@@ -94,7 +94,6 @@ export async function action({request, context}: ActionArgs) {
       const linesToUpdate = formData.get('lines')
         ? JSON.parse(String(formData.get('lines')))
         : [];
-      console.log('linesToUpdate', JSON.stringify(linesToUpdate));
       if (!linesToUpdate.length) {
         throw new Error('No lines to update');
       }
@@ -220,8 +219,6 @@ export async function cartRemove({cartId, lineIds, storefront}: any) {
   return cartLinesRemove;
 }
 export async function cartUpdate({cartId, lines, storefront}: any) {
-  console.log('lines', lines);
-
   const {cartLinesUpdate} = await storefront.mutate(
     UPDATE_LINE_ITEMS_MUTATION,
     {

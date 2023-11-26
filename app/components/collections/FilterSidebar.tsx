@@ -26,7 +26,6 @@ function FilterSidebar({
   const [filteredProductType, setFilteredProductType] = useState(
     filteredProductTypeDefault,
   );
-  console.log('filteredProductType', filteredProductType);
   //   Handle Character Filtering
   useEffect(() => {
     if (filteredCharacters.length > 0) {

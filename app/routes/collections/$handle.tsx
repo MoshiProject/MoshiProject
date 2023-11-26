@@ -67,7 +67,6 @@ export async function loader({params, context, request}: LoaderArgs) {
   //   );
 
   //   const data = await response.json();
-  //   console.log('dataaaaaaa', data);
   // } catch (error) {
   //   console.error(error);
   // }

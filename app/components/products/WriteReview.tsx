@@ -59,23 +59,7 @@ function WriteReview({
     reviewQuantitiyArr[2] = threeQuantity ? parseInt(threeQuantity) : 0;
     reviewQuantitiyArr[3] = twoQuantity ? parseInt(twoQuantity) : 0;
     reviewQuantitiyArr[4] = oneQuantity ? parseInt(oneQuantity) : 0;
-    console.log(
-      'aaaaa',
-      fiveQuantity,
-      fourQuantity,
-      threeQuantity,
-      twoQuantity,
-      oneQuantity,
-    );
-    console.log('reviewQuantitiyArr', reviewQuantitiyArr);
-    console.log(
-      'nul',
-      quantity !== null ? quantity : 0,
-      reviewQuantitiyArr.reduce((partialSum, a) => {
-        console.log('sum', a, partialSum);
-        return a ? partialSum + a : 0;
-      }, 0),
-    );
+
     const additionalReviewsToGenerate =
       (reviewQuantity !== null ? reviewQuantity : 0) -
       reviewQuantitiyArr.reduce(
@@ -93,7 +77,6 @@ function WriteReview({
       } else {
         reviewQuantitiyArr[4] += 1;
       }
-      console.log(reviewQuantitiyArr);
     }
 
     const revs = [];
@@ -125,14 +108,10 @@ function WriteReview({
       Math.min(emptyQuantity, numNonEmptyReviews) -
       (reviewQuantity - numNonEmptyReviews);
 
-    console.log('maxEmptyReviews', maxEmptyReviews);
     if (maxEmptyReviews !== 0) {
       for (let i = 0; i < maxEmptyReviews; i++) {
         let rand = Math.floor(Math.random() * revs.length);
-        console.log('body1', revs[rand].body);
         while (revs[rand].body === '') {
-          console.log('body2', revs[rand].body);
-
           rand = Math.floor(Math.random() * revs.length);
         }
         revs[rand].body = '';
@@ -331,7 +310,6 @@ function WriteReview({
                       (a.body.length > 0 ? 1 : -1),
                   )
                   .map((review, index) => {
-                    console.log(review);
                     return (
                       <div
                         key={review.body + index + review.rating}
@@ -397,7 +375,6 @@ function WriteReview({
                                 5,
                                 originalReview.rating + 1,
                               );
-                              console.log(originalReview.rating);
                               const newReviews = reviews;
                               newReviews[index] = originalReview;
                               setReviews(newReviews);
@@ -414,7 +391,6 @@ function WriteReview({
                                 1,
                                 originalReview.rating - 1,
                               );
-                              console.log(originalReview.rating);
                               const newReviews = reviews;
                               newReviews[index] = originalReview;
                               setReviews(newReviews);

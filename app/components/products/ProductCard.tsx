@@ -132,7 +132,6 @@ export default function ProductCard({
             }`}
           >
             {titleFilter(product.title)}
-            {/* {console.log(product)} */}
           </h3>
           <div className="flex gap-2 justify-center mb-3 h-fit">
             <span className="max-w-prose whitespace-pre-wrap inherit text-copy tracking-widest flex gap-1 text-center font-semibold text-xs md:text-base h-fit">

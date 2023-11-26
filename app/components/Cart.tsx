@@ -130,7 +130,6 @@ function ItemUpdateButton({
   children: any;
 }) {
   const fetcher = useFetcher();
-  console.log('lines input', JSON.stringify(lines));
   return (
     <fetcher.Form action="/cart" method="post">
       <input type="hidden" name="cartAction" value="UPDATE_IN_CART" />
@@ -280,24 +279,27 @@ export const CartShippingBar = ({currentTotal}: {currentTotal: any}) => {
   const [reachedGoals, setReachedGoals] = useState([]);
   const [closestGoal, setClosestGoal] = useState(goals[0]);
   const [difference, setDifference] = useState(
-    closestGoal.goalAmount - parseFloat(currentTotal?.totalAmount?.amount),
+    closestGoal.goalAmount - parseFloat(currentTotal?.subtotalAmount?.amount),
   );
 
   useEffect(() => {
     const newReachedGoals = goals.filter((goal) => {
-      return parseFloat(currentTotal?.totalAmount?.amount) >= goal.goalAmount;
+      return (
+        parseFloat(currentTotal?.subtotalAmount?.amount) >= goal.goalAmount
+      );
     });
     setReachedGoals(newReachedGoals);
 
     const newClosestGoal = goals.reduce((goal1, goal2) => {
       const diff1 =
-        goal1.goalAmount - parseFloat(currentTotal?.totalAmount?.amount);
+        goal1.goalAmount - parseFloat(currentTotal?.subtotalAmount?.amount);
       return diff1 > 0 ? goal1 : goal2;
     }, goals[0]);
 
     setClosestGoal(newClosestGoal);
     setDifference(
-      newClosestGoal.goalAmount - parseFloat(currentTotal?.totalAmount?.amount),
+      newClosestGoal.goalAmount -
+        parseFloat(currentTotal?.subtotalAmount?.amount),
     );
   }, [currentTotal]);
 

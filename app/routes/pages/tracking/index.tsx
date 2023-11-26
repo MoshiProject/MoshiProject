@@ -34,8 +34,6 @@ export async function loader({request, context, params}: LoaderArgs) {
     },
   });
 
-  //   console.log(await response.json());
-  //   console.log(query);
   // use sessionId to retrieve session from app's session storage
   // getSessionFromStorage() must be provided by application
 

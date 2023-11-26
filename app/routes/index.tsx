@@ -130,7 +130,6 @@ export const getJudgeReviews = async (context) => {
       const gid = 'gid://shopify/Product/' + review.product_external_id;
       return gid;
     });
-    console.log('judgeGIDs', judgeGIDs);
     console.time('get image Data');
 
     const moreData: any = await context.storefront.query(

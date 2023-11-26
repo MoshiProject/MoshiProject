@@ -73,7 +73,6 @@ export async function loader({context, request}: LoaderArgs) {
   //get cookie data for recently Viewed
   // const cookieHeader = request.headers.get('Cookie');
   // const cookie = await recentlyViewedCookie.parse(cookieHeader);
-  // console.log('cookie', cookie.recentlyViewed);
 
   // const {nodes}: {nodes: object[]} = await context.storefront.query(
   //   PRODUCTS_BY_ID_QUERY,

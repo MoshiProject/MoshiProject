@@ -39,7 +39,6 @@ export const action: ActionFunction = async ({request, context, params}) => {
     })
     .then((data) => {
       // Handle the response data
-      console.log('data', data);
       return json(data);
     })
     .catch((error) => {

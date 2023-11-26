@@ -30,7 +30,6 @@ export default function ProductGrid({
     products.nodes || [],
   );
   const totalProducts = nextPage ? 9999999 : (products || []).length;
-  console.log('total products: ' + totalProducts, 'next page: ' + nextPage);
   // For making client-side requests
   // https://remix.run/docs/en/v1/hooks/use-fetcher
   const fetcher = useFetcher();
