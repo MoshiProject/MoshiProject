@@ -76,26 +76,41 @@ export default function CartButton(cart: any) {
                       </div>
                     </div>
                     <div className="w-full md:px-12 px-4 py-6 space-y-3 border-t border-neutral-800 pt-1">
-                      <div>
+                      <div className="w-full">
                         {data.discountCodes.map((discount) => (
                           <div
                             className="flex justify-between items-center w-full"
                             key={discount.code}
                           >
-                            <div>
+                            <div className="flex justify-between items-center w-full">
                               {' '}
                               {discount.applicable ? (
-                                <span
-                                  className={`flex items-center border-2 ${
-                                    discount.applicable
-                                      ? 'border-green-500'
-                                      : 'border-red-600'
-                                  } bg-neutral-700 bg-opacity-50 p-1 text-sm w-fit rounded-md px-4`}
-                                >
-                                  <TagIcon className="h-5 w-5 rotate-90 mr-1" />{' '}
-                                  <span className="mx-2">{discount.code}</span>
-                                  <RemoveDiscountButton></RemoveDiscountButton>
-                                </span>
+                                <div className="flex justify-between items-center w-full">
+                                  {' '}
+                                  <span
+                                    className={`flex items-center border-2 ${
+                                      discount.applicable
+                                        ? 'border-green-500'
+                                        : 'border-red-600'
+                                    } bg-neutral-700 bg-opacity-50 p-1 text-sm w-fit rounded-md px-4`}
+                                  >
+                                    <TagIcon className="h-5 w-5 rotate-90 mr-1" />{' '}
+                                    <span className="mx-2">
+                                      {discount.code}
+                                    </span>
+                                    <RemoveDiscountButton></RemoveDiscountButton>
+                                  </span>
+                                  <span className="text-sm p-2 tracking-normal border-green-500 bg-neutral-700 bg-opacity-50 px-3 border-2 rounded-lg flex text-center mx-2">
+                                    Discount Applied! You got{' '}
+                                    {(
+                                      (100 *
+                                        (data.cost.subtotalAmount.amount -
+                                          data.cost.totalAmount.amount)) /
+                                      data.cost.subtotalAmount.amount
+                                    ).toFixed(0)}
+                                    % off!
+                                  </span>
+                                </div>
                               ) : (
                                 <>
                                   {' '}
@@ -165,7 +180,7 @@ function RemoveDiscountButton() {
   const fetcher = useFetcher();
 
   return (
-    <fetcher.Form action="/handleDiscount" method="get">
+    <fetcher.Form action="/handleDiscount" method="post">
       <input type="hidden" name="code" value={'empty'} />
       {fetcher.state === 'idle' ? (
         <button

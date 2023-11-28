@@ -30,8 +30,8 @@ export function Layout({children, title}: LayoutProps) {
         <div
           className={` ${
             siteSettings.header.displayCountdown ? 'h-32' : 'h-24'
-          } md:${
-            siteSettings.header.displayCountdown ? 'h-48' : 'h-32'
+          } ${
+            siteSettings.header.displayCountdown ? 'md:h-40' : 'md:h-32'
           } w-full bg-neutral-950 md:bg-white`}
         ></div>
         {children}

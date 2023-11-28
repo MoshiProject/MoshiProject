@@ -133,7 +133,7 @@ const FooterMenu: React.FC = () => {
   return (
     <Suspense>
       <div className="flex flex-col flex-wrap justify-center items-center gap-2 bg-neutral-950">
-        <div className="flex  flex-wrap md:flex-nowrap justify-center  p-4 pt-0 bg-neutral-950 md:w-full  md:pl-64 md:pt-10 md:pb-16">
+        <div className="flex  flex-wrap md:flex-nowrap justify-center  p-4 pt-0 bg-neutral-950 md:w-full  md:pl-32 md:pt-10 md:pb-16">
           {/* <FooterSubscribe /> */}
           <CustomForm />
           {menuItems.map((item) => (
@@ -293,9 +293,9 @@ const CustomForm = () => {
   const ref = useRef();
 
   return (
-    <div className="flex flex-col md:w-1/3 md:mr-20">
+    <div className="flex flex-col md:flex-row md:w-1/2 md:mr-20">
       <div>
-        <div className="grid grid-cols-2 grid-rows-2 h-72 w-full gap-2">
+        <div className="md:hidden grid grid-cols-2 grid-rows-2 h-72 w-full gap-2">
           {[
             {
               icon: <TruckIcon className="h-8 w-8" />,
@@ -352,7 +352,7 @@ const CustomForm = () => {
           10% off your first order!
         </div>
       ) : (
-        <div className="my-4 border-y border-neutral-800 py-8 ">
+        <div className="my-4 border-y border-neutral-800 py-8 md:my-0">
           <div className=" md:text-sm text-white md:mb-4 text-center text-2xl font-bold mb-2 md:text-left">
             Sign Up and Save
           </div>
@@ -374,7 +374,7 @@ const CustomForm = () => {
               method="post"
             >
               <input
-                className="bg-white text-sm  border placeholder:text-neutral-400 text-neutral-850 rounded-md border-white w-full md:w-3/5 mb-2"
+                className="bg-white text-sm  border placeholder:text-neutral-400 text-neutral-850 rounded-md border-white w-full  mb-2"
                 type="text"
                 name="email"
                 id="email"
@@ -386,9 +386,12 @@ const CustomForm = () => {
               </button>
             </fetcher.Form>
           </div>
+          <div className="mt-4">
+            {' '}
+            <SocialMediaIcons />
+          </div>
         </div>
       )}
-      <SocialMediaIcons />
     </div>
   );
 };
