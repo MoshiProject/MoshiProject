@@ -51,7 +51,7 @@ const CollectionPageSlideshow = () => {
               key="hero container"
               className="flex flex-col justify-center items-center text-center text-2xl font-bold tracking-widest text-white list-none p-0 m-0"
             >
-              BLACK FRIDAY SALE
+              EXTENDED BLACK FRIDAY SALE
               <br />
               <span className=" text-base">
                 ORDERS <span className="text-xl">$99+ </span> USE CODE{' '}

@@ -194,7 +194,7 @@ export default function Homepage() {
         >
           {' '}
           <ParallaxText baseVelocity={5}>
-            BLACK FRIDAY SALE IS LIVE | ALL ITEMS UP TO 70% OFF
+            EXTENDED BLACK FRIDAY SALE | ALL ITEMS UP TO 70% OFF
           </ParallaxText>
         </motion.div>
       </div>
