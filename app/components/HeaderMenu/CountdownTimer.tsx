@@ -4,7 +4,7 @@ const CountdownTimer = () => {
   let targetDate = new Date('2023-11-25T02:00:00');
   let counter = 1;
   while (calculateTimeLeft(targetDate).total <= 0) {
-    targetDate = new Date('2023-12-' + (17 + counter).toString() + 'T02:00:00');
+    targetDate = new Date('2023-12-' + (1 + counter).toString() + 'T02:00:00');
     counter++;
   }
 
