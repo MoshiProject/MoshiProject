@@ -12,7 +12,6 @@ const CountdownTimer = () => {
   );
   targetDate.setHours(2, 0, 0); // Set the time to 12:00 AM
 
-  console.log('targetDate', targetDate);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
 
   useEffect(() => {
