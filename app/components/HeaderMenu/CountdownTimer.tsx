@@ -2,15 +2,16 @@ import React, {useState, useEffect} from 'react';
 
 const CountdownTimer = () => {
   const tomorrow = new Date();
-  //  const tomorrow = new 
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  //  const tomorrow = new
+  if (tomorrow.getHours() > 2) tomorrow.setDate(tomorrow.getDate() + 1);
 
   const targetDate = new Date(
     `${tomorrow.getFullYear()}-${
       tomorrow.getMonth() + 1
     }-${tomorrow.getDate()}`,
   );
-  targetDate.setHours(2, 0, 0); // Set the time to 12:00 AM
+  console.log(targetDate);
+  targetDate.setHours(2, 0, 0); // Set the time to 02:00 AM
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
 
