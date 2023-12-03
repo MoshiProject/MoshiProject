@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 
 const CountdownTimer = () => {
   const tomorrow = new Date();
-  //  const tomorrow = new Date('2023-12-31T00:00:00.000-06:00');
-  if(tomorrow.getHours() >2)tomorrow.setDate(tomorrow.getDate() + 1);
+  //  const tomorrow = new 
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
   const targetDate = new Date(
     `${tomorrow.getFullYear()}-${
