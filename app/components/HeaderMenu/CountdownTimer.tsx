@@ -1,20 +1,19 @@
 import React, {useState, useEffect} from 'react';
 
 const CountdownTimer = () => {
-  const tomorrow = new Date();
-  //  const tomorrow = new
-  if (tomorrow.getHours() > 2) tomorrow.setDate(tomorrow.getDate() + 1);
+  let targetDate = new Date('2023-12-01T02:00:00');
+  let counter = 1;
+  while (calculateTimeLeft(targetDate).total <= 0) {
+    targetDate = new Date(
+      '2023-12-' + (counter < 10 ? '0' : '') + counter.toString() + 'T02:00:00',
+    );
 
-  const targetDate = new Date(
-    `${tomorrow.getFullYear()}-${
-      tomorrow.getMonth() + 1
-    }-${tomorrow.getDate()}`,
-  );
-  console.log(targetDate);
-  targetDate.setHours(2, 0, 0); // Set the time to 02:00 AM
+    counter++;
+  }
 
+  targetDate.setHours(2, 0, 0); // Set the time to 12:00 AM
+  console.log('targetDate', targetDate);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       const timeLeft = calculateTimeLeft(targetDate);
