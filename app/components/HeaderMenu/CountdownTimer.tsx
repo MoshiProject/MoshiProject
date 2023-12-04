@@ -11,7 +11,6 @@ const CountdownTimer = () => {
 
   // Set the time to 2 AM
   targetDate.setHours(2, 0, 0, 0);
-  console.log('targetDate', targetDate);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
   useEffect(() => {
     const intervalId = setInterval(() => {
