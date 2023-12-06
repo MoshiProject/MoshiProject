@@ -25,7 +25,6 @@ export default function ProductGrid({
   const [endCursor, setEndCursor] = useState(productsList.pageInfo.endCursor);
   const [gridType, setGridType] = useState('normal');
   const [products, setProducts] = useState(productsList.nodes || []);
-
   const [filteredProducts, setFilteredProducts] = useState(
     products.nodes || [],
   );

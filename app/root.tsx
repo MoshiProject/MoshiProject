@@ -46,11 +46,6 @@ export const links = () => {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: 'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/Favicon.png?v=1643314556',
-    },
   ];
 };
 export const handle = {
@@ -148,7 +143,7 @@ export default function App() {
         <Meta />
         <Links />
         <FacebookPixel />
-        <InspectletSnippet />
+        {/* <InspectletSnippet /> */}
         <MSClaritySnippet />
         <GAnalyticsSnippet />
       </head>

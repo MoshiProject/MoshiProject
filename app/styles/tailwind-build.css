@@ -1744,6 +1744,19 @@ input:checked + .toggle-bg {
 .min-h-screen {
   min-height: 100vh;
 }
+.min-h-fit {
+  min-height: -moz-fit-content;
+  min-height: fit-content;
+}
+.min-h-\[128px\] {
+  min-height: 128px;
+}
+.min-h-\[256px\] {
+  min-height: 256px;
+}
+.min-h-\[50vh\] {
+  min-height: 50vh;
+}
 .\!w-px {
   width: 1px !important;
 }
