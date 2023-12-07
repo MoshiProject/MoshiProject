@@ -72,38 +72,22 @@ function AddToCartAnalytics({
   const formData = fetcher.formData;
   // Data from loaders
   const pageAnalytics = usePageAnalytics({hasUserConsent: true});
+  console.log('formData', formData);
+  console.log('fetcher', fetcher);
 
   useEffect(() => {
-    if (formData) {
-      const cartData: Record<string, unknown> = {};
-      const cartInputs = CartForm.getFormInput(formData);
+    if (fetcherData) {
+      const addToCartPayload: ShopifyAddToCartPayload = {
+        ...getClientBrowserParameters(),
+        ...pageAnalytics,
+        // ...cartData,
+        cartId: fetcherData.cart.id,
+      };
 
-      try {
-        // Get analytics data from form inputs
-        if (cartInputs.inputs.analytics) {
-          const dataInForm: unknown = JSON.parse(
-            String(cartInputs.inputs.analytics),
-          );
-          Object.assign(cartData, dataInForm);
-        }
-      } catch {
-        // do nothing
-      }
-
-      // If we got a response from the add to cart action
-      if (Object.keys(cartData).length && fetcherData) {
-        const addToCartPayload: ShopifyAddToCartPayload = {
-          ...getClientBrowserParameters(),
-          ...pageAnalytics,
-          ...cartData,
-          cartId: fetcherData.cart.id,
-        };
-
-        sendShopifyAnalytics({
-          eventName: AnalyticsEventName.ADD_TO_CART,
-          payload: addToCartPayload,
-        });
-      }
+      sendShopifyAnalytics({
+        eventName: AnalyticsEventName.ADD_TO_CART,
+        payload: addToCartPayload,
+      });
     }
   }, [fetcherData, formData, pageAnalytics]);
   return <>{children}</>;
