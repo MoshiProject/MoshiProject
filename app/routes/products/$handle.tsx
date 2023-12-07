@@ -78,8 +78,8 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
 
   const productAnime = getProductAnime(product.title);
   const animeHandle = productAnimeHandles[productAnime];
-  const {collection: productTypeRecommendations}: any = animeHandle
-    ? await context.storefront.query(SMALL_COLLECTION_QUERY, {
+  const productTypeRecommendations = animeHandle
+    ? context.storefront.query(SMALL_COLLECTION_QUERY, {
         variables: {
           handle: typeHandle,
           cursor,
@@ -92,15 +92,18 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
   console.time('get anime Recs');
 
   const animeCollectionExists = animeHandle !== undefined;
-  const {collection: productAnimeRecommendations}: any =
-    await context.storefront.query(SMALL_COLLECTION_QUERY, {
+  const productAnimeRecommendations = context.storefront.query(
+    SMALL_COLLECTION_QUERY,
+    {
       variables: {
         handle: animeCollectionExists ? animeHandle : 'featured-products',
         cursor,
         rev,
         sort,
       },
-    });
+    },
+  );
+  console.log('productAnimeRecommendations', productAnimeRecommendations);
   console.timeEnd('get anime Recs');
   console.time('get judge');
 
@@ -128,8 +131,8 @@ export const loader = async ({params, context, request}: LoaderArgs) => {
     product,
     selectedVariant,
     storeDomain,
-    productAnimeRecommendations: productAnimeRecommendations?.products?.nodes,
-    productTypeRecommendations: productTypeRecommendations?.products?.nodes,
+    productAnimeRecommendations,
+    productTypeRecommendations,
     analytics: {
       pageType: AnalyticsPageType.product,
       products: [product],
@@ -534,23 +537,41 @@ export default function ProductHandle() {
       <Seperator />
       <Suspense fallback={<div></div>}>
         <Await resolve={productAnimeRecommendations}>
-          {(productAnimeRecommendations) => (
-            <ProductRecommendations
-              recommendations={productAnimeRecommendations}
-              title={
-                getProductAnime(product.title) === undefined
-                  ? `You may also like`
-                  : `Shop ${getProductAnime(product.title)}`
-              }
-            />
-          )}
+          {(productAnimeRecommendations) => {
+            return (
+              <ProductRecommendations
+                recommendations={
+                  productAnimeRecommendations?.collection?.products?.nodes
+                }
+                title={
+                  getProductAnime(product.title) === undefined
+                    ? `You may also like`
+                    : `Shop ${getProductAnime(product.title)}`
+                }
+              />
+            );
+          }}
         </Await>
       </Suspense>
       <Seperator />
-      <ProductRecommendations
-        recommendations={productTypeRecommendations}
-        title={`Shop ${getProductType(product.title)}s`}
-      />
+      <Suspense fallback={<div></div>}>
+        <Await resolve={productTypeRecommendations}>
+          {(productTypeRecommendations) => {
+            return (
+              <ProductRecommendations
+                recommendations={
+                  productTypeRecommendations?.collection?.products?.nodes
+                }
+                title={
+                  getProductType(product.title) === undefined
+                    ? `You may also like`
+                    : `Shop ${getProductType(product.title)}s`
+                }
+              />
+            );
+          }}
+        </Await>
+      </Suspense>
     </section>
   );
 }
