@@ -8,7 +8,7 @@ import ParallaxText from '~/components/HeaderMenu/ParallaxText';
 import Hero from '~/components/HomePage/Hero';
 import ItemTypeCollections from '~/components/HomePage/ItemTypeCollections';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-import {SMALL_COLLECTION_QUERY} from './collections/$handle';
+import {SMALL_COLLECTION_QUERY} from './collections.$handle';
 import HomepageSlideshow from '~/components/HomePage/HomepageSlideshow';
 
 const LazyAnimeCarousel = lazy(

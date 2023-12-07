@@ -1,6 +1,11 @@
 import {Link, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
-import {ActionArgs, LoaderArgs, json} from '@shopify/remix-oxygen';
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  json,
+} from '@shopify/remix-oxygen';
+import invariant from 'tiny-invariant';
 import {
   CartActions,
   CartLineItems,
@@ -8,8 +13,9 @@ import {
   CartSummary,
 } from '~/components/Cart';
 import {CART_QUERY} from '~/queries/cart';
+import {CartForm, type CartQueryData} from '@shopify/hydrogen';
 
-export async function loader({context}: LoaderArgs) {
+export async function loader({context}: LoaderFunctionArgs) {
   const cartId = await context.session.get('cartId');
 
   const cart = cartId
@@ -33,98 +39,86 @@ export async function loader({context}: LoaderArgs) {
   };
 }
 
-export async function action({request, context}: ActionArgs) {
-  const {session, storefront} = context;
-  const headers = new Headers();
-  const [formData, storedCartId, customerAccessToken] = await Promise.all([
+export async function action({request, context}: ActionFunctionArgs) {
+  const {session, cart} = context;
+
+  const [formData, customerAccessToken] = await Promise.all([
     request.formData(),
-    session.get('cartId'),
     session.get('customerAccessToken'),
   ]);
 
-  let cartId = storedCartId;
+  const {action, inputs} = CartForm.getFormInput(formData);
+  invariant(action, 'No cartAction defined');
 
-  const status = 200;
-  let result;
-
-  const cartAction = formData.get('cartAction');
-  const countryCode = formData.get('countryCode')
-    ? formData.get('countryCode')
-    : null;
-
-  switch (cartAction) {
-    case 'ADD_TO_CART':
-      const lines = formData.get('lines')
-        ? JSON.parse(String(formData.get('lines')))
-        : [];
-
-      if (!cartId) {
-        result = await cartCreate({
-          input: countryCode ? {lines, buyerIdentity: {countryCode}} : {lines},
-          storefront,
-        });
-      } else {
-        result = await cartAdd({
-          cartId,
-          lines,
-          storefront,
-        });
-      }
-
-      cartId = result.cart.id;
+  let status = 200;
+  let result: CartQueryData;
+  console.log('parsedData', inputs.lines);
+  const line = inputs.lines;
+  console.log('inputs.lines', line);
+  switch (action) {
+    case CartForm.ACTIONS.LinesAdd:
+      result = await cart.addLines(line);
       break;
-    case 'REMOVE_FROM_CART':
-      const lineIds = formData.get('linesIds')
-        ? JSON.parse(String(formData.get('linesIds')))
-        : [];
-
-      if (!lineIds.length) {
-        throw new Error('No lines to remove');
-      }
-
-      result = await cartRemove({
-        cartId,
-        lineIds,
-        storefront,
-      });
-
-      cartId = result.cart.id;
+    case CartForm.ACTIONS.LinesUpdate:
+      result = await cart.updateLines(inputs.lines);
       break;
-    case 'UPDATE_IN_CART':
-      const linesToUpdate = formData.get('lines')
-        ? JSON.parse(String(formData.get('lines')))
-        : [];
-      if (!linesToUpdate.length) {
-        throw new Error('No lines to update');
-      }
+    case CartForm.ACTIONS.LinesRemove:
+      result = await cart.removeLines(inputs.lineIds);
+      break;
+    case CartForm.ACTIONS.DiscountCodesUpdate:
+      const formDiscountCode = inputs.discountCode;
 
-      result = await cartUpdate({
-        cartId,
-        lines: linesToUpdate,
-        storefront,
+      // User inputted discount code
+      const discountCodes = (
+        formDiscountCode ? [formDiscountCode] : []
+      ) as string[];
+
+      // Combine discount codes already applied on cart
+      discountCodes.push(...inputs.discountCodes);
+
+      result = await cart.updateDiscountCodes(discountCodes);
+      break;
+    case CartForm.ACTIONS.BuyerIdentityUpdate:
+      result = await cart.updateBuyerIdentity({
+        ...inputs.buyerIdentity,
+        customerAccessToken,
       });
-
-      cartId = result.cart.id;
       break;
     default:
-      throw new Error('Invalid cart action');
+      invariant(false, `${action} cart action is not defined`);
   }
 
   /**
    * The Cart ID may change after each mutation. We need to update it each time in the session.
    */
-  session.set('cartId', cartId);
-  headers.set('Set-Cookie', await session.commit());
+  const cartId = result.cart.id;
+  const headers = cart.setCartId(result.cart.id);
 
-  const {cart, errors} = result;
+  const redirectTo = formData.get('redirectTo') ?? null;
+  if (typeof redirectTo === 'string' && isLocalPath(redirectTo)) {
+    status = 303;
+    headers.set('Location', redirectTo);
+  }
+
+  const {cart: cartResult, errors} = result;
+
+  console.log('result', {
+    cart: cartResult,
+    errors,
+    analytics: {
+      cartId,
+    },
+  });
+
   return json(
-    {cart, errors},
-    {status, headers},
     {
+      cart: cartResult,
+      errors,
       analytics: {
         cartId,
       },
     },
+    {status, headers},
   );
 }
 

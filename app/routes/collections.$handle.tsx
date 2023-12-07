@@ -2,11 +2,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {useLoaderData} from '@remix-run/react';
 import {Image, type SeoHandleFunction} from '@shopify/hydrogen';
-import {json, type LoaderArgs, type MetaFunction} from '@shopify/remix-oxygen';
+import {
+  json,
+  LoaderFunctionArgs,
+  type MetaFunction,
+} from '@shopify/remix-oxygen';
 import {lazy, useEffect, useState} from 'react';
 import {Product} from '~/components/products/products';
 import {animeNames, productTypes} from '~/functions/titleFilter';
-import ProductGrid from '../../components/collections/ProductGrid';
+import ProductGrid from '../components/collections/ProductGrid';
 import AnimeCarousel from '~/components/HomePage/AnimeCarousel';
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.collection?.title,
@@ -19,7 +23,7 @@ export const handle = {
 const LazyAnimeCarousel = lazy(
   () => import('~/components/HomePage/AnimeCarousel'),
 );
-export async function loader({params, context, request}: LoaderArgs) {
+export async function loader({params, context, request}: LoaderFunctionArgs) {
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
   const sortParam = searchParams.get('sort');
@@ -163,10 +167,12 @@ export async function loader({params, context, request}: LoaderArgs) {
 }
 
 export const meta: MetaFunction = ({data}) => {
-  return {
-    title: data?.collection?.title ?? 'Collection',
-    description: data?.collection?.description,
-  };
+  return [
+    {
+      title: data?.collection?.title ?? 'Collection',
+      description: data?.collection?.description,
+    },
+  ];
 };
 const titleStyling =
   'hidden text-2xl mt-2 font-semibold  px-0.5 lg:text-2xl lg:font-semibold lg:px-0 ';

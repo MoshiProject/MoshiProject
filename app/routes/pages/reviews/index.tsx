@@ -1,7 +1,7 @@
 import {useLoaderData} from '@remix-run/react';
 import {LoaderArgs, defer} from '@shopify/remix-oxygen';
 import ReviewContainer from '~/components/Reviews/ReviewContainer';
-import {getJudgeReviews} from '~/routes';
+import {getJudgeReviews} from '~/routes/_index';
 export async function loader({params, context, request}: LoaderArgs) {
   const searchParams = new URL(request.url).searchParams;
 

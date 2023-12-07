@@ -1,5 +1,5 @@
 import {ActionArgs, json} from '@shopify/remix-oxygen';
-import {getJudgeReviews} from '.';
+import {getJudgeReviews} from './_index';
 
 export async function action({request, context}: ActionArgs) {
   const {session, storefront} = context;

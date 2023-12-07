@@ -1,10 +1,13 @@
 import {Disclosure} from '@headlessui/react';
 import {ChevronRightIcon} from '@heroicons/react/20/solid';
 import {Await, useActionData, useLoaderData} from '@remix-run/react';
-import type {SeoHandleFunction} from '@shopify/hydrogen';
+import type {
+  SeoHandleFunction,
+  ShopifyAnalyticsProduct,
+} from '@shopify/hydrogen';
 import {AnalyticsPageType} from '@shopify/hydrogen';
 import {Money, ShopPayButton} from '@shopify/hydrogen-react';
-import {ActionArgs, LoaderArgs, defer} from '@shopify/remix-oxygen';
+import {ActionFunctionArgs, LoaderArgs, defer} from '@shopify/remix-oxygen';
 import {AnimatePresence} from 'framer-motion';
 import {Suspense, useEffect, useRef, useState} from 'react';
 import ReviewsSection from '~/components/Reviews/ReviewsSection';
@@ -26,8 +29,8 @@ import titleFilter, {
   productTypeHandles,
 } from '~/functions/titleFilter';
 import {PRODUCT_QUERY} from '~/queries/product';
-import {SMALL_COLLECTION_QUERY} from '../collections/$handle';
-import ContactUs from '../pages/contact-us';
+import {SMALL_COLLECTION_QUERY} from './collections.$handle';
+import ContactUs from './pages/contact-us';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.product?.seo?.title,
@@ -177,7 +180,7 @@ async function getJudgeMeReviews(id: string, context) {
   return judgeReviews;
 }
 
-export async function action({request, context, params}: ActionArgs) {
+export async function action({request, context, params}: ActionFunctionArgs) {
   const body = await request.formData();
   const userEmail = body.get('user_email');
   const name = body.get('name');
@@ -303,7 +306,15 @@ export default function ProductHandle() {
     productAnimeRecommendations,
     isAdmin,
   } = useLoaderData();
-
+  const productAnalytics: ShopifyAnalyticsProduct = {
+    productGid: product.id,
+    variantGid: selectedVariant.id,
+    name: product.title,
+    variantName: selectedVariant.title,
+    brand: product.vendor,
+    price: selectedVariant.price.amount,
+    quantity: 1,
+  };
   const actionData = useActionData();
   const desc = product.descriptionHtml;
   const reviewsMetafield = product?.metafield
@@ -457,9 +468,18 @@ export default function ProductHandle() {
                 <ShippingEstimation />
               </div>
               <AddToCartForm
-                variantId={selectedVariant?.id}
                 value={selectedVariant?.price?.amount}
                 productTitle={product.title}
+                analytics={{
+                  products: [productAnalytics],
+                  totalValue: parseFloat(productAnalytics.price),
+                }}
+                lines={[
+                  {
+                    quantity: 1,
+                    merchandiseId: selectedVariant.id,
+                  },
+                ]}
               />
               <ShopPayButton
                 storeDomain={storeDomain}

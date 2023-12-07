@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import ReviewContainer from './Reviews/ReviewContainer';
 import {useFetcher, useSubmit} from '@remix-run/react';
-import {getJudgeReviews} from '~/routes'; // Adjust the path based on your project structure
+import {getJudgeReviews} from '~/routes/_index'; // Adjust the path based on your project structure
 import LoadingSpinner from './animations/LoadingSpinner';
 import {XMarkIcon} from '@heroicons/react/20/solid';
 

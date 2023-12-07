@@ -1,11 +1,6 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/naming-convention */
-import {
-  Link,
-  useLocation,
-  useSearchParams,
-  useTransition,
-} from '@remix-run/react';
+import {Link, useLocation, useSearchParams} from '@remix-run/react';
 import {AnimatePresence, motion, useScroll} from 'framer-motion';
 import {useRef, useState} from 'react';
 import SizingChart from '~/components/products/SizingChart';
@@ -22,7 +17,7 @@ const colorMap = {
   Natural: '#D6D1AA',
   HeatherNavy: '#2C3E4C',
 };
-
+import React from 'react';
 export default function ProductOptions({
   options,
   selectedVariant,
@@ -30,7 +25,7 @@ export default function ProductOptions({
 }) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
-  const transition = useTransition();
+  const transition = React.useTransition();
   const optionsRef = useRef(null);
   const {scrollYProgress} = useScroll({
     target: optionsRef,
