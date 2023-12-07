@@ -13,19 +13,17 @@ import {clarityEvent} from '~/root';
 import ReactGA from 'react-ga4';
 
 export default function AddToCartForm({
-  variantId,
   textColor = 'text-white',
   backgroundColor = 'bg-black',
   value = '0',
   productTitle = '',
+  lines,
   analytics,
 }: {
   children: React.ReactNode;
   disabled?: boolean;
   analytics?: unknown;
 }) {
-  const lines = [{merchandiseId: variantId, quantity: 1}];
-
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher: FetcherWithComponents<any>) => {
@@ -74,18 +72,35 @@ function AddToCartAnalytics({
   const pageAnalytics = usePageAnalytics({hasUserConsent: true});
 
   useEffect(() => {
-    if (fetcherData) {
-      const addToCartPayload: ShopifyAddToCartPayload = {
-        ...getClientBrowserParameters(),
-        ...pageAnalytics,
-        // ...cartData,
-        cartId: fetcherData.cart.id,
-      };
+    if (formData) {
+      const cartData: Record<string, unknown> = {};
+      const cartInputs = CartForm.getFormInput(formData);
+      console.log('cartInputs', cartInputs);
 
-      sendShopifyAnalytics({
-        eventName: AnalyticsEventName.ADD_TO_CART,
-        payload: addToCartPayload,
-      });
+      try {
+        if (cartInputs.inputs.analytics) {
+          const dataInForm: unknown = JSON.parse(
+            String(cartInputs.inputs.analytics),
+          );
+          Object.assign(cartData, dataInForm);
+        }
+      } catch {
+        // do nothing
+      }
+
+      if (Object.keys(cartData).length && fetcherData) {
+        const addToCartPayload: ShopifyAddToCartPayload = {
+          ...getClientBrowserParameters(),
+          ...pageAnalytics,
+          ...cartData,
+          cartId: fetcherData.cart.id,
+        };
+
+        sendShopifyAnalytics({
+          eventName: AnalyticsEventName.ADD_TO_CART,
+          payload: addToCartPayload,
+        });
+      }
     }
   }, [fetcherData, formData, pageAnalytics]);
   return <>{children}</>;

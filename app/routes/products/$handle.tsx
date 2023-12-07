@@ -303,6 +303,15 @@ export default function ProductHandle() {
     productAnimeRecommendations,
     isAdmin,
   } = useLoaderData();
+  const productAnalytics: ShopifyAnalyticsProduct = {
+    productGid: product.id,
+    variantGid: selectedVariant.id,
+    name: product.title,
+    variantName: selectedVariant.title,
+    brand: product.vendor,
+    price: selectedVariant.price.amount,
+    quantity: 1,
+  };
 
   const actionData = useActionData();
   const desc = product.descriptionHtml;
@@ -447,6 +456,7 @@ export default function ProductHandle() {
             options={product.options}
             selectedVariant={selectedVariant}
             productType={getProductType(product.title)}
+            productAnalytics={productAnalytics}
           />
           {orderable && (
             <div className="space-y-2 w-full">
@@ -457,9 +467,17 @@ export default function ProductHandle() {
                 <ShippingEstimation />
               </div>
               <AddToCartForm
-                variantId={selectedVariant?.id}
-                value={selectedVariant?.price?.amount}
                 productTitle={product.title}
+                lines={[
+                  {
+                    quantity: 1,
+                    merchandiseId: selectedVariant.id,
+                  },
+                ]}
+                analytics={{
+                  products: [productAnalytics],
+                  totalValue: parseFloat(productAnalytics.price),
+                }}
               />
               <ShopPayButton
                 storeDomain={storeDomain}

@@ -27,6 +27,7 @@ export default function ProductOptions({
   options,
   selectedVariant,
   productType,
+  productAnalytics,
 }) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
@@ -150,6 +151,7 @@ export default function ProductOptions({
             options={options}
             searchParams={searchParams}
             pathname={pathname}
+            productAnalytics={productAnalytics}
           />
         )}
       </AnimatePresence>

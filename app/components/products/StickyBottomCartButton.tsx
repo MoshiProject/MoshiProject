@@ -20,6 +20,7 @@ function StickyBottomCartButton({
   options,
   searchParams,
   pathname,
+  productAnalytics,
 }) {
   const linkParams = new URLSearchParams(searchParams);
   const [variantSelector, setVariantSelector] = useState('');
@@ -93,7 +94,19 @@ function StickyBottomCartButton({
           ADD TO CART
         </button> */}
         <div className="w-full">
-          <AddToCartForm variantId={selectedVariant?.id} />
+          <AddToCartForm
+            productTitle={productAnalytics.name}
+            lines={[
+              {
+                quantity: 1,
+                merchandiseId: selectedVariant.id,
+              },
+            ]}
+            analytics={{
+              products: [productAnalytics],
+              totalValue: parseFloat(productAnalytics.price),
+            }}
+          />
         </div>
       </motion.div>
     </>
