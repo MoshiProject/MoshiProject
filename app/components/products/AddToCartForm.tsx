@@ -72,8 +72,6 @@ function AddToCartAnalytics({
   const formData = fetcher.formData;
   // Data from loaders
   const pageAnalytics = usePageAnalytics({hasUserConsent: true});
-  console.log('formData', formData);
-  console.log('fetcher', fetcher);
 
   useEffect(() => {
     if (fetcherData) {
