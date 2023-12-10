@@ -27,6 +27,7 @@ import {
 import {usePageAnalytics} from './hooks/usePageAnalytics';
 import {getPublicEnv, useEnv} from './functions/utils';
 import ReactGA from 'react-ga4';
+import {userInfo} from './cookies.server';
 
 export const links = () => {
   return [
@@ -64,6 +65,26 @@ export const meta = () => ({
 });
 
 export async function loader({context, request}: LoaderArgs) {
+  //get the cookie
+  const cookieHeader = request.headers.get('Cookie');
+  const cookie = (await userInfo.parse(cookieHeader)) || {};
+  console.log('cookieOG', cookie);
+
+  if (!cookie.userId) {
+    cookie.userId = generateUniqueId();
+    console.log('cookie.userId', cookie.userId);
+  }
+
+  if (!cookie.utm) {
+    //How to get utms
+    const url = new URL(request.url);
+    const utms = getUTMFromURL(url);
+    cookie.utms = utms;
+    console.log('cookie.utms', cookie.utms);
+  }
+
+  console.log('cookie', cookie);
+
   const cartId = await context.session.get('cartId');
   //get cookie data for recently Viewed
   // const cookieHeader = request.headers.get('Cookie');
@@ -86,14 +107,21 @@ export async function loader({context, request}: LoaderArgs) {
     // });
   } else {
     //sets cookie with header
-    return defer({
-      publicEnv: getPublicEnv(context.env),
-      cart: cartId ? getCart(context, cartId) : undefined,
-      layout: await context.storefront.query(LAYOUT_QUERY),
-      analytics: {
-        shopId: 'gid://shopify/Shop/55241212109',
+    return defer(
+      {
+        publicEnv: getPublicEnv(context.env),
+        cart: cartId ? getCart(context, cartId) : undefined,
+        layout: await context.storefront.query(LAYOUT_QUERY),
+        analytics: {
+          shopId: 'gid://shopify/Shop/55241212109',
+        },
       },
-    });
+      {
+        headers: {
+          'Set-Cookie': await userInfo.serialize(cookie),
+        },
+      },
+    );
   }
 }
 
@@ -159,6 +187,29 @@ export default function App() {
     </html>
   );
 }
+
+//getUTMFromTerm
+const getUTMFromURL = (url) => {
+  const term = url.searchParams;
+  const utmSource = term.get('utm_source');
+  const utmMedium = term.get('utm_medium');
+  const utmCampaign = term.get('utm_campaign');
+  console.log('utmSource', utmSource);
+  console.log('utmMedium', utmMedium);
+  console.log('utmCampaign', utmCampaign);
+  return {
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    valid: !!(utmSource && utmMedium && utmCampaign),
+  };
+};
+
+//GENERATE UNIQUE ID
+const generateUniqueId = () => {
+  const id = Math.random().toString(16).slice(2);
+  return id;
+};
 
 const LAYOUT_QUERY = `#graphql
   query layout {

@@ -75,7 +75,6 @@ function AddToCartAnalytics({
     if (formData) {
       const cartData: Record<string, unknown> = {};
       const cartInputs = CartForm.getFormInput(formData);
-      console.log('cartInputs', cartInputs);
 
       try {
         if (cartInputs.inputs.analytics) {

@@ -2686,6 +2686,10 @@ input:checked + .toggle-bg {
 .\!bg-transparent {
   background-color: transparent !important;
 }
+.bg-\[\#5A31F4\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(90 49 244 / var(--tw-bg-opacity));
+}
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
