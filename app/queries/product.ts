@@ -230,7 +230,7 @@ export const PRODUCT_QUERY = `#graphql
           handle
         }
       }
-      variants(first: 1) {
+      variants(first: 100) {
         nodes {
           id
           title

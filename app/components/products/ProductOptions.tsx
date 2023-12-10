@@ -28,6 +28,8 @@ export default function ProductOptions({
   selectedVariant,
   productType,
   productAnalytics,
+  setVariantByOptions,
+  highlightNoneSelected,
 }) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
@@ -38,7 +40,7 @@ export default function ProductOptions({
     offset: ['end start', `${0.1} start`],
   });
   const [optionsBar, setOptionsBar] = useState(true);
-
+  const searchParamObject = getSearchParamObject(currentSearchParams);
   const paramsWithDefaults = (() => {
     const defaultParams = new URLSearchParams(currentSearchParams);
 
@@ -116,11 +118,21 @@ export default function ProductOptions({
                 <h3 className="whitespace-pre-wrap max-w-prose font-normal text-xs uppercase pt-1 tracking-widest">
                   {option.name} -{' '}
                   <span className="text-neutral-500 text-xs">
-                    {
-                      selectedVariant.selectedOptions.find(
-                        (opt) => opt.name === option.name,
-                      ).value
-                    }
+                    {selectedVariant
+                      ? selectedVariant?.selectedOptions?.find(
+                          (opt) => opt.name === option.name,
+                        ).value
+                      : searchParamObject[option.name] ?? (
+                          <span
+                            className={`${
+                              highlightNoneSelected
+                                ? 'border-red-600 text-red-500 border rounded-lg p-1'
+                                : 'text-neutral-500 p-1'
+                            }`}
+                          >
+                            None Selected
+                          </span>
+                        )}
                   </span>
                 </h3>
                 {isSize && (
@@ -139,6 +151,7 @@ export default function ProductOptions({
                 currentOptionVal,
                 isColor,
                 pathname,
+                setVariantByOptions,
               )}
             </div>
           );
@@ -164,6 +177,7 @@ export function Options(
   currentOptionVal: string | null,
   isColor: boolean,
   pathname: string,
+  setVariantByOptions?: any,
 ) {
   return (
     <div className="flex flex-wrap items-center gap-[.45rem] ">
@@ -176,6 +190,9 @@ export function Options(
           return (
             <Link
               key={value}
+              onClick={() => {
+                setVariantByOptions(getSearchParameters(linkParams));
+              }}
               style={{
                 backgroundColor: color,
                 borderColor: isSelected
@@ -198,6 +215,9 @@ export function Options(
         return (
           <Link
             key={value}
+            onClick={() => {
+              setVariantByOptions(getSearchParameters(linkParams));
+            }}
             to={`${pathname}?${linkParams.toString()}`}
             preventScrollReset
             replace
@@ -213,4 +233,27 @@ export function Options(
       })}
     </div>
   );
+}
+function getSearchParameters(searchParams) {
+  const paramObj = [];
+  for (const key of searchParams.keys()) {
+    paramObj[key] =
+      searchParams.getAll(key).length > 1
+        ? searchParams.getAll(key)
+        : searchParams.get(key);
+  }
+  const output = Object.entries(paramObj).map(([key, value]) => ({key, value}));
+
+  return output;
+}
+function getSearchParamObject(searchParams) {
+  const paramObj = [];
+  for (const key of searchParams.keys()) {
+    paramObj[key] =
+      searchParams.getAll(key).length > 1
+        ? searchParams.getAll(key)
+        : searchParams.get(key);
+  }
+
+  return paramObj;
 }

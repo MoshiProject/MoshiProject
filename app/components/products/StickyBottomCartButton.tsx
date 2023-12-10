@@ -57,38 +57,39 @@ function StickyBottomCartButton({
         exit={{opacity: 0, translateY: 60}}
         className={`fixed flex md:hidden  items-center left-0 bottom-0 h-16 bg-black w-full text-white z-50 px-2`}
       >
-        {selectedVariant.selectedOptions.map((option) => {
-          linkParams.set(option.name, option.value);
-          return option.name.toLowerCase() === 'color' ? (
-            <button
-              onClick={() => {
-                setVariantSelector(option.name);
-              }}
-              key={option.value}
-              style={{
-                backgroundColor: colorMap[option.value.replace(/\s/g, '')],
-                borderColor:
-                  option.value === 'Black'
-                    ? '#444'
-                    : colorMap[option.value.replace(/\s/g, '')],
-              }}
-              className={`w-8 h-8 mx-1 leading-3 text-sm border-2 p-1 bg-clip-content inset cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
-            ></button>
-          ) : (
-            <button
-              onClick={() => {
-                setVariantSelector(option.name);
-              }}
-              key={option.value}
-              style={{
-                borderColor: 'white',
-              }}
-              className={`w-8 h-8 mx-1 leading-3 text-sm border-2 cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
-            >
-              {option.value}
-            </button>
-          );
-        })}{' '}
+        {selectedVariant &&
+          selectedVariant?.selectedOptions?.map((option) => {
+            linkParams.set(option.name, option.value);
+            return option.name.toLowerCase() === 'color' ? (
+              <button
+                onClick={() => {
+                  setVariantSelector(option.name);
+                }}
+                key={option.value}
+                style={{
+                  backgroundColor: colorMap[option.value.replace(/\s/g, '')],
+                  borderColor:
+                    option.value === 'Black'
+                      ? '#444'
+                      : colorMap[option.value.replace(/\s/g, '')],
+                }}
+                className={`w-8 h-8 mx-1 leading-3 text-sm border-2 p-1 bg-clip-content inset cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
+              ></button>
+            ) : (
+              <button
+                onClick={() => {
+                  setVariantSelector(option.name);
+                }}
+                key={option.value}
+                style={{
+                  borderColor: 'white',
+                }}
+                className={`w-8 h-8 mx-1 leading-3 text-sm border-2 cursor-pointer rounded-full ${'rounded-full border border-white w-fit min-w-[36px] h-9'}`}
+              >
+                {option.value}
+              </button>
+            );
+          })}{' '}
         <div className="h-10 border-l w-0 ml-4 border-neutral-700"></div>
         {/* <button className="w-full h-full font-semibold tracking-widest text-lg">
           ADD TO CART
@@ -99,7 +100,7 @@ function StickyBottomCartButton({
             lines={[
               {
                 quantity: 1,
-                merchandiseId: selectedVariant.id,
+                merchandiseId: selectedVariant?.id,
               },
             ]}
             analytics={{
