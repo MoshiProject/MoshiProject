@@ -25,7 +25,7 @@ function StickyBottomCartButton({
   const linkParams = new URLSearchParams(searchParams);
   const [variantSelector, setVariantSelector] = useState('');
   return (
-    <>
+    <div className="hidden">
       {' '}
       <AnimatePresence>
         {' '}
@@ -110,7 +110,7 @@ function StickyBottomCartButton({
           />
         </div>
       </motion.div>
-    </>
+    </div>
   );
 }
 
