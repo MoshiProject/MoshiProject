@@ -254,11 +254,12 @@ export function CartActions({
     <div className="flex flex-col mt-2">
       <a
         onClick={async () => {
-          clarityEvent('InitiateCheckout');
           await sendMoshiAnalytics('InitiateCheckout', {
             value: totalAmount?.totalAmount?.amount,
             items: lines,
           });
+          clarityEvent('InitiateCheckout');
+
           ReactGA.event('begin_checkout', {
             currency: 'USD',
             value: totalAmount.totalAmount.amount,
