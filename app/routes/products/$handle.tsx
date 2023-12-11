@@ -534,12 +534,24 @@ export default function ProductHandle() {
                       totalValue: parseFloat(productAnalytics.price),
                     }}
                   />
-                  <ShopPayButton
-                    storeDomain={storeDomain}
-                    variantIds={[selectedVariant?.id]}
-                    width="100%"
+                  <button
                     className="w-full"
-                  />
+                    onClick={() => {
+                      console.log('sending Analytics');
+                      sendMoshiAnalytics('AcceleratedCheckout', {
+                        productTitle: product.title,
+                        productVariant: selectedVariant?.title,
+                        price: selectedVariant?.price,
+                      });
+                    }}
+                  >
+                    <ShopPayButton
+                      storeDomain={storeDomain}
+                      variantIds={[selectedVariant?.id]}
+                      width="100%"
+                      className="w-full"
+                    />
+                  </button>
                 </>
               ) : (
                 <>
@@ -552,7 +564,9 @@ export default function ProductHandle() {
                   >
                     Add to Cart
                   </button>
-                  <ShopPayFiller setter={setHighlightNoneSelected} />
+                  <ShopPayFiller
+                    setHighlightNoneSelected={setHighlightNoneSelected}
+                  />
                 </>
               )}
               <div className=" text-xs text-center">
@@ -1013,6 +1027,7 @@ const SharpStarIcon = ({className}) => {
 };
 
 import ProductPageGraphic from '~/components/products/ProductPageGraphic';
+import {sendMoshiAnalytics} from '../api.sendEventUser';
 
 const ItemIsInStock = () => {
   return (
@@ -1031,12 +1046,12 @@ const ItemIsInStock = () => {
 const reviewStringToArray = (reviewString: string) => {
   return JSON.parse('[' + reviewString + ']');
 };
-const ShopPayFiller = (setter) => {
+const ShopPayFiller = ({setHighlightNoneSelected}) => {
   return (
     <button
       className="bg-[#5A31F4] rounded-sm flex h-12 items-center justify-center w-full"
       onClick={() => {
-        setter(true);
+        setHighlightNoneSelected(true);
       }}
     >
       <svg
