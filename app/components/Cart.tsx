@@ -253,9 +253,9 @@ export function CartActions({
   return (
     <div className="flex flex-col mt-2">
       <a
-        onClick={() => {
+        onClick={async () => {
           clarityEvent('InitiateCheckout');
-          sendMoshiAnalytics('InitiateCheckout', {
+          await sendMoshiAnalytics('InitiateCheckout', {
             value: totalAmount?.totalAmount?.amount,
             items: lines,
           });
