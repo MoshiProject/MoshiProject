@@ -223,7 +223,7 @@ export function Options(
             replace
             className={`w-fit md:px-3 h-8 px-2 min-w-[32px] flex justify-center items-center  border-neutral-400 border leading-none cursor-pointer text-sm transition-all duration-200 rounded-lg ${
               isSelected
-                ? 'border-neutral-800 border-2  bg-clip-content font-semibold'
+                ? 'bg-neutral-950 text-white  font-semibold'
                 : 'border-neutral-300 font-normal '
             }`}
           >
