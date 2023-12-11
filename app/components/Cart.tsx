@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import {TrashIcon} from '@heroicons/react/24/outline';
 import {clarityEvent} from '~/root';
 import ReactGA from 'react-ga4';
+import {sendMoshiAnalytics} from '~/routes/api.sendEventUser';
 export function CartLineItems({linesObj}: any) {
   const lines = flattenConnection(linesObj);
   return (
@@ -242,9 +243,11 @@ export function CartSummary({
 export function CartActions({
   checkoutUrl,
   totalAmount,
+  lines,
 }: {
   checkoutUrl: string;
   totalAmount: any;
+  lines: any;
 }) {
   if (!checkoutUrl) return null;
   return (
@@ -252,6 +255,10 @@ export function CartActions({
       <a
         onClick={() => {
           clarityEvent('InitiateCheckout');
+          sendMoshiAnalytics('InitiateCheckout', {
+            totalAmount,
+            lines,
+          });
           ReactGA.event('begin_checkout', {
             currency: 'USD',
             value: totalAmount.totalAmount.amount,

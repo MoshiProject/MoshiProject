@@ -11,6 +11,7 @@ import {useEffect} from 'react';
 import {usePageAnalytics} from '~/hooks/usePageAnalytics';
 import {clarityEvent} from '~/root';
 import ReactGA from 'react-ga4';
+import {sendMoshiAnalytics} from '~/routes/api.sendEventUser';
 
 export default function AddToCartForm({
   textColor = 'text-white',
@@ -40,6 +41,9 @@ export default function AddToCartForm({
             <button
               onClick={() => {
                 clarityEvent('AddToCart');
+                sendMoshiAnalytics('AddToCart', {
+                  lines,
+                });
                 ReactGA.event('add_to_cart', {
                   currency: 'USD',
                   value,

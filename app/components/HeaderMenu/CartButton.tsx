@@ -147,6 +147,7 @@ export default function CartButton(cart: any) {
                           .reduce((partialSum, a) => partialSum + a, 0)}
                       />
                       <CartActions
+                        lines={data.lines.edges}
                         checkoutUrl={data.checkoutUrl}
                         totalAmount={data.cost}
                       />
