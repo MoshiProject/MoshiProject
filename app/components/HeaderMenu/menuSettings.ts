@@ -11,7 +11,7 @@ export const navigation: MenuItem[] = [
   {title: 'T-SHIRTS', url: '/collections/t-shirt', children: []},
   {title: 'HOODIES', url: '/collections/hoodie', children: []},
   {title: 'SWEATSHIRTS', url: '/collections/sweatshirts', children: []},
-  {title: 'FIGURES', url: '/collections/figurines', children: []},
+  // {title: 'FIGURES', url: '/collections/figurines', children: []},
   {
     title: 'SHOP BY ANIME',
     url: '',
@@ -40,11 +40,11 @@ export const navigation: MenuItem[] = [
             url: '/collections/demon-slayer-sweatshirts',
             children: [],
           },
-          {
-            title: 'FIGURES',
-            url: '/collections/demon-slayer-figures',
-            children: [],
-          },
+          // {
+          //   title: 'FIGURES',
+          //   url: '/collections/demon-slayer-figures',
+          //   children: [],
+          // },
         ],
       },
       {
@@ -67,11 +67,11 @@ export const navigation: MenuItem[] = [
             url: '/collections/chainsaw-man-sweatshirts',
             children: [],
           },
-          {
-            title: 'FIGURES',
-            url: '/collections/chainsaw-man-figures',
-            children: [],
-          },
+          // {
+          //   title: 'FIGURES',
+          //   url: '/collections/chainsaw-man-figures',
+          //   children: [],
+          // },
         ],
       },
       {
@@ -122,7 +122,7 @@ export const navigation: MenuItem[] = [
       {title: 'MOUSE PADS', url: '/collections/mouse-pads', children: []},
       {title: 'STICKERS', url: '/collections/stickers', children: []},
       {title: 'MUGS', url: '/collections/mugs', children: []},
-      {title: '3D LAMPS', url: '/collections/3d-lamp', children: []},
+      // {title: '3D LAMPS', url: '/collections/3d-lamp', children: []},
     ],
   },
   {
