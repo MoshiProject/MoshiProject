@@ -33,7 +33,7 @@ export default function ProductCard({
     }
   }, [isInView]);
   return (
-    <Link to={`/products/${product.handle}`} className="relative ">
+    <Link to={`/products/${product.handle}?Color=Black`} className="relative ">
       <div
         ref={ref}
         variants={{
