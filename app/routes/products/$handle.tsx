@@ -310,7 +310,10 @@ export default function ProductHandle() {
   } = useLoaderData();
 
   const [selectedVariant, setSelectedVariant] = useState(tempSelectedVariant);
-
+  useEffect(() => {
+    setSelectedVariant(tempSelectedVariant);
+  }, [product]);
+  console.log('selectedVariant', selectedVariant);
   const setVariantByOptions = (options: Option[]) => {
     product.variants?.nodes?.forEach((variant) => {
       if (
@@ -429,7 +432,10 @@ export default function ProductHandle() {
   }, [actionData]);
   const orderable = selectedVariant?.availableForSale || false;
   return (
-    <section className="w-full  gap-2 px-2  md:gap-8 grid  mt-1 md:px-24 md:mt-0">
+    <section
+      className="w-full  gap-2 px-2  md:gap-8 grid  mt-1 md:px-24 md:mt-0"
+      key={product.title + selectedVariant?.title}
+    >
       <div className="grid items-start gap-1 lg:gap-12 md:grid-cols-2 lg:grid-cols-11 px-3">
         {/* Product Images */}
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden  md:w-full lg:col-span-6 h-fit md:mt-20 mt-4">
@@ -503,6 +509,7 @@ export default function ProductHandle() {
             </div>
           </div>
           <ProductOptions
+            key={product.title}
             options={product.options}
             selectedVariant={selectedVariant}
             productType={getProductType(product.title)}

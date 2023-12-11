@@ -39,6 +39,7 @@ export default function ProductOptions({
     target: optionsRef,
     offset: ['end start', `${0.1} start`],
   });
+  console.log('CURRENT SEARCH: ' + currentSearchParams);
   const [optionsBar, setOptionsBar] = useState(true);
   const searchParamObject = getSearchParamObject(currentSearchParams);
   const paramsWithDefaults = (() => {
@@ -64,7 +65,7 @@ export default function ProductOptions({
     : paramsWithDefaults;
 
   return (
-    <>
+    <div key={selectedVariant?.title + currentSearchParams}>
       <motion.div
         style={{opacity: scrollYProgress}}
         ref={optionsRef}
@@ -168,7 +169,7 @@ export default function ProductOptions({
           />
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }
 export function Options(

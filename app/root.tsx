@@ -68,15 +68,14 @@ export async function loader({context, request}: LoaderArgs) {
   //get the cookie
   const cookieHeader = request.headers.get('Cookie');
   const cookie = (await userInfo.parse(cookieHeader)) || {};
+  const url = new URL(request.url);
+  const utms = getUTMFromURL(url);
 
   if (!cookie.userId) {
     cookie.userId = generateUniqueId();
   }
-
-  if (!cookie.utm) {
+  if (utms?.valid && !cookie?.utm?.valid) {
     //How to get utms
-    const url = new URL(request.url);
-    const utms = getUTMFromURL(url);
     cookie.utms = utms;
   }
 
