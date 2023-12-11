@@ -65,7 +65,6 @@ export const meta = () => ({
 });
 
 export async function loader({context, request}: LoaderArgs) {
-  console.log('request', request);
   const buyerIP = request.headers.get('oxygen-buyer-ip');
   console.log('Buyer IP:', buyerIP);
   //get the cookie
