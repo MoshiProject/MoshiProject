@@ -539,9 +539,9 @@ export default function ProductHandle() {
                     onClick={() => {
                       console.log('sending Analytics');
                       sendMoshiAnalytics('AcceleratedCheckout', {
-                        productTitle: product.title,
-                        productVariant: selectedVariant?.title,
-                        price: selectedVariant?.price,
+                        items: [product.title + selectedVariant?.title],
+
+                        value: selectedVariant?.price?.amount,
                       });
                     }}
                   >

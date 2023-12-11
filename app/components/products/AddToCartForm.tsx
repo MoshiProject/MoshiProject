@@ -42,7 +42,8 @@ export default function AddToCartForm({
               onClick={() => {
                 clarityEvent('AddToCart');
                 sendMoshiAnalytics('AddToCart', {
-                  lines,
+                  value: analytics.totalValue,
+                  items: [analytics.products[0].name],
                 });
                 ReactGA.event('add_to_cart', {
                   currency: 'USD',

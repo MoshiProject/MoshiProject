@@ -4,6 +4,7 @@ import {userInfo} from '~/cookies.server';
 export async function action({request}: ActionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const cookie = (await userInfo.parse(cookieHeader)) || {};
+  const buyerIP = request.headers.get('oxygen-buyer-ip');
   const payload = await request.json();
   console.log('payload', payload);
   console.log('yeah, cookie', cookie);
@@ -17,7 +18,7 @@ export async function action({request}: ActionArgs) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({...payload, ...cookie}),
+        body: JSON.stringify({...payload, ...cookie, ip: buyerIP}),
       },
     );
 
@@ -40,7 +41,7 @@ export const sendMoshiAnalytics = async (event, items) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({event, items}),
+      body: JSON.stringify({event, ...items}),
     });
 
     // Check if the request was successful (status code 200)

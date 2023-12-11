@@ -256,8 +256,8 @@ export function CartActions({
         onClick={() => {
           clarityEvent('InitiateCheckout');
           sendMoshiAnalytics('InitiateCheckout', {
-            totalAmount,
-            lines,
+            value: totalAmount?.totalAmount?.amount,
+            items: lines,
           });
           ReactGA.event('begin_checkout', {
             currency: 'USD',
