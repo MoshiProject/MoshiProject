@@ -23,10 +23,10 @@ function ReturnInfo() {
 
           <h2 className="mb-2 text-lg">Can I return my items?</h2>
           <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
-            Yes. We offer hassle free full refunds/replacements for damaged or
-            incorrect items. If you don't like your purchase, no worries – we
-            offer a straightforward 30-day refund policy for all clothing.
-            Simply contact us at the portal below or at info@moshiproject.com.
+            Yes. We offer hassle free replacements for damaged or incorrect
+            items. If you don't like your purchase, no worries – we offer a
+            straightforward 30-day refund policy for all clothing. Simply
+            contact us at the portal below or at contact@moshiproject.com.
           </p>
         </div>
         <div className="p-1 mr-8 mt-8">
@@ -36,7 +36,7 @@ function ReturnInfo() {
             your order being made for any reason. If you don't like your
             purchase, no worries – we offer a straightforward 30-day refund
             policy for all clothing. Simply contact us at the portal below or at
-            info@moshiproject.com.
+            contact@moshiproject.com.
           </p>
         </div>
         <div className="p-1 mr-8 mt-8">
