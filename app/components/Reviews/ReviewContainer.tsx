@@ -19,21 +19,35 @@ export default function ReviewContainer(judgeReviews: {
         <span>{numberWithCommas(reviewQuantity)} reviews</span>
       </div>
       <div>
-        {judgeReviews.judgeReviews.map((review, index) => (
-          <ReviewCard
-            className={`my-2 ${index < reviewCount ? 'block' : 'hidden'}`}
-            key={'reviewCard' + index}
-            imgSrc={review.imageSrc}
-            author={review.reviewer.name}
-            stars={review.rating}
-            productImageData={review.productData}
-            body={review.body}
-            product={{
-              url: '/products/' + review.product_handle,
-              title: review.product_title,
-            }}
-          />
-        ))}
+        {
+          judgeReviews.judgeReviews.map((review, index) => {
+            return (
+              review.reviewer.name !== 'Jessica Nicastro' &&
+              review.reviewer.name !== 'Jessica Nicastro' &&
+              review.rating >= 4 && (
+                <ReviewCard
+                  className={`my-2 ${index < reviewCount ? 'block' : 'hidden'}`}
+                  key={'reviewCard' + index}
+                  imgSrc={review.imageSrc}
+                  author={review.reviewer.name}
+                  stars={review.rating}
+                  productImageData={review.productData}
+                  body={review.body}
+                  product={{
+                    url: '/products/' + review.product_handle,
+                    title: review.product_title,
+                  }}
+                />
+              )
+            );
+          })
+          // .filter((review) => {
+          //   console.log(review.reviewer.name);
+          //   return (
+
+          //   );
+          // })
+        }
       </div>
       <div className="flex justify-center mt-8 mb-4">
         <button
