@@ -70,10 +70,10 @@ const ReviewsSection: React.FC<Props> = ({
         />
         <ReviewsCounter reviews={counterArr} isProduct />
         <ul className="mt-2 border-t border-neutral-300 grid grid-cols-1 gap-1 md:gap-2 lg:grid-cols-1 last:border-b-0">
-          {judgeReviews
-            .map((review, index) => {
-              review = judgeReviewFilter(review);
-              return (
+          {judgeReviews.map((review, index) => {
+            review = judgeReviewFilter(review);
+            return (
+              review.rating >= 4 && (
                 <ReviewCard
                   key={index}
                   className={`my-2 ${
@@ -84,16 +84,9 @@ const ReviewsSection: React.FC<Props> = ({
                   stars={review.rating}
                   body={review.body}
                 />
-              );
-            })
-            .filter((review) => {
-              console.log(review.reviewer.name);
-              return (
-                review.reviewer.name !== 'Jessica Nicastro' &&
-                review.reviewer.name !== 'Jessica Nicastro' &&
-                review.rating >= 4
-              );
-            })}
+              )
+            );
+          })}
           {customReviews
             .sort(
               (a, b) =>

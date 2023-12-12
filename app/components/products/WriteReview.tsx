@@ -558,14 +558,16 @@ function WriteReview({
           </motion.div>
         )
       ) : (
-        <div className="flex justify-center ">
-          <button
-            className="bg-neutral-950 rounded text-white py-2 px-4 font-semibold"
-            onClick={() => setOpen(!open)}
-          >
-            Write a Review
-          </button>
-        </div>
+        isAdmin && (
+          <div className="flex justify-center ">
+            <button
+              className="bg-neutral-950 rounded text-white py-2 px-4 font-semibold"
+              onClick={() => setOpen(!open)}
+            >
+              Write a Review
+            </button>
+          </div>
+        )
       )}
     </>
   );

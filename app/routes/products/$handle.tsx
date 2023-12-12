@@ -1051,7 +1051,19 @@ const ItemIsInStock = () => {
 };
 
 const reviewStringToArray = (reviewString: string) => {
-  return JSON.parse('[' + reviewString + ']');
+  try {
+    const reviews = JSON.parse('[' + reviewString + ']');
+    return reviews;
+  } catch (err) {
+    try {
+      const reviews = JSON.parse(
+        '[' + reviewString.replaceAll('undefined,', '') + ']',
+      );
+      return reviews;
+    } catch (err) {
+      return [];
+    }
+  }
 };
 const ShopPayFiller = ({setHighlightNoneSelected}) => {
   return (
