@@ -22,9 +22,9 @@ export default function ReviewContainer(judgeReviews: {
         {
           judgeReviews.judgeReviews.map((review, index) => {
             return (
-              review.reviewer.name !== 'Jessica Nicastro' &&
-              review.reviewer.name !== 'Jessica Nicastro' &&
-              review.rating >= 4 && (
+              review?.reviewer?.name !== 'Jessica Nicastro' &&
+              review?.reviewer?.name !== 'Jessica Nicastro' &&
+              review?.rating >= 4 && (
                 <ReviewCard
                   className={`my-2 ${index < reviewCount ? 'block' : 'hidden'}`}
                   key={'reviewCard' + index}
