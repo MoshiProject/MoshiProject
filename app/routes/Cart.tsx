@@ -60,14 +60,7 @@ export async function action({request, context}: ActionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const cookie = (await userInfo.parse(cookieHeader)) || {};
   const buyerIP = request.headers.get('oxygen-buyer-ip');
-  const payload = {
-    event: 'AddToCart',
-    ...cookie,
-    ip: buyerIP,
-    value: analytics.totalValue,
-    items: [analytics.products[0].name],
-    cartId: cartId.split('gid://shopify/Cart/')[1],
-  };
+
   switch (cartAction) {
     case 'ADD_TO_CART':
       const lines = formData.get('lines')
@@ -86,11 +79,18 @@ export async function action({request, context}: ActionArgs) {
           storefront,
         });
       }
+      cartId = result.cart.id;
 
+      const payload = {
+        event: 'AddToCart',
+        ...cookie,
+        ip: buyerIP,
+        value: analytics?.totalValue,
+        items: [analytics?.products[0]?.name],
+        cartId: cartId.split('gid://shopify/Cart/')[1],
+      };
       console.log('payload', payload);
       console.log('yeah, cookie', cookie);
-      cartId = result.cart.id;
-      payload.cartId = cartId.split('gid://shopify/Cart/')[1];
       // Post to https://profit-calc.vercel.app/api/createUserEvent with a body containing the event payload and user information
       await sendAnalyticsToMoshiProfit(payload, cookie, buyerIP);
 
