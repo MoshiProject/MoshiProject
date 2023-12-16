@@ -25,6 +25,7 @@ export default function AddToCartForm({
   disabled?: boolean;
   analytics?: unknown;
 }) {
+  console.log('analytics', analytics);
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher: FetcherWithComponents<any>) => {
@@ -41,10 +42,6 @@ export default function AddToCartForm({
             <button
               onClick={() => {
                 clarityEvent('AddToCart');
-                sendMoshiAnalytics('AddToCart', {
-                  value: analytics.totalValue,
-                  items: [analytics.products[0].name],
-                });
                 ReactGA.event('add_to_cart', {
                   currency: 'USD',
                   value,

@@ -8,6 +8,11 @@ import {
   CartSummary,
 } from '~/components/Cart';
 import {CART_QUERY} from '~/queries/cart';
+import {
+  sendAnalyticsToMoshiProfit,
+  sendMoshiAnalytics,
+} from './api.sendEventUser';
+import {userInfo} from '~/cookies.server';
 
 export async function loader({context}: LoaderArgs) {
   const cartId = await context.session.get('cartId');
@@ -43,7 +48,7 @@ export async function action({request, context}: ActionArgs) {
   ]);
 
   let cartId = storedCartId;
-
+  const analytics = JSON.parse(String(formData.get('analytics')));
   const status = 200;
   let result;
 
@@ -52,6 +57,17 @@ export async function action({request, context}: ActionArgs) {
     ? formData.get('countryCode')
     : null;
 
+  const cookieHeader = request.headers.get('Cookie');
+  const cookie = (await userInfo.parse(cookieHeader)) || {};
+  const buyerIP = request.headers.get('oxygen-buyer-ip');
+  const payload = {
+    event: 'AddToCart',
+    ...cookie,
+    ip: buyerIP,
+    value: analytics.totalValue,
+    items: [analytics.products[0].name],
+    cartId: cartId.split('gid://shopify/Cart/')[1],
+  };
   switch (cartAction) {
     case 'ADD_TO_CART':
       const lines = formData.get('lines')
@@ -71,7 +87,13 @@ export async function action({request, context}: ActionArgs) {
         });
       }
 
+      console.log('payload', payload);
+      console.log('yeah, cookie', cookie);
       cartId = result.cart.id;
+      payload.cartId = cartId.split('gid://shopify/Cart/')[1];
+      // Post to https://profit-calc.vercel.app/api/createUserEvent with a body containing the event payload and user information
+      await sendAnalyticsToMoshiProfit(payload, cookie, buyerIP);
+
       break;
     case 'REMOVE_FROM_CART':
       const lineIds = formData.get('linesIds')

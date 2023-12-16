@@ -254,9 +254,12 @@ export function CartActions({
     <div className="flex flex-col mt-2">
       <a
         onClick={async () => {
+          //example checkoutURL:https://moshiproject.myshopify.com/cart/c/c1-5821ecaf2e36292b24ca70ff611d8729?key=6e3fdf401d1e18d80dc779ae3445156f
+          //example cartId: c1-5821ecaf2e36292b24ca70ff611d8729
           await sendMoshiAnalytics('InitiateCheckout', {
             value: totalAmount?.totalAmount?.amount,
             items: lines,
+            cartId: checkoutUrl.split('cart/c/')[1].split('?key')[0],
           });
           clarityEvent('InitiateCheckout');
 
