@@ -2,7 +2,7 @@ import {Link} from '@remix-run/react';
 import {Image, Money} from '@shopify/hydrogen';
 import {useInView} from 'framer-motion';
 import {useEffect, useRef, useState} from 'react';
-import titleFilter from '~/functions/titleFilter';
+import titleFilter, {getProductType} from '~/functions/titleFilter';
 import {Product} from './products';
 type PrdouctCardType = {
   product: Product;
@@ -33,7 +33,16 @@ export default function ProductCard({
     }
   }, [isInView]);
   return (
-    <Link to={`/products/${product.handle}?Color=Black`} className="relative ">
+    <Link
+      to={`/products/${product.handle}${
+        ['hoodie', 't-shirt', 'sweatshirt'].includes(
+          getProductType(product.title)?.toLowerCase(),
+        )
+          ? '?Color=Black'
+          : ''
+      }`}
+      className="relative "
+    >
       <div
         ref={ref}
         variants={{
