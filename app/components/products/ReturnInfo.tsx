@@ -24,12 +24,11 @@ function ReturnInfo() {
           <h2 className="mb-2 text-lg">Can I return my items?</h2>
           <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
             Yes. We offer hassle free replacements for damaged or incorrect
-            items. If you don't like your purchase, no worries – we offer a
-            straightforward 30-day refund policy for all clothing. Simply
-            contact us at the portal below or at contact@moshiproject.com.
+            items. Simply contact us at the portal below or at
+            contact@moshiproject.com.
           </p>
         </div>
-        <div className="p-1 mr-8 mt-8">
+        {/* <div className="p-1 mr-8 mt-8">
           <h2 className="mb-2 text-lg">Change of mind</h2>
           <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
             Order changes or cancellation requests can be within 24 hours of
@@ -38,14 +37,14 @@ function ReturnInfo() {
             policy for all clothing. Simply contact us at the portal below or at
             contact@moshiproject.com.
           </p>
-        </div>
+        </div> */}
         <div className="p-1 mr-8 mt-8">
           <h2 className="mb-2 text-lg">Return Procedure</h2>
           <p className=" w-72 whitespace-normal text-xs tracking-wide h-48">
             On the rare occasion that you receive the wrong size/color, a refund
-            can be opted for. Please email info@moshiproject.com as soon as you
-            are made aware of the issue. Include your order number, photos and
-            any further information you may have.
+            can be opted for. Please email contact@moshiproject.com as soon as
+            you are made aware of the issue. Include your order number, photos
+            and any further information you may have.
           </p>
         </div>
       </>
