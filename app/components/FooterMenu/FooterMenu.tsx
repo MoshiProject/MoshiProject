@@ -327,7 +327,7 @@ const CustomForm = () => {
             },
             {
               icon: <ArrowPathIcon className="h-8 w-8" />,
-              text: '30-Day Hassle-Free Returns',
+              text: 'Order Tracking and Updates',
             },
           ].map((box) => {
             return (
