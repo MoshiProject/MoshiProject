@@ -163,18 +163,9 @@ export default function Homepage() {
     'text-2xl mt-2 font-semibold  text-center px-0.5 lg:text-2xl lg:font-semibold lg:px-0 ';
   return (
     <>
-      {/* <div className="block md:hidden ">
-        <Hero
-          title="BLACK FRIDAY SALE 2023"
-          subtitle="ANIME MEETS STREETWEAR"
-          buttonText="Shop Now →"
-          imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/3.5sec.gif?v=1681722723"
-          isGif
-        />
-      </div> */}
       <div className="hidden md:block md:mx-[-48px]">
         <Hero
-          title="BLACK FRIDAY SALE 2023"
+          title="HOLIDAY SALE 2023"
           subtitle="ANIME MEETS STREETWEAR"
           buttonText="Shop Now →"
           imageUrl="https://cdn.shopify.com/s/files/1/0552/4121/2109/files/t-shirt-mockup-of-a-cool-man-posing-in-a-dark-alley-2357-el1.png
@@ -194,7 +185,7 @@ export default function Homepage() {
         >
           {' '}
           <ParallaxText baseVelocity={5}>
-            EXTENDED BLACK FRIDAY SALE | ALL ITEMS UP TO 70% OFF
+            HOLIDAY SALE | ALL ITEMS UP TO 70% OFF
           </ParallaxText>
         </motion.div>
       </div>

@@ -16,7 +16,7 @@ const CollectionPageSlideshow = () => {
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_18.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_29.webp?v=1699561270',
   ];
-  const announcementText = 'BLACK FRIDAY SALE LIVE';
+  const announcementText = 'HOLIDAY SALE LIVE';
   const subtitleText = 'ANIME MEETS STREETEAR';
   const buttonText = 'Shop Now→';
   useEffect(() => {
@@ -51,7 +51,7 @@ const CollectionPageSlideshow = () => {
               key="hero container"
               className="flex flex-col justify-center items-center text-center text-2xl font-bold tracking-widest text-white list-none p-0 m-0"
             >
-              EXTENDED BLACK FRIDAY SALE
+              HOLIDAY SALE
               <br />
               <span className=" text-base">
                 ORDERS <span className="text-xl">$99+ </span> USE CODE{' '}

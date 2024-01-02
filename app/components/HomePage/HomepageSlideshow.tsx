@@ -16,7 +16,7 @@ const HomepageSlideshow = () => {
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_18.webp?v=1699561270',
     'https://cdn.shopify.com/s/files/1/0552/4121/2109/files/1_29.webp?v=1699561270',
   ];
-  const announcementText = 'EXTENDED BLACK FRIDAY SALE LIVE';
+  const announcementText = 'HOLIDAY SALE LIVE';
   const subtitleText = 'ANIME MEETS STREETEAR';
   const buttonText = 'Shop Now→';
   useEffect(() => {
