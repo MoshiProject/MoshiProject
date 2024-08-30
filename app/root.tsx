@@ -172,9 +172,7 @@ export default function App() {
         <GAnalyticsSnippet />
       </head>
       <body>
-        <Layout title={name}>
-          <Outlet />
-        </Layout>
+       Down For maintainance
         <ScrollRestoration />
         <Scripts />
         <ShopifyChat />
